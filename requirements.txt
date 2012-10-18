@@ -1,0 +1,16 @@
+# The server
+django
+# gevent
+gunicorn
+
+# Templates
+django-jstemplate>=1.0.3
+django_compressor
+
+# Web interface helpers
+requests
+hashlib
+httpagentparser
+
+# Config
+pyyaml

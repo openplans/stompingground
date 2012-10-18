@@ -1,0 +1,27 @@
+{% load jstemplate %}
+{% load compress %}
+{% load i18n %}
+{% load url from future %}
+{% load shareabouts_utils %}
+
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en" class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=IE7">
+
+  <title>Shareabouts Client</title>
+</head>
+<body>
+  
+  <h1>Get started!</h1>
+  <ul>
+    <li>Your dataset root is <a href="{% url 'api_proxy' ''%}">{% url 'api_proxy' '' %}</a></li>
+  </ul>
+
+</body>
+</html>

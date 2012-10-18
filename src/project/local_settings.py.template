@@ -1,0 +1,9 @@
+TIME_ZONE = 'America/New_York'
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+
+SHAREABOUTS = {
+  'DATASET_ROOT': 'http://api.shareabouts.org/api/v1/datasets/demo-user/demo-data/',
+  'DATASET_KEY': 'abc123',
+}
+
