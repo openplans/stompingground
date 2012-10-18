@@ -1,37 +1,19 @@
-Shareabouts [![Build Status](https://secure.travis-ci.org/openplans/shareabouts.png)](http://travis-ci.org/openplans/shareabouts)
-===========
+Shareabouts Client Starter Kit [![Build Status](https://secure.travis-ci.org/openplans/shareabouts.png)](http://travis-ci.org/openplans/shareabouts)
+==============================
 
-1. Set your username/dataset/api key in the local_settings.py file
-2. Place your page(s) in shareabouts_client/templates folder
-3. Place your static files in the shareabouts_client/static folder
-4. Refer to the static files folder with the {{ STATIC_URL }} variable
+This starter kit allows you to quickly get started with creating a client
+application built on the [Shareabouts API](https://github.com/openplans/shareabouts-api).
 
-Shareabouts is an online mapping tool to gather crowd sourced public input in a
-social and engaging process. Using Shareabouts, people can drop a pin on a map
-to provide ideas, suggestions, and comments for planning and design issues. It
-complements and extends the reach of your existing or future project by
-collecting input from the people who know the city best. And as a
-mobile-friendly application, Shareabouts makes it easy to add input on the go.
+Quick Start
+-----------
 
-Documentation
--------------
-All of our documentation is is our `doc` directory. Use it to learn more about:
-* [the architecture](https://github.com/openplans/shareabouts/blob/master/doc/ARCHITECTURE.md)
-* [local setup](https://github.com/openplans/shareabouts/blob/master/doc/README.md)
-* [testing the source](https://github.com/openplans/shareabouts/blob/master/doc/TESTING.md)
-* [interface configuration](https://github.com/openplans/shareabouts/blob/master/doc/CONFIG.md)
-* [custom themes](https://github.com/openplans/shareabouts/blob/master/doc/CUSTOM_THEME.md)
-* [how to deploy to DotCloud](https://github.com/openplans/shareabouts/blob/master/doc/DEPLOY.md)
-* [upgrading from an older version](https://github.com/openplans/shareabouts/blob/master/doc/UPGRADE.md)
-
-Where is Sharabouts going? Check [our roadmap](https://github.com/openplans/shareabouts/wiki/Roadmap) for details of possble future features we've identified.
-
-Demos
-------------
-* [gathering usage data for a city park](http://sistercities.shareabouts.org/)
-* [mapping ATM surcharges](http://nosur.shareabouts.org/)
-* [surveying bike commuters about parking at stations](http://bikeparking.shareabouts.org/)
-* [tracking and describing community assets](http://communitymap.shareabouts.org/)
+1. In *src/project/*, copy *local_settings.py.template* to *local_settings.py*
+2. Set your dataset root and api key in the local_settings.py file
+3. Place your *index.html* in *shareabouts_client/templates/* folder
+4. Place your static files in the *shareabouts_client/static/* folder; refer to 
+   the static files folder with the {{ STATIC_URL }} variable
+   
+For documentation on using the API see ...
 
 Contributing
 ------------

@@ -1,0 +1,27 @@
+# https://github.com/travis-ci/travis-ci/wiki/.travis.yml-options
+
+install: "ci/install.sh"
+script: "ci/script.sh"
+python:
+  - "2.6"
+  - "2.7"
+notifications:
+  irc:
+    channels:
+      - "irc.freenode.org#civicworks"
+    on_success: change
+    on_failure: always
+  email: false
+# Turned off because the default policy is to spam ALL members of
+# the repositories' owner organization.
+# If we decide we want email notifications, feel free to uncomment this and
+# add yourself to the recipient list:
+# email:
+#    recipients:
+#     - foo@bar.com
+#     - foo2@bar.com
+#    on_success: change
+#    on_failure: change
+branches:
+  only:
+    - master
