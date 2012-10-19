@@ -1,4 +1,4 @@
-Shareabouts Client Starter Kit [![Build Status](https://secure.travis-ci.org/openplans/shareabouts.png)](http://travis-ci.org/openplans/shareabouts)
+Shareabouts Client Starter Kit [![Build Status](https://secure.travis-ci.org/openplans/shareabouts-django-client.png)](http://travis-ci.org/openplans/shareabouts-django-client)
 ==============================
 
 This starter kit allows you to quickly get started with creating a client
