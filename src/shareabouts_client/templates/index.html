@@ -14,14 +14,31 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=IE7">
 
-  <title>Shareabouts Client</title>
+  <title>Stomping Ground</title>
+
+  <link href="{{ STATIC_URL }}lib/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.css" />
+  <!--[if lte IE 8]>
+      <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.ie.css" />
+  <![endif]-->
+  <link href="{{ STATIC_URL }}css/main.css" rel="stylesheet" media="screen">
+
 </head>
 <body>
-  
-  <h1>Get started!</h1>
-  <ul>
-    <li>Your dataset root is <a href="{% url 'api_proxy' ''%}">{% url 'api_proxy' '' %}</a></li>
-  </ul>
 
+  <div id="map"><div>
+
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script src="{{ STATIC_URL }}lib/bootstrap/js/bootstrap.js"></script>
+  <script src="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js"></script>
+  <script src="{{ STATIC_URL }}lib/Leaflet.Bing.js"></script>
+  <script src="{{ STATIC_URL }}js/utils.js"></script>
+  <script src="{{ STATIC_URL }}js/models.js"></script>
+  <script src="{{ STATIC_URL }}js/views/layer-view.js"></script>
+  <script src="{{ STATIC_URL }}js/views/map-view.js"></script>
+  <script src="{{ STATIC_URL }}js/main.js"></script>
 </body>
+
 </html>
