@@ -56,8 +56,8 @@ var Shareabouts = Shareabouts || {};
       // Pass the submissionType into each PlaceModel so that it makes its way
       // to the SubmissionCollections
       options = options || {};
-      options.responseType = this.options.responseType;
-      options.supportType = this.options.supportType;
+      options.responseType = this.options && this.options.responseType;
+      options.supportType = this.options && this.options.supportType;
       return S.PlaceCollection.__super__.add.call(this, models, options);
     }
   });

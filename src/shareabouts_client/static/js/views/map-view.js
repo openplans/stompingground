@@ -1,6 +1,6 @@
 var Shareabouts = Shareabouts || {};
 
-(function(S, A, $, console){
+(function(S, $, console){
   S.MapView = Backbone.View.extend({
     events: {
       'click .locate-me': 'geolocate'
@@ -8,31 +8,12 @@ var Shareabouts = Shareabouts || {};
     initialize: function() {
       var self = this,
           i, layerModel,
-          // Base layer config is optional, default to Mapbox Streets
-          baseLayerConfig = _.extend({
-            url: 'http://{s}.tiles.mapbox.com/v3/mapbox.mapbox-streets/{z}/{x}/{y}.png',
-            attribution: '&copy; OpenStreetMap contributors, CC-BY-SA. <a href="http://mapbox.com/about/maps" target="_blank">Terms &amp; Feedback</a>'
-          }, self.options.mapConfig.base_layer),
-          baseLayer = L.tileLayer(baseLayerConfig.url, baseLayerConfig);
+          baseLayer = self.options.mapConfig.base_layer;
 
       // Init the map
       self.map = L.map(self.el, self.options.mapConfig.options);
       self.placeLayers = L.layerGroup();
       self.map.addLayer(baseLayer);
-
-      // Cache additional vector layer views
-      self.argoLayerViews = {};
-
-      if (A && self.options.mapConfig.layers) {
-        // Init all of the vector layer views
-        argoConfigs = new Backbone.Collection(self.options.mapConfig.layers);
-        argoConfigs.each(function(model, i) {
-          self.argoLayerViews[model.get('id')] = new A.LayerView({
-            map: self.map,
-            model: model
-          });
-        });
-      }
 
       // Remove default prefix
       self.map.attributionControl.setPrefix('');
@@ -41,11 +22,6 @@ var Shareabouts = Shareabouts || {};
       if (self.options.mapConfig.geolocation_enabled) {
         self.initGeolocation();
       }
-
-      _.each(self.options.mapConfig.layers, function(layerConfig){
-        var layer = L.tileLayer(layerConfig.url, layerConfig);
-        self.map.addLayer(layer);
-      });
 
       self.map.addLayer(self.placeLayers);
 
@@ -144,4 +120,4 @@ var Shareabouts = Shareabouts || {};
     }
   });
 
-})(Shareabouts, Argo, jQuery, Shareabouts.Util.console);
+})(Shareabouts, jQuery, Shareabouts.Util.console);
