@@ -16,15 +16,40 @@
 
   <title>Stomping Ground</title>
 
+  <!-- Favicon & Progressively-Enhanced Touch Icons: http://mathiasbynens.be/notes/touch-icons#sizes -->
+  <link rel="shortcut icon" href="{{ STATIC_URL }}css/images/favicon.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="{{ STATIC_URL }}css/images/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="{{ STATIC_URL }}css/images/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="{{ STATIC_URL }}css/images/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" href="{{ STATIC_URL }}css/images/apple-touch-icon.png">
+
+  <!-- Legacy HTML5 & Media Queries -->
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+  <![endif]-->
+
   <link href="{{ STATIC_URL }}lib/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.css" />
   <!--[if lte IE 8]>
-      <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.ie.css" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.ie.css" />
   <![endif]-->
+
   <link href="{{ STATIC_URL }}css/main.css" rel="stylesheet" media="screen">
+
+  <!-- Google Webfonts -->
+  <link href='http://fonts.googleapis.com/css?family=Cabin+Sketch:700|Chelsea+Market' rel='stylesheet' type='text/css'>
 
 </head>
 <body>
+
+	<header id="branding" role="banner">
+		<hgroup>
+		  <h1 id="site-title">Stomping Ground</h1>
+			<h2 id="site-description">Share something something about your walk&hellip;</h2>
+		</hgroup>
+  </header>
 
   <div id="map"><div>
 
@@ -39,6 +64,6 @@
   <script src="{{ STATIC_URL }}js/views/layer-view.js"></script>
   <script src="{{ STATIC_URL }}js/views/map-view.js"></script>
   <script src="{{ STATIC_URL }}js/main.js"></script>
-</body>
 
+</body>
 </html>
