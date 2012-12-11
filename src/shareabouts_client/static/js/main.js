@@ -62,13 +62,11 @@ var StompingGround = StompingGround || {};
   controlMarkersConfig = [
     {
       origin: [25, 110],
-      controlIcon: goodIcon,
       icon: goodIcon,
       placeType: 'good'
     },
     {
       origin: [25, 160],
-      controlIcon: badIcon,
       icon: badIcon,
       placeType: 'bad'
     }
@@ -79,21 +77,20 @@ var StompingGround = StompingGround || {};
   mapView.map.addLayer(controlMarkerGroup);
 
   // Init a new control marker
-  function setControlMarker(placeType, origin, controlIcon, icon) {
+  function setControlMarker(placeType, origin, icon) {
 
     // Add it to its pixel coordinates
     ll = mapView.map.containerPointToLatLng(origin);
     var controlMarker = L.marker(ll, {
       draggable: true,
-      icon: controlIcon,
+      icon: icon,
       origin: origin
     });
     controlMarkerGroup.addLayer(controlMarker);
 
     // Clone a new control marker when this one is dragged away
     controlMarker.on('dragstart', function(evt) {
-      setControlMarker(placeType, origin, controlIcon, icon);
-      // this.setIcon(icon);
+      setControlMarker(placeType, origin, icon);
     });
 
     // When I'm done dragging, create a new model and remove this from the map
@@ -130,7 +127,7 @@ var StompingGround = StompingGround || {};
 
   // Init the control markers
   _.each(controlMarkersConfig, function(obj, i) {
-    setControlMarker(obj.placeType, obj.origin, obj.controlIcon, obj.icon);
+    setControlMarker(obj.placeType, obj.origin, obj.icon);
   });
 
 })(StompingGround, Shareabouts, jQuery, L);
