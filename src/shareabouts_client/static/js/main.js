@@ -1,9 +1,10 @@
 var StompingGround = StompingGround || {};
 
 (function(SG, S, $, L) {
-  var collection, mapView, happyIcon, happyFocusedIcon;
+  var collection, mapView, goodIcon, badIcon;
 
-  happyIcon = L.icon({
+  // Icons
+  badIcon = L.icon({
     iconUrl: '/static/img/markers/marker-e1264d.png',
     iconSize: [25, 41],
     iconAnchor: [12, 41],
@@ -12,8 +13,8 @@ var StompingGround = StompingGround || {};
     shadowSize: [41, 41]
   });
 
-  happyFocusedIcon = L.icon({
-    iconUrl: '/static/img/markers/marker-2654d2.png',
+  goodIcon = L.icon({
+    iconUrl: '/static/img/markers/marker-4bbd45.png',
     iconSize: [25, 41],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
@@ -21,7 +22,10 @@ var StompingGround = StompingGround || {};
     shadowSize: [41, 41]
   });
 
+  // Init the place collection
   collection = new S.PlaceCollection();
+
+  // Setup the map view
   mapView = new S.MapView({
     el: '#map',
     mapConfig: {
@@ -37,24 +41,95 @@ var StompingGround = StompingGround || {};
     collection: collection,
     router: null,
     placeTypes: {
-      'happy': {
-        'default': happyIcon,
-        'focused': happyFocusedIcon,
-        'label': 'Happy'
+      'good': {
+        'default': goodIcon,
+        'label': 'Good'
+      },
+      'bad': {
+        'default': badIcon,
+        'label': 'Bad'
       }
     }
   });
 
+  // Fetch the existing places
   collection.fetch();
 
-  mapView.map.on('contextmenu', function(evt) {
-    collection.create({
-      'location': {
-        'lat': evt.latlng.lat,
-        'lng': evt.latlng.lng
-      },
-      'location_type': 'happy'
+  // Begin marker control section //
+  var controlMarkersConfig, controlMarkerGroup;
+
+  // Marker control config
+  controlMarkersConfig = [
+    {
+      origin: [25, 110],
+      controlIcon: goodIcon,
+      icon: goodIcon,
+      placeType: 'good'
+    },
+    {
+      origin: [25, 160],
+      controlIcon: badIcon,
+      icon: badIcon,
+      placeType: 'bad'
+    }
+  ];
+
+  // Init the layer group for the control markers
+  controlMarkerGroup = L.layerGroup();
+  mapView.map.addLayer(controlMarkerGroup);
+
+  // Init a new control marker
+  function setControlMarker(placeType, origin, controlIcon, icon) {
+
+    // Add it to its pixel coordinates
+    ll = mapView.map.containerPointToLatLng(origin);
+    var controlMarker = L.marker(ll, {
+      draggable: true,
+      icon: controlIcon,
+      origin: origin
     });
+    controlMarkerGroup.addLayer(controlMarker);
+
+    // Clone a new control marker when this one is dragged away
+    controlMarker.on('dragstart', function(evt) {
+      setControlMarker(placeType, origin, controlIcon, icon);
+      // this.setIcon(icon);
+    });
+
+    // When I'm done dragging, create a new model and remove this from the map
+    controlMarker.on('dragend', function(evt) {
+      var marker = this,
+          ll = marker.getLatLng();
+
+      collection.create({
+        'location': {
+          'lat': ll.lat,
+          'lng': ll.lng
+        },
+        'location_type': placeType,
+        'visible': true
+      }, {
+        success: function() {
+          controlMarkerGroup.removeLayer(marker);
+        },
+        error: function() {
+          controlMarkerGroup.removeLayer(marker);
+        }
+      });
+    });
+  }
+
+  // Always keep the control markers in the same spot on the map
+  mapView.map.on('move', function(evt) {
+    controlMarkerGroup.eachLayer(function(layer) {
+      ll = mapView.map.containerPointToLatLng([25, 110]);
+      layer.setLatLng(ll);
+    });
+  });
+
+  // Init the control markers
+  _.each(controlMarkersConfig, function(obj, i) {
+    setControlMarker(obj.placeType, obj.origin, obj.controlIcon, obj.icon);
   });
 
 })(StompingGround, Shareabouts, jQuery, L);
