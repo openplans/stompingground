@@ -67,7 +67,9 @@ var Shareabouts = Shareabouts || {};
       }
     },
     onMarkerClick: function() {
-      this.options.router.navigate('/place/' + this.model.id, {trigger: true});
+      if (this.options.router) {
+        this.options.router.navigate('/place/' + this.model.id, {trigger: true});
+      }
     },
     focus: function() {
       if (this.placeType) {

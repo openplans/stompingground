@@ -35,7 +35,7 @@ var StompingGround = StompingGround || {};
       })
     },
     collection: collection,
-    router: new Backbone.Router(),
+    router: null,
     placeTypes: {
       'happy': {
         'default': happyIcon,
@@ -45,12 +45,15 @@ var StompingGround = StompingGround || {};
     }
   });
 
+  collection.fetch();
+
   mapView.map.on('contextmenu', function(evt) {
     collection.create({
       'location': {
         'lat': evt.latlng.lat,
         'lng': evt.latlng.lng
-      }
+      },
+      'location_type': 'happy'
     });
   });
 
