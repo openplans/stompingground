@@ -109,6 +109,7 @@ var StompingGround = StompingGround || {};
         'location_type': placeType,
         'visible': true
       }, {
+        wait: true,
         success: function() {
           controlMarkerGroup.removeLayer(marker);
         },
@@ -122,7 +123,7 @@ var StompingGround = StompingGround || {};
   // Always keep the control markers in the same spot on the map
   mapView.map.on('move', function(evt) {
     controlMarkerGroup.eachLayer(function(layer) {
-      ll = mapView.map.containerPointToLatLng([25, 110]);
+      ll = mapView.map.containerPointToLatLng(layer.options.origin);
       layer.setLatLng(ll);
     });
   });
