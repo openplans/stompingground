@@ -5,21 +5,17 @@ var StompingGround = StompingGround || {};
 
   // Icons
   badIcon = L.icon({
-    iconUrl: '/static/img/markers/marker-e1264d.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowUrl: '/static/img/markers/marker-shadow.png',
-    shadowSize: [41, 41]
+    iconUrl: '/static/img/marker-heart-broken.png',
+    iconSize: [51, 46],
+    iconAnchor: [25, 26],
+    popupAnchor: [1, -26]
   });
 
   goodIcon = L.icon({
-    iconUrl: '/static/img/markers/marker-4bbd45.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowUrl: '/static/img/markers/marker-shadow.png',
-    shadowSize: [41, 41]
+    iconUrl: '/static/img/marker-heart.png',
+    iconSize: [51, 46],
+    iconAnchor: [25, 26],
+    popupAnchor: [1, -26]
   });
 
   // Init the place collection
@@ -61,12 +57,12 @@ var StompingGround = StompingGround || {};
   // Marker control config
   controlMarkersConfig = [
     {
-      origin: [25, 110],
+      origin: [35, 110],
       icon: goodIcon,
       placeType: 'good'
     },
     {
-      origin: [25, 160],
+      origin: [35, 160],
       icon: badIcon,
       placeType: 'bad'
     }
