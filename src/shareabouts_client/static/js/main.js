@@ -130,4 +130,36 @@ var StompingGround = StompingGround || {};
     setControlMarker(obj.placeType, obj.origin, obj.icon);
   });
 
+  function showZoomTooltip() {
+    $('.leaflet-control-zoom')
+      .tooltip({
+        title: 'Move the map around to find the place you want to start. Use these buttons to move in and out.',
+        trigger: 'manual',
+        placement: 'right'
+      })
+      .tooltip('show');
+  };
+
+  function hideZoomTooltip() {
+    $('.leaflet-control-zoom').tooltip('hide');
+    mapView.map.off('zoomend', hideZoomTooltip);
+  };
+
+  showZoomTooltip();
+  mapView.map.on('zoomend', hideZoomTooltip);
+
+  mapView.map.on('contextmenu', function(evt) {
+    L.DomEvent.preventDefault(evt);
+
+    var ll = evt.latlng;
+    var marker = L.marker(ll, {
+      draggable: true,
+      icon: goodIcon,
+      origin: [5, 5]
+    });
+
+    mapView.map.addLayer(marker);
+    marker.fire('movestart').fire('dragstart');
+  });
+
 })(StompingGround, Shareabouts, jQuery, L);
