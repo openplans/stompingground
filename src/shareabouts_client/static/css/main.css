@@ -184,6 +184,22 @@ button {width: auto; overflow: visible;}
   width: 20em;
 }
 
+ul#control-markers {
+  position: fixed;
+  top: 75px;
+  left: 10px;
+  z-index: 2;
+
+  margin: 0;
+  padding: 0.5em;
+  background-color: #fff;
+  list-style-type: none;
+}
+
+ul#control-markers li {
+  cursor: pointer;
+  padding: 0 !important; /* this is important! */
+}
 
 /* =Media Queries for Responsive Layout
 -------------------------------------------------------------- */

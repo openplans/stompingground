@@ -1,26 +1,33 @@
 var StompingGround = StompingGround || {};
 
 (function(SG, S, $, L) {
-  var collection, mapView, goodIcon, badIcon;
+  var collection, mapView, goodIcon, badIcon, placeTypes;
 
   // Icons
   badIcon = L.icon({
-    iconUrl: '/static/img/markers/marker-e1264d.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowUrl: '/static/img/markers/marker-shadow.png',
-    shadowSize: [41, 41]
+    iconUrl: '/static/img/marker-heart-broken.png',
+    iconSize: [51, 46],
+    iconAnchor: [25, 26],
+    popupAnchor: [1, -26]
   });
 
   goodIcon = L.icon({
-    iconUrl: '/static/img/markers/marker-4bbd45.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowUrl: '/static/img/markers/marker-shadow.png',
-    shadowSize: [41, 41]
+    iconUrl: '/static/img/marker-heart.png',
+    iconSize: [51, 46],
+    iconAnchor: [25, 26],
+    popupAnchor: [1, -26]
   });
+
+  placeTypes = {
+    'good': {
+      'default': goodIcon,
+      'label': 'Good'
+    },
+    'bad': {
+      'default': badIcon,
+      'label': 'Bad'
+    }
+  };
 
   // Init the place collection
   collection = new S.PlaceCollection();
@@ -40,94 +47,73 @@ var StompingGround = StompingGround || {};
     },
     collection: collection,
     router: null,
-    placeTypes: {
-      'good': {
-        'default': goodIcon,
-        'label': 'Good'
-      },
-      'bad': {
-        'default': badIcon,
-        'label': 'Bad'
-      }
-    }
+    placeTypes: placeTypes
   });
 
   // Fetch the existing places
   collection.fetch();
 
   // Begin marker control section //
-  var controlMarkersConfig, controlMarkerGroup;
+  var controlMarkerGroup;
 
-  // Marker control config
-  controlMarkersConfig = [
-    {
-      origin: [25, 110],
-      icon: goodIcon,
-      placeType: 'good'
-    },
-    {
-      origin: [25, 160],
-      icon: badIcon,
-      placeType: 'bad'
-    }
-  ];
 
   // Init the layer group for the control markers
   controlMarkerGroup = L.layerGroup();
   mapView.map.addLayer(controlMarkerGroup);
 
   // Init a new control marker
-  function setControlMarker(placeType, origin, icon) {
+  function setControlMarker(placeType, icon, $target) {
+    // Append new element to the target
+    var $controlMarker = $('<li><img src="'+icon.options.iconUrl+'"></img></li>').appendTo($target);
 
-    // Add it to its pixel coordinates
-    ll = mapView.map.containerPointToLatLng(origin);
-    var controlMarker = L.marker(ll, {
-      draggable: true,
-      icon: icon,
-      origin: origin
-    });
-    controlMarkerGroup.addLayer(controlMarker);
+    $controlMarker.on('mousedown', function(evt) {
+      var mapContainerOffset = $(mapView.map.getContainer()).offset(),
+          controlMarkerOffset = $controlMarker.offset(),
+          pos = {left: controlMarkerOffset.left - mapContainerOffset.left,
+                 top: controlMarkerOffset.top - mapContainerOffset.top};
+          ll = mapView.map.containerPointToLatLng([pos.left+icon.options.iconAnchor[0],
+                                                   pos.top+icon.options.iconAnchor[1]]),
+          marker = L.marker(ll, {
+            icon: icon,
+            draggable: true
+          }).addTo(mapView.map);
 
-    // Clone a new control marker when this one is dragged away
-    controlMarker.on('dragstart', function(evt) {
-      setControlMarker(placeType, origin, icon);
-    });
+      // Super hack to start the dragging!!
+      marker.dragging._draggable._onDown(evt);
 
-    // When I'm done dragging, create a new model and remove this from the map
-    controlMarker.on('dragend', function(evt) {
-      var marker = this,
-          ll = marker.getLatLng();
+      // When I'm done dragging, create a new model and remove this from the map
+      marker.on('dragend', function(evt) {
+        var ll = marker.getLatLng();
 
-      collection.create({
-        'location': {
-          'lat': ll.lat,
-          'lng': ll.lng
-        },
-        'location_type': placeType,
-        'visible': true
-      }, {
-        wait: true,
-        success: function() {
-          controlMarkerGroup.removeLayer(marker);
-        },
-        error: function() {
-          controlMarkerGroup.removeLayer(marker);
-        }
+        collection.create({
+          'location': {
+            'lat': ll.lat,
+            'lng': ll.lng
+          },
+          'location_type': placeType,
+          'visible': true
+        }, {
+          wait: true,
+          success: function() {
+            controlMarkerGroup.removeLayer(marker);
+          },
+          error: function() {
+            controlMarkerGroup.removeLayer(marker);
+          }
+        });
       });
+
+      evt.preventDefault();
     });
   }
 
-  // Always keep the control markers in the same spot on the map
-  mapView.map.on('move', function(evt) {
-    controlMarkerGroup.eachLayer(function(layer) {
-      ll = mapView.map.containerPointToLatLng(layer.options.origin);
-      layer.setLatLng(ll);
-    });
-  });
+  // Init the control marker container
+  var $controlMarkerTarget =
+    $('<ul id="control-markers"></ul>').appendTo(mapView.map.getPanes().mapPane);
 
   // Init the control markers
-  _.each(controlMarkersConfig, function(obj, i) {
-    setControlMarker(obj.placeType, obj.origin, obj.icon);
+  _.each(placeTypes, function(obj, key) {
+    setControlMarker(key, obj['default'], $controlMarkerTarget);
   });
 
   function showZoomTooltip() {
