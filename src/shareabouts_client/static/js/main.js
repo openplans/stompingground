@@ -61,31 +61,29 @@ var StompingGround = StompingGround || {};
   controlMarkerGroup = L.layerGroup();
   mapView.map.addLayer(controlMarkerGroup);
 
-  // Init a new control marker
-  function setControlMarker(placeType, icon, $target) {
-    // Append new element to the target
-    var $controlMarker = $('<li><img src="'+icon.options.iconUrl+'"></img></li>').appendTo($target);
+  // Make the map a jQuery UI drop target
+  $(mapView.map.getContainer()).droppable({
+    drop: function(event, ui) {
+      var icon = ui.draggable.data('icon'),
+          placeType = ui.draggable.data('placeType'),
+          $controlMarker = ui.helper,
 
-    $controlMarker.on('mousedown', function(evt) {
-      var mapContainerOffset = $(mapView.map.getContainer()).offset(),
+      // Calculate the new marker position
+          mapContainerOffset = $(mapView.map.getContainer()).offset(),
           controlMarkerOffset = $controlMarker.offset(),
           pos = {left: controlMarkerOffset.left - mapContainerOffset.left,
-                 top: controlMarkerOffset.top - mapContainerOffset.top};
+                 top: controlMarkerOffset.top - mapContainerOffset.top},
           ll = mapView.map.containerPointToLatLng([pos.left+icon.options.iconAnchor[0],
                                                    pos.top+icon.options.iconAnchor[1]]),
-          marker = L.marker(ll, {
-            icon: icon,
-            draggable: true
+
+      // Add a temporary marker to the map until we get a response from
+      // the API
+          standInMarker = L.marker(ll, {
+            icon: icon
           }).addTo(mapView.map);
 
-      // Super hack to start the dragging!!
-      marker.dragging._draggable._onDown(evt);
-
-      // When I'm done dragging, create a new model and remove this from the map
-      marker.on('dragend', function(evt) {
-        var ll = marker.getLatLng();
-
-        collection.create({
+      collection.create(
+        {
           'location': {
             'lat': ll.lat,
             'lng': ll.lng
@@ -94,22 +92,37 @@ var StompingGround = StompingGround || {};
           'visible': true
         }, {
           wait: true,
-          success: function() {
-            controlMarkerGroup.removeLayer(marker);
-          },
-          error: function() {
-            controlMarkerGroup.removeLayer(marker);
+          complete: function() {
+            mapView.map.removeLayer(standInMarker);
           }
         });
-      });
+    }
+  });
 
-      evt.preventDefault();
+  // Init a new control marker
+  function setControlMarker(placeType, icon, $target) {
+    // Append new element to the target
+    var $controlMarker = $('<li class="control-marker-' + placeType + '">' +
+                           '<img src="'+icon.options.iconUrl+'"></img></li>').appendTo($target);
+
+    // Attach the icon data to the control marker
+    $controlMarker.data('placeType', placeType);
+    $controlMarker.data('icon', icon);
+
+    // Make the control a jQuery UI draggable object
+    $controlMarker.draggable({
+      helper: 'clone'
+    });
+
+    // Prevent the mousedown event from being registered on the map.
+    $controlMarker.on('mousedown', function(event) {
+      event.stopPropagation();
     });
   }
 
   // Init the control marker container
   var $controlMarkerTarget =
-    $('<ul id="control-markers"></ul>').appendTo(mapView.map.getPanes().mapPane);
+    $('<ul id="control-markers"></ul>').appendTo(mapView.map.getContainer());
 
   // Init the control markers
   _.each(placeTypes, function(obj, key) {

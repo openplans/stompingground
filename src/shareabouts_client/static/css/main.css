@@ -186,7 +186,7 @@ button {width: auto; overflow: visible;}
 
 ul#control-markers {
   position: fixed;
-  top: 75px;
+  top: 125px;
   left: 10px;
   z-index: 2;
 
