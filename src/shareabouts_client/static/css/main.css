@@ -196,6 +196,9 @@ button {width: auto; overflow: visible;}
 .leaflet-control-zoom-out {
   background-image: url(../img/zoom-minus.png);
 }
+.leaflet-control-zoom + .tooltip {
+  width: 20em;
+}
 
 ul#control-markers {
   position: fixed;
