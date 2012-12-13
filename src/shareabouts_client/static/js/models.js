@@ -1,7 +1,24 @@
 var Shareabouts = Shareabouts || {};
 
 (function(S, $, console) {
-  S.SubmissionModel = Backbone.Model.extend({
+  S.ShareaboutsApiModel = Backbone.Model.extend({
+    sync: function(method, model, options) {
+      var data = model.toJSON();
+
+      delete data.created_datetime;
+      delete data.dataset;
+      delete data.id;
+      delete data.updated_datetime;
+
+      options = options || {};
+      options.contentType = 'application/json';
+      options.data = JSON.stringify(data);
+
+      Backbone.sync(method, model, options);
+    }
+  });
+
+  S.SubmissionModel = S.ShareaboutsApiModel.extend({
     url: function() {
       // This is to make Django happy. I'm sad to have to add it.
       var url = S.SubmissionModel.__super__.url.call(this);
@@ -30,7 +47,7 @@ var Shareabouts = Shareabouts || {};
     }
   });
 
-  S.PlaceModel = Backbone.Model.extend({
+  S.PlaceModel = S.ShareaboutsApiModel.extend({
     initialize: function(attributes, options) {
       this.responseCollection = new S.SubmissionCollection([], {
         placeModel: this,
