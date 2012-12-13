@@ -202,12 +202,13 @@ button {width: auto; overflow: visible;}
 
 ul#control-markers {
   position: fixed;
-  top: 125px;
+  top: 155px;
   left: 10px;
   z-index: 2;
 
   margin: 0;
-  padding: 0.5em;
+  padding: 5px;
+  padding-bottom: 0px;
   background-color: #fff;
   list-style-type: none;
 }
