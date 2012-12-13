@@ -43,6 +43,16 @@
 
 </head>
 <body>
+  <script id="comment-form-tpl" type="text/html">
+    <form id="comment-form">
+      <textarea id="comment" placeholder="Add your comment..." required></textarea>
+      <div>
+        <a href="#" id="cancel-comment">cancel</a>
+        <button id="save-comment">Save</button>
+      </div>
+    </form>
+  </script>
+
 	<header id="branding" role="banner">
 		<hgroup>
 		  <h1 id="site-title">Stomping Ground</h1>
@@ -56,6 +66,7 @@
   <script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/ICanHaz.js/0.10/ICanHaz.min.js"></script>
   <script src="{{ STATIC_URL }}lib/bootstrap/js/bootstrap.js"></script>
   <script src="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js"></script>
   <script src="{{ STATIC_URL }}lib/Leaflet.Bing.js"></script>
@@ -64,6 +75,5 @@
   <script src="{{ STATIC_URL }}js/views/layer-view.js"></script>
   <script src="{{ STATIC_URL }}js/views/map-view.js"></script>
   <script src="{{ STATIC_URL }}js/main.js"></script>
-
 </body>
 </html>

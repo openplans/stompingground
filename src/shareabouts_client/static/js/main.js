@@ -1,7 +1,7 @@
 var StompingGround = StompingGround || {};
 
 (function(SG, S, $, L) {
-  var collection, mapView, goodIcon, badIcon, placeTypes;
+  var collection, mapView, map, goodIcon, badIcon, placeTypes;
 
 /* ==============================
  * Config
@@ -22,6 +22,13 @@ var StompingGround = StompingGround || {};
     popupAnchor: [1, -26]
   });
 
+  commentIcon = L.icon({
+    iconUrl: '/static/img/marker-heart.png',
+    iconSize: [51, 46],
+    iconAnchor: [25, 26],
+    popupAnchor: [1, -26]
+  });
+
   placeTypes = {
     'good': {
       'default': goodIcon,
@@ -30,6 +37,18 @@ var StompingGround = StompingGround || {};
     'bad': {
       'default': badIcon,
       'label': 'Bad'
+    },
+    'comment': {
+      'default': commentIcon,
+      'label': 'Comment',
+      'onClick': function(evt) {
+        // 'this' is the layer view
+        var comment = this.model.get('comment');
+        if (comment) {
+          // Open popup with comment
+          this.layer.bindPopup(comment).openPopup();
+        }
+      }
     }
   };
 
@@ -59,6 +78,9 @@ var StompingGround = StompingGround || {};
     placeTypes: placeTypes
   });
 
+  // So I don't have to type mapView.map all the time
+  map = mapView.map;
+
   // Fetch the existing places
   collection.fetch();
 
@@ -78,43 +100,67 @@ var StompingGround = StompingGround || {};
   }
 
   // Make the map a jQuery UI drop target
-  $(mapView.map.getContainer()).droppable({
+  $(map.getContainer()).droppable({
     drop: function(event, ui) {
       if (containsPoint(ui.draggable, event.pageX, event.pageY))
-          return;
+        return;
+
+      function createPlace(latlng, placeType, comment) {
+        collection.create({
+          'location': {
+            'lat': latlng.lat,
+            'lng': latlng.lng
+          },
+          'location_type': placeType,
+          'comment': comment,
+          'visible': true
+        }, {
+          wait: true,
+          complete: function() {
+            map.removeLayer(standInMarker);
+          }
+        });
+      }
 
       var icon = ui.draggable.data('icon'),
           placeType = ui.draggable.data('placeType'),
           $controlMarker = ui.helper,
 
       // Calculate the new marker position
-          mapContainerOffset = $(mapView.map.getContainer()).offset(),
-          controlMarkerOffset = $controlMarker.offset(),
-          pos = {left: controlMarkerOffset.left - mapContainerOffset.left,
-                 top: controlMarkerOffset.top - mapContainerOffset.top},
-          ll = mapView.map.containerPointToLatLng([pos.left+icon.options.iconAnchor[0],
-                                                   pos.top+icon.options.iconAnchor[1]]),
+      mapContainerOffset = $(map.getContainer()).offset(),
+      controlMarkerOffset = $controlMarker.offset(),
+      pos = {left: controlMarkerOffset.left - mapContainerOffset.left,
+             top: controlMarkerOffset.top - mapContainerOffset.top},
+      ll = map.containerPointToLatLng([pos.left+icon.options.iconAnchor[0],
+                                               pos.top+icon.options.iconAnchor[1]]),
 
       // Add a temporary marker to the map until we get a response from
       // the API
-          standInMarker = L.marker(ll, {
-            icon: icon
-          }).addTo(mapView.map);
+      standInMarker = L.marker(ll, {
+        icon: icon
+      }).addTo(map);
 
-      collection.create(
-        {
-          'location': {
-            'lat': ll.lat,
-            'lng': ll.lng
-          },
-          'location_type': placeType,
-          'visible': true
-        }, {
-          wait: true,
-          complete: function() {
-            mapView.map.removeLayer(standInMarker);
-          }
+      if (placeType === 'comment') {
+        // Show popup with comment form
+        standInMarker.bindPopup(ich['comment-form-tpl']().get(0), {
+          closeButton: false
+        }).openPopup();
+
+        // On save click, create model
+        $('#comment-form').submit(function(evt) {
+          createPlace(ll, placeType, $('#comment').val());
+          evt.preventDefault();
         });
+
+        // On cancel click, remove popup, marker
+        $('#cancel-comment').click(function(evt) {
+          map.removeLayer(standInMarker);
+          evt.preventDefault();
+        });
+
+      } else {
+        createPlace(ll, placeType);
+      }
     }
   });
 
@@ -142,7 +188,7 @@ var StompingGround = StompingGround || {};
 
   // Init the control marker container
   var $controlMarkerTarget =
-    $('<ul id="control-markers"></ul>').appendTo(mapView.map.getContainer());
+    $('<ul id="control-markers"></ul>').appendTo(map.getContainer());
 
   // Init the control markers
   _.each(placeTypes, function(obj, key) {
@@ -162,13 +208,13 @@ var StompingGround = StompingGround || {};
         placement: 'right'
       })
       .tooltip('show');
-  };
+  }
 
   function hideZoomTooltip() {
     $('.leaflet-control-zoom').tooltip('hide');
     $('.leaflet-control-zoom').trigger('hide-tooltip');
-    mapView.map.off('zoomend', hideZoomTooltip);
-  };
+    map.off('zoomend', hideZoomTooltip);
+  }
 
   function showMarkerControlTooltip() {
     $('#control-markers')
@@ -178,26 +224,26 @@ var StompingGround = StompingGround || {};
         placement: 'right'
       })
       .tooltip('show');
-  };
+  }
 
   function hideMarkerControlTooltip() {
     $('#control-markers').tooltip('hide');
     $('.leaflet-control-zoom').off('hide-tooltip', showMarkerControlTooltip);
-    $(mapView.map.getContainer()).off('drop', hideMarkerControlTooltip);
-  };
+    $(map.getContainer()).off('drop', hideMarkerControlTooltip);
+  }
 
   // Show the zoom tooltip to start
   showZoomTooltip();
 
   // Set it up to hide when the user zooms, or 5 seconds after the user starts
   // panning
-  mapView.map.on('zoomend', hideZoomTooltip);
-  mapView.map.on('dragstart', function() { _.delay(hideZoomTooltip, 5000); });
+  map.on('zoomend', hideZoomTooltip);
+  map.on('dragstart', function() { _.delay(hideZoomTooltip, 5000); });
 
   // Whenever the zoom tooltip goes away, show the marker control tooltip
   $('.leaflet-control-zoom').on('hide-tooltip', _.once(showMarkerControlTooltip));
 
   // Hide the marker tooltip whenever the user drops a marker
-  $(mapView.map.getContainer()).on('drop', hideMarkerControlTooltip);
+  $(map.getContainer()).on('drop', hideMarkerControlTooltip);
 
 })(StompingGround, Shareabouts, jQuery, L);
