@@ -23,7 +23,7 @@ var StompingGround = StompingGround || {};
   });
 
   commentIcon = L.icon({
-    iconUrl: '/static/img/marker-heart.png',
+    iconUrl: '/static/img/marker-comment.png',
     iconSize: [51, 46],
     iconAnchor: [25, 26],
     popupAnchor: [1, -26]

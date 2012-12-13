@@ -202,18 +202,19 @@ button {width: auto; overflow: visible;}
 
 ul#control-markers {
   position: fixed;
-  top: 151px;
-  left: 10px;
+  top: 160px;
+  left: -10px;
   z-index: 2;
-
   margin: 0;
+  padding: 0 0 0 10px;
   list-style-type: none;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
 
 ul#control-markers li {
-  background-color: white;
   padding: 5px 5px 0 5px;
-  margin-top: 5px;
 }
 
 ul#control-markers li div {
