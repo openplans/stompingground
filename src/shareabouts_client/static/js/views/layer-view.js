@@ -46,21 +46,9 @@ var Shareabouts = Shareabouts || {};
         });
 
         // Focus on the marker onclick
-        if (this.placeType.onClick) {
-          this.layer.on('click', this.placeType.onClick, this);
+        if (this.placeType.onPostInit) {
+          this.placeType.onPostInit.call(this);
         }
-
-        this.layer.on('dragend', function(evt) {
-          var latLng = this.layer.getLatLng();
-          this.model.save({
-            location: {lat: latLng.lat, lng: latLng.lng}
-          }, {
-            complete: function() {
-              console.log(arguments);
-            }
-          });
-
-        }, this);
 
         this.render();
       }

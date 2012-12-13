@@ -239,7 +239,7 @@ ul#control-markers li div {
   cursor: pointer;
   padding: 0 !important; /* this is important! */
 }
-.control-marker-good:hover:after, 
+.control-marker-good:hover:after,
 .control-marker-bad:hover:after,
 .control-marker-comment:hover:after {
   display: block;
@@ -293,6 +293,21 @@ input[name="map-title"] {
   font-size: 1.5em;
 	width: 100%;
 	height: 40px;
+}
+
+#control-markers-trash {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 100px;
+  width: 100px;
+
+  background-color: #efefef;
+  opacity: 0.8;
+}
+
+#control-markers-trash.hover {
+  background-color: red;
 }
 
 

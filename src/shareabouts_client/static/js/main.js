@@ -41,16 +41,54 @@ var StompingGround = StompingGround || {};
     'comment': {
       'default': commentIcon,
       'label': 'Comment',
-      'onClick': function(evt) {
-        // 'this' is the layer view
-        var comment = this.model.get('comment');
-        if (comment) {
-          // Open popup with comment
-          this.layer.bindPopup(comment).openPopup();
-        }
+      'onPostInit': function() {
+        this.layer.on('click', function(evt) {
+          // 'this' is the layer view
+          var comment = this.model.get('comment');
+          if (comment) {
+            // Open popup with comment
+            this.layer.bindPopup(comment).openPopup();
+          }
+
+          }, this);
+
+        this.layer.on('dragend', function(evt) {
+          var $icon = $(evt.target._icon),
+              iconOffset = $icon.offset(),
+              iconWidth = $icon.width(),
+              iconHeight = $icon.height(),
+              $trash = $('#control-markers-trash'),
+              trashOffset = $trash.offset(),
+              trashWidth = $trash.width(),
+              trashHeight = $trash.height(),
+
+              iconBounds = L.bounds([iconOffset.top, iconOffset.left],
+                [iconOffset.top+iconHeight, iconOffset.left+iconWidth]),
+
+              trashBounds = L.bounds([trashOffset.top, trashOffset.left],
+                [trashOffset.top+trashHeight, trashOffset.left+trashWidth]);
+
+
+
+          if(trashBounds.intersects(iconBounds)) {
+            this.model.destroy();
+          } else {
+            var latLng = this.layer.getLatLng();
+
+            console.log(arguments);
+            this.model.save({
+              location: {lat: latLng.lat, lng: latLng.lng}
+            }, {
+              complete: function() {
+                console.log('done with model save');
+              }
+            });
+          }
+        }, this);
       }
     }
   };
+
 
 
 /* ==============================
@@ -189,6 +227,12 @@ var StompingGround = StompingGround || {};
   // Init the control marker container
   var $controlMarkerTarget =
     $('<ul id="control-markers"></ul>').appendTo(map.getContainer());
+
+
+  // Init the control marker container
+  var $controlMarkerTrash =
+    $('<div id="control-markers-trash"></div>')
+      .appendTo(map.getContainer());
 
   // Init the control markers
   _.each(placeTypes, function(obj, key) {
