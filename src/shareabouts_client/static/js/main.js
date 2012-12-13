@@ -32,62 +32,80 @@ var StompingGround = StompingGround || {};
   placeTypes = {
     'good': {
       'default': goodIcon,
-      'label': 'Good'
+      'label': 'Good',
+      'onPostInit': markerPostInit
     },
     'bad': {
       'default': badIcon,
-      'label': 'Bad'
+      'label': 'Bad',
+      'onPostInit': markerPostInit
     },
     'comment': {
       'default': commentIcon,
       'label': 'Comment',
-      'onPostInit': function() {
-        this.layer.on('click', function(evt) {
-          // 'this' is the layer view
-          var comment = this.model.get('comment');
-          if (comment) {
-            // Open popup with comment
-            this.layer.bindPopup(comment).openPopup();
-          }
-
-          }, this);
-
-        this.layer.on('dragend', function(evt) {
-          var $icon = $(evt.target._icon),
-              iconOffset = $icon.offset(),
-              iconWidth = $icon.width(),
-              iconHeight = $icon.height(),
-              $trash = $('#control-markers-trash'),
-              trashOffset = $trash.offset(),
-              trashWidth = $trash.width(),
-              trashHeight = $trash.height(),
-
-              iconBounds = L.bounds([iconOffset.top, iconOffset.left],
-                [iconOffset.top+iconHeight, iconOffset.left+iconWidth]),
-
-              trashBounds = L.bounds([trashOffset.top, trashOffset.left],
-                [trashOffset.top+trashHeight, trashOffset.left+trashWidth]);
-
-
-
-          if(trashBounds.intersects(iconBounds)) {
-            this.model.destroy();
-          } else {
-            var latLng = this.layer.getLatLng();
-
-            console.log(arguments);
-            this.model.save({
-              location: {lat: latLng.lat, lng: latLng.lng}
-            }, {
-              complete: function() {
-                console.log('done with model save');
-              }
-            });
-          }
-        }, this);
-      }
+      'onPostInit': markerPostInit
     }
   };
+
+  function markerPostInit() {
+    function elementsIntersect($a, $b) {
+      var aOffset = $a.offset(),
+          aWidth = $a.width(),
+          aHeight = $a.height(),
+          bOffset = $b.offset(),
+          bWidth = $b.width(),
+          bHeight = $b.height(),
+
+          aBounds = L.bounds([aOffset.top, aOffset.left],
+            [aOffset.top+aHeight, aOffset.left+aWidth]),
+
+          bBounds = L.bounds([bOffset.top, bOffset.left],
+            [bOffset.top+bHeight, bOffset.left+bWidth]);
+
+      return aBounds.intersects(bBounds);
+    }
+
+    this.layer.on('click', function(evt) {
+      // 'this' is the layer view
+      var comment = this.model.get('comment');
+      if (comment) {
+        // Open popup with comment
+        this.layer.bindPopup(comment).openPopup();
+      }
+
+      }, this);
+
+    this.layer.on('drag', function(evt) {
+      var $icon = $(evt.target._icon),
+          $trash = $('#control-markers-trash');
+
+      if(elementsIntersect($icon, $trash)) {
+        $trash.addClass('hover');
+      } else {
+        $trash.removeClass('hover');
+      }
+    });
+
+    this.layer.on('dragend', function(evt) {
+      var $icon = $(evt.target._icon),
+          $trash = $('#control-markers-trash');
+
+      if(elementsIntersect($icon, $trash)) {
+        this.model.destroy();
+      } else {
+        var latLng = this.layer.getLatLng();
+
+        this.model.save({
+          location: {lat: latLng.lat, lng: latLng.lng}
+        }, {
+          complete: function() {
+            console.log('done with model save');
+          }
+        });
+      }
+    }, this);
+
+  }
 
 
 
