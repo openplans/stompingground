@@ -151,11 +151,37 @@ var StompingGround = StompingGround || {};
 
   function hideZoomTooltip() {
     $('.leaflet-control-zoom').tooltip('hide');
+    $('.leaflet-control-zoom').trigger('hide-tooltip');
     mapView.map.off('zoomend', hideZoomTooltip);
   };
 
+  function showMarkerControlTooltip() {
+    $('#control-markers')
+      .tooltip({
+        title: 'Choose a sticker to make your map awesome! Drag stickers that show what you think about a place.',
+        trigger: 'manual',
+        placement: 'right'
+      })
+      .tooltip('show');
+  };
+
+  function hideMarkerControlTooltip() {
+    $('#control-markers').tooltip('hide');
+    $('.leaflet-control-zoom').off('hide-tooltip', showMarkerControlTooltip);
+    $(mapView.map.getContainer()).off('drop', hideMarkerControlTooltip);
+  };
+
+  // Show the zoom tooltip to start
   showZoomTooltip();
+
+  // Set it up to hide when the user zooms
   mapView.map.on('zoomend', hideZoomTooltip);
+
+  // Whenever the zoom tooltip goes away, show the marker control tooltip
+  $('.leaflet-control-zoom').on('hide-tooltip', showMarkerControlTooltip);
+
+  // Hide the marker tooltip whenever the user drops a marker
+  $(mapView.map.getContainer()).on('drop', hideMarkerControlTooltip);
 
   mapView.map.on('contextmenu', function(evt) {
     L.DomEvent.preventDefault(evt);
