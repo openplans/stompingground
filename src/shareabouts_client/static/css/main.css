@@ -60,6 +60,7 @@ h1,h2,h3,h4,h5,h6 {
   font-family: 'Cabin Sketch', sans-serif;
   font-weight: 700;
   margin: 0 0 0.5em 0;
+  line-height: 1.25;
 }
 h1 { font-size: 2.75em; }
 h2 { font-size: 2.25em; }
@@ -196,17 +197,33 @@ button {width: auto; overflow: visible;}
 .leaflet-control-zoom-out {
   background-image: url(../img/zoom-minus.png);
 }
-.leaflet-control-zoom + .tooltip {
-  width: 20em;
+
+.tooltip {
+  font-size: 1em;
+  padding-left: 15px;
+  width: 22em;
+}
+.tooltip-inner {
+  max-width: 22em;
+  padding: 0.75em 1em;
+  color: #ffffff;
+  background-color: #333;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+}
+.tooltip.right .tooltip-arrow {
+  margin-top: -15px;
+  border-right-color: #333;
+  border-width: 15px 15px 15px 0;
 }
 
 ul#control-markers {
   position: fixed;
-  top: 160px;
+  top: 105px;
   left: -10px;
-  z-index: 2;
-  margin: 0;
-  padding: 0 0 0 10px;
+  z-index: 1040;
+  margin: 3.5em 0 0;
+  padding: 5px 0 5px 10px;
   list-style-type: none;
   background-color: white;
   border-radius: 6px;
@@ -215,11 +232,36 @@ ul#control-markers {
 
 ul#control-markers li {
   padding: 5px 5px 0 5px;
+  position: relative;
 }
 
 ul#control-markers li div {
   cursor: pointer;
   padding: 0 !important; /* this is important! */
+}
+.control-marker-good:hover:after, 
+.control-marker-bad:hover:after,
+.control-marker-comment:hover:after {
+  display: block;
+  content: "\0020";
+  position: absolute;
+  top: -8px;
+  left: 100%;
+  background: rgba(255,255,230,0.92);
+  box-shadow: 0 0 5px rgba(0,0,0,0.25);
+  white-space: nowrap;
+  margin-left: -15px;
+  padding: 0.25em 0.5em;
+  z-index: 5000;
+}
+.control-marker-good:hover:after {
+  content: "Stick on nice-to-walk places.";
+}
+.control-marker-bad:hover:after {
+  content: "Stick on bad-to-walk places.";
+}
+.control-marker-comment:hover:after {
+  content: "Add comments to your map.";
 }
 
 div#finalize-button-wrapper {

@@ -20,7 +20,7 @@ var Shareabouts = Shareabouts || {};
       this.initLayer();
     },
     initLayer: function() {
-      var location;
+      var location, draggable;
 
       // Handle if an existing place type does not match the list of available
       // place types.
@@ -36,15 +36,31 @@ var Shareabouts = Shareabouts || {};
         location = this.model.get('location');
         this.latLng = L.latLng(location.lat, location.lng);
 
+        // Default to true
+        draggable = _.isUndefined(this.placeType.draggable) ? true : this.placeType.draggable;
+
         this.layer = L.marker(this.latLng, {
           icon: this.placeType['default'],
-          clickable: !!this.placeType.onClick
+          clickable: draggable || !!this.placeType.onClick,
+          draggable: draggable
         });
 
         // Focus on the marker onclick
         if (this.placeType.onClick) {
           this.layer.on('click', this.placeType.onClick, this);
         }
+
+        this.layer.on('dragend', function(evt) {
+          var latLng = this.layer.getLatLng();
+          this.model.save({
+            location: {lat: latLng.lat, lng: latLng.lng}
+          }, {
+            complete: function() {
+              console.log(arguments);
+            }
+          });
+
+        }, this);
 
         this.render();
       }
