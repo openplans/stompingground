@@ -3,6 +3,10 @@ var StompingGround = StompingGround || {};
 (function(SG, S, $, L) {
   var collection, mapView, goodIcon, badIcon, placeTypes;
 
+/* ==============================
+ * Config
+ * ============================== */
+
   // Icons
   badIcon = L.icon({
     iconUrl: '/static/img/marker-heart-broken.png',
@@ -29,6 +33,11 @@ var StompingGround = StompingGround || {};
     }
   };
 
+
+/* ==============================
+ * Initialization
+ * ============================== */
+
   // Init the place collection
   collection = new S.PlaceCollection();
 
@@ -53,13 +62,9 @@ var StompingGround = StompingGround || {};
   // Fetch the existing places
   collection.fetch();
 
-  // Begin marker control section //
-  var controlMarkerGroup;
-
-
-  // Init the layer group for the control markers
-  controlMarkerGroup = L.layerGroup();
-  mapView.map.addLayer(controlMarkerGroup);
+/* ==============================
+ * Controls Setup
+ * ============================== */
 
   // Make the map a jQuery UI drop target
   $(mapView.map.getContainer()).droppable({
@@ -128,6 +133,11 @@ var StompingGround = StompingGround || {};
   _.each(placeTypes, function(obj, key) {
     setControlMarker(key, obj['default'], $controlMarkerTarget);
   });
+
+
+/* ==============================
+ * Tooltips
+ * ============================== */
 
   function showZoomTooltip() {
     $('.leaflet-control-zoom')
