@@ -222,6 +222,37 @@ ul#control-markers li div {
   padding: 0 !important; /* this is important! */
 }
 
+div#finalize-button-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  z-index: 2;
+}
+
+#finalization-modal .modal-header {
+  min-height: 1.25em;
+}
+
+#finalization-modal .modal-body {
+  height: 15em;
+  overflow-y: auto;
+}
+
+#finalization-modal .carousel {
+  margin: 0;
+}
+
+input[name="map-title"] {
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+
+  font-size: 1.5em;
+	width: 100%;
+	height: 40px;
+}
+
 
 /* =Media Queries for Responsive Layout
 -------------------------------------------------------------- */

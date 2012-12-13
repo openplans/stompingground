@@ -62,6 +62,47 @@
 
   <div id="map"></div>
 
+  <div id="finalization-modal" class="modal hide fade">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    </div>
+
+    <div class="carousel slide">
+      <div class="carousel-inner">
+
+        <div class="active item">
+          <div class="modal-body">
+            <h1>Great! What should we call your map?</h1>
+            <div><input type="text" name="map-title"></div>
+            <p>This information can be used to make the area safer for walking. <a href="#">Find out how.</a>
+          </div>
+          <div class="modal-footer">
+            <div class="actions">
+              <a id="finalization-cancel" href="#">Wait! I want to add more places.</a>
+              <a id="finalization-save" class="btn btn-large" href="#">Finalize Map</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="modal-body">
+            <h1>Thanks!</h1>
+            <p>Here is where you can find your map:</p>
+            <p><a href="#">stompingground.org/a3fd2</a></p>
+          </div>
+          <div class="modal-footer">
+            <div class="actions">
+              <a id="finalization-home-page" href="#">Go back to the home page</a>
+              <a id="finalization-start-over" class="btn btn-large" href="#">Make another map</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
   <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js "></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js"></script>

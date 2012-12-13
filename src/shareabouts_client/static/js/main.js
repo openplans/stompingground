@@ -195,6 +195,32 @@ var StompingGround = StompingGround || {};
     setControlMarker(key, obj['default'], $controlMarkerTarget);
   });
 
+/* ==============================
+ * Finalization process
+ * ============================== */
+
+  function setupFinalizeProcess($target) {
+    var $finalizeButton1 = $('<button class="btn btn-large">I\'m Done!</button>').appendTo($target)
+    $finalizeButton1.on('click', showFinalizationModal);
+
+    var $finalizeButton2 = $('#finalization-save');
+    $finalizeButton2.on('click', saveMap);
+  }
+
+  function showFinalizationModal() {
+    $('#finalization-modal .carousel').carousel({interval: false}).carousel(0);
+    $('#finalization-modal').modal('show');
+  }
+
+  function saveMap() {
+    var $finalizeCarousel = $('#finalization-modal .carousel');
+    $finalizeCarousel.carousel('next');
+  }
+
+  var $finalizeButtonTarget =
+    $('<div id="finalize-button-wrapper"></div>').appendTo(map.getContainer());
+
+  setupFinalizeProcess($finalizeButtonTarget);
 
 /* ==============================
  * Tooltips
