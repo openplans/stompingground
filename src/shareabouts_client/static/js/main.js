@@ -107,8 +107,9 @@ var StompingGround = StompingGround || {};
   // Init a new control marker
   function setControlMarker(placeType, icon, $target) {
     // Append new element to the target
-    var $controlMarker = $('<li class="control-marker-' + placeType + '">' +
-                           '<img src="'+icon.options.iconUrl+'"></img></li>').appendTo($target);
+    var $controlMarkerWrapper = $('<li></li>').appendTo($target),
+        $controlMarker = $('<div class="control-marker-' + placeType + '">' +
+                           '<img src="'+icon.options.iconUrl+'"></img></div>').appendTo($controlMarkerWrapper);
 
     // Attach the icon data to the control marker
     $controlMarker.data('placeType', placeType);
