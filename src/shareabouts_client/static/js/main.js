@@ -175,11 +175,13 @@ var StompingGround = StompingGround || {};
   // Show the zoom tooltip to start
   showZoomTooltip();
 
-  // Set it up to hide when the user zooms
+  // Set it up to hide when the user zooms, or 5 seconds after the user starts
+  // panning
   mapView.map.on('zoomend', hideZoomTooltip);
+  mapView.map.on('dragstart', function() { _.delay(hideZoomTooltip, 5000); });
 
   // Whenever the zoom tooltip goes away, show the marker control tooltip
-  $('.leaflet-control-zoom').on('hide-tooltip', showMarkerControlTooltip);
+  $('.leaflet-control-zoom').on('hide-tooltip', _.once(showMarkerControlTooltip));
 
   // Hide the marker tooltip whenever the user drops a marker
   $(mapView.map.getContainer()).on('drop', hideMarkerControlTooltip);
