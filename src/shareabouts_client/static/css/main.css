@@ -202,17 +202,21 @@ button {width: auto; overflow: visible;}
 
 ul#control-markers {
   position: fixed;
-  top: 75px;
+  top: 151px;
   left: 10px;
   z-index: 2;
 
   margin: 0;
-  padding: 0.5em;
-  background-color: #fff;
   list-style-type: none;
 }
 
 ul#control-markers li {
+  background-color: white;
+  padding: 5px 5px 0 5px;
+  margin-top: 5px;
+}
+
+ul#control-markers li div {
   cursor: pointer;
   padding: 0 !important; /* this is important! */
 }

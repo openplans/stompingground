@@ -36,10 +36,15 @@ var Shareabouts = Shareabouts || {};
         location = this.model.get('location');
         this.latLng = L.latLng(location.lat, location.lng);
 
-        this.layer = L.marker(this.latLng, {icon: this.placeType['default']});
+        this.layer = L.marker(this.latLng, {
+          icon: this.placeType['default'],
+          clickable: !!this.placeType.onClick
+        });
 
         // Focus on the marker onclick
-        this.layer.on('click', this.onMarkerClick, this);
+        if (this.placeType.onClick) {
+          this.layer.on('click', this.placeType.onClick, this);
+        }
 
         this.render();
       }
@@ -56,7 +61,7 @@ var Shareabouts = Shareabouts || {};
     },
     render: function() {
       // Show if it is within the current map bounds
-      var mapBounds = this.map.getBounds();
+      var mapBounds = this.map.getBounds().pad(0.02);
 
       if (this.latLng) {
         if (mapBounds.contains(this.latLng)) {
@@ -64,11 +69,6 @@ var Shareabouts = Shareabouts || {};
         } else {
           this.hide();
         }
-      }
-    },
-    onMarkerClick: function() {
-      if (this.options.router) {
-        this.options.router.navigate('/place/' + this.model.id, {trigger: true});
       }
     },
     focus: function() {
