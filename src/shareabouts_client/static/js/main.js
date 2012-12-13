@@ -66,9 +66,23 @@ var StompingGround = StompingGround || {};
  * Controls Setup
  * ============================== */
 
+  function containsPoint($el, x, y) {
+    var elOffset = $el.offset(),
+        elSize = {width: $el.width(), height: $el.height()};
+
+    return (
+      x >= elOffset.left &&
+      x < elOffset.left + elSize.width &&
+      y >= elOffset.top &&
+      y < elOffset.top + elSize.height);
+  }
+
   // Make the map a jQuery UI drop target
   $(mapView.map.getContainer()).droppable({
     drop: function(event, ui) {
+      if (containsPoint(ui.draggable, event.pageX, event.pageY))
+          return;
+
       var icon = ui.draggable.data('icon'),
           placeType = ui.draggable.data('placeType'),
           $controlMarker = ui.helper,
