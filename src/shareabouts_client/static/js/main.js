@@ -88,18 +88,18 @@ var StompingGround = StompingGround || {};
           $controlMarker = ui.helper,
 
       // Calculate the new marker position
-          mapContainerOffset = $(mapView.map.getContainer()).offset(),
-          controlMarkerOffset = $controlMarker.offset(),
-          pos = {left: controlMarkerOffset.left - mapContainerOffset.left,
-                 top: controlMarkerOffset.top - mapContainerOffset.top},
-          ll = mapView.map.containerPointToLatLng([pos.left+icon.options.iconAnchor[0],
-                                                   pos.top+icon.options.iconAnchor[1]]),
+      mapContainerOffset = $(mapView.map.getContainer()).offset(),
+      controlMarkerOffset = $controlMarker.offset(),
+      pos = {left: controlMarkerOffset.left - mapContainerOffset.left,
+             top: controlMarkerOffset.top - mapContainerOffset.top},
+      ll = mapView.map.containerPointToLatLng([pos.left+icon.options.iconAnchor[0],
+                                               pos.top+icon.options.iconAnchor[1]]),
 
       // Add a temporary marker to the map until we get a response from
       // the API
-          standInMarker = L.marker(ll, {
-            icon: icon
-          }).addTo(mapView.map);
+      standInMarker = L.marker(ll, {
+        icon: icon
+      }).addTo(mapView.map);
 
       collection.create(
         {
@@ -162,13 +162,13 @@ var StompingGround = StompingGround || {};
         placement: 'right'
       })
       .tooltip('show');
-  };
+  }
 
   function hideZoomTooltip() {
     $('.leaflet-control-zoom').tooltip('hide');
     $('.leaflet-control-zoom').trigger('hide-tooltip');
     mapView.map.off('zoomend', hideZoomTooltip);
-  };
+  }
 
   function showMarkerControlTooltip() {
     $('#control-markers')
@@ -178,13 +178,13 @@ var StompingGround = StompingGround || {};
         placement: 'right'
       })
       .tooltip('show');
-  };
+  }
 
   function hideMarkerControlTooltip() {
     $('#control-markers').tooltip('hide');
     $('.leaflet-control-zoom').off('hide-tooltip', showMarkerControlTooltip);
     $(mapView.map.getContainer()).off('drop', hideMarkerControlTooltip);
-  };
+  }
 
   // Show the zoom tooltip to start
   showZoomTooltip();
