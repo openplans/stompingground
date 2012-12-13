@@ -246,18 +246,4 @@ var StompingGround = StompingGround || {};
   // Hide the marker tooltip whenever the user drops a marker
   $(map.getContainer()).on('drop', hideMarkerControlTooltip);
 
-  map.on('contextmenu', function(evt) {
-    L.DomEvent.preventDefault(evt);
-
-    var ll = evt.latlng;
-    var marker = L.marker(ll, {
-      draggable: true,
-      icon: goodIcon,
-      origin: [5, 5]
-    });
-
-    map.addLayer(marker);
-    marker.fire('movestart').fire('dragstart');
-  });
-
 })(StompingGround, Shareabouts, jQuery, L);
