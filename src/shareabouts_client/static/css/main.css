@@ -320,6 +320,13 @@ ul#control-markers li div {
   cursor: pointer;
   padding: 0 !important; /* this is important! */
 }
+
+ul#control-markers li img {
+                  transition: transform 0.2s;
+        -moz-transition: -moz-transform 0.2s; /* Firefox 4 */
+  -webkit-transition: -webkit-transform 0.2s; /* Safari and Chrome */
+            -o-transition: -o-transform 0.2s; /* Opera */
+}
 ul#control-markers li img:hover {
           transform: rotate(15deg);
       -ms-transform: rotate(15deg); /* IE 9 */
