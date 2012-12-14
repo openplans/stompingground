@@ -24,6 +24,12 @@ def index(request):
     return render(request, 'index.html', context)
 
 
+@ensure_csrf_cookie
+def admin(request):
+
+    return render(request, 'admin.html')
+
+
 def api(request, path):
     """
     A small proxy for a Shareabouts API server, exposing only
