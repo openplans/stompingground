@@ -344,6 +344,7 @@ div#finalize-button-wrapper {
 
 #finalization-modal .progress {
   margin-top: 2em;
+  display: none;
 }
 
 input[name="map-title"] {
