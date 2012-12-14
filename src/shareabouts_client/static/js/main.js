@@ -267,8 +267,9 @@ var StompingGround = StompingGround || {};
  * ============================== */
 
   function setupFinalizeProcess($target) {
-    var $finalizeButton1 = $('<button class="btn btn-large">I\'m Done!</button>').appendTo($target)
-    $finalizeButton1.on('click', showFinalizationModal);
+    var $finalizeButton1 = $('<button class="btn btn-large">I\'m Done!</button>')
+      .appendTo($target)
+      .on('click', showFinalizationModal);
 
     var $finalizeButton2 = $('#finalization-save'),
         $mapTitle = $('input[name="map-title"]');
@@ -301,9 +302,9 @@ var StompingGround = StompingGround || {};
 
         tryToSave = function(place, data, options, tryCount) {
           var maxTries = 5,
-              tryCount = tryCount || 1,
               originalOptions = options;
 
+          tryCount = tryCount || 1;
           options = options || {};
           options.error = function() {
             if (tryCount < maxTries) {
@@ -311,7 +312,7 @@ var StompingGround = StompingGround || {};
             } else {
               originalOptions.error();
             }
-          }
+          };
 
           place.save(data, options);
         };
