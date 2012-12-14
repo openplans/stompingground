@@ -304,12 +304,16 @@ div#finalize-button-wrapper {
 }
 
 #finalization-modal .modal-body {
-  height: 15em;
+  height: 18em;
   overflow-y: auto;
 }
 
 #finalization-modal .carousel {
   margin: 0;
+}
+
+#finalization-modal .progress {
+  margin-top: 2em;
 }
 
 input[name="map-title"] {

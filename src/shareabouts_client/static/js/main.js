@@ -92,22 +92,17 @@ var StompingGround = StompingGround || {};
 
       if(elementsIntersect($icon, $trash)) {
         this.model.destroy();
+        $trash.removeClass('hover');
       } else {
         var latLng = this.layer.getLatLng();
 
-        this.model.save({
+        this.model.set({
           location: {lat: latLng.lat, lng: latLng.lng}
-        }, {
-          complete: function() {
-            console.log('done with model save');
-          }
         });
       }
     }, this);
 
   }
-
-
 
 /* ==============================
  * Initialization
@@ -162,7 +157,7 @@ var StompingGround = StompingGround || {};
         return;
 
       function createPlace(latlng, placeType, comment) {
-        collection.create({
+        collection.add({
           'location': {
             'lat': latlng.lat,
             'lng': latlng.lng
@@ -170,12 +165,9 @@ var StompingGround = StompingGround || {};
           'location_type': placeType,
           'comment': comment,
           'visible': true
-        }, {
-          wait: true,
-          complete: function() {
-            map.removeLayer(standInMarker);
-          }
         });
+
+        map.removeLayer(standInMarker);
       }
 
       var icon = ui.draggable.data('icon'),
@@ -265,8 +257,12 @@ var StompingGround = StompingGround || {};
     var $finalizeButton1 = $('<button class="btn btn-large">I\'m Done!</button>').appendTo($target)
     $finalizeButton1.on('click', showFinalizationModal);
 
-    var $finalizeButton2 = $('#finalization-save');
-    $finalizeButton2.on('click', saveMap);
+    var $finalizeButton2 = $('#finalization-save'),
+        $mapTitle = $('input[name="map-title"]');
+    $finalizeButton2.on('click', function() {
+      var title = $mapTitle.val();
+      saveMap(title);
+    });
   }
 
   function showFinalizationModal() {
@@ -274,9 +270,54 @@ var StompingGround = StompingGround || {};
     $('#finalization-modal').modal('show');
   }
 
-  function saveMap() {
-    var $finalizeCarousel = $('#finalization-modal .carousel');
-    $finalizeCarousel.carousel('next');
+  function saveMap(title) {
+    var $finalizeCarousel = $('#finalization-modal .carousel'),
+        $progressBar = $('#finalization-modal .progress .bar'),
+        numPlaces = collection.length,
+        numSavedPlaces = 0,
+
+        goNext = _.after(numPlaces, function() {
+          console.log('next called');
+          $finalizeCarousel.carousel('next');
+        }),
+
+        tryToSave = function(place, data, options, tryCount) {
+          var maxTries = 5,
+              tryCount = tryCount || 1,
+              originalOptions = options;
+
+          options = options || {};
+          options.error = function() {
+            if (tryCount < maxTries) {
+              tryToSave(place, data, originalOptions, tryCount + 1);
+            } else {
+              originalOptions.error();
+            }
+          }
+
+          place.save(data, options);
+        };
+
+
+    collection.each(function(place) {
+      tryToSave(place,
+        {'map_title': title},
+        {
+          success: function() {
+            numSavedPlaces += 1;
+            $progressBar.css('width', ((numSavedPlaces + 1) * 100 / (numPlaces + 1)) + '%');
+            console.log(numSavedPlaces, numPlaces);
+            console.log((numSavedPlaces * 100 / numPlaces) + '%');
+            goNext();
+          },
+          error: function() {
+            // TODO: Handle failure
+          }
+        }
+      );
+    });
+
+
   }
 
   var $finalizeButtonTarget =
