@@ -92,6 +92,7 @@ var StompingGround = StompingGround || {};
 
       if(elementsIntersect($icon, $trash)) {
         this.model.destroy();
+        $trash.removeClass('hover');
       } else {
         var latLng = this.layer.getLatLng();
 
