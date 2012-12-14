@@ -95,19 +95,13 @@ var StompingGround = StompingGround || {};
       } else {
         var latLng = this.layer.getLatLng();
 
-        this.model.save({
+        this.model.set({
           location: {lat: latLng.lat, lng: latLng.lng}
-        }, {
-          complete: function() {
-            console.log('done with model save');
-          }
         });
       }
     }, this);
 
   }
-
-
 
 /* ==============================
  * Initialization
@@ -162,7 +156,7 @@ var StompingGround = StompingGround || {};
         return;
 
       function createPlace(latlng, placeType, comment) {
-        collection.create({
+        collection.add({
           'location': {
             'lat': latlng.lat,
             'lng': latlng.lng
@@ -170,12 +164,9 @@ var StompingGround = StompingGround || {};
           'location_type': placeType,
           'comment': comment,
           'visible': true
-        }, {
-          wait: true,
-          complete: function() {
-            map.removeLayer(standInMarker);
-          }
         });
+
+        map.removeLayer(standInMarker);
       }
 
       var icon = ui.draggable.data('icon'),
