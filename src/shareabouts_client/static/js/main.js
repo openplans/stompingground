@@ -298,6 +298,10 @@ var StompingGround = StompingGround || {};
           place.save(data, options);
         };
 
+    // Initialize the progress bar with a little sliver, to give the user
+    // an indication that something's going on.
+    $progressBar.css('width', (100 / (numPlaces + 1)) + '%');
+    $progressBar.parent().fadeIn();
 
     collection.each(function(place) {
       tryToSave(place,
