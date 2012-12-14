@@ -49,7 +49,7 @@ pre, code, kbd, samp { font-family: monospace, sans-serif; }
 /* =Base Styles
 -------------------------------------------------------------- */
 
-body, select, input, textarea {
+body, select, input, textarea, button {
   color: #444;
   font-family: 'Chelsea Market', sans-serif;
   font-weight: normal;
@@ -359,17 +359,17 @@ input[name="map-title"] {
 
 #control-markers-trash {
   position: absolute;
-  right: 0;
-  bottom: 0;
-  height: 100px;
-  width: 100px;
-
-  background-color: #efefef;
-  opacity: 0.8;
+  right: -10px;
+  bottom: 2em;
+  height: 85px;
+  width: 85px;
+  background: white url(../img/trash.png) left top no-repeat scroll;
+  border-radius: 6px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
 
 #control-markers-trash.hover {
-  background-color: red;
+  background-position: left bottom;
 }
 
 
