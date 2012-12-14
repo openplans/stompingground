@@ -281,7 +281,7 @@ var StompingGround = StompingGround || {};
         }),
 
         tryToSave = function(place, data, options, tryCount) {
-          var maxTries = 3,
+          var maxTries = 5,
               tryCount = tryCount || 1,
               originalOptions = options;
 
@@ -299,13 +299,12 @@ var StompingGround = StompingGround || {};
 
 
     collection.each(function(place) {
-      place.set('map_title', title);
       tryToSave(place,
         {'map_title': title},
         {
           success: function() {
             numSavedPlaces += 1;
-            $progressBar.css('width', (numSavedPlaces * 100 / numPlaces) + '%');
+            $progressBar.css('width', ((numSavedPlaces + 1) * 100 / (numPlaces + 1)) + '%');
             console.log(numSavedPlaces, numPlaces);
             console.log((numSavedPlaces * 100 / numPlaces) + '%');
             goNext();
