@@ -203,8 +203,12 @@ var StompingGround = StompingGround || {};
     var $finalizeButton1 = $('<button class="btn btn-large">I\'m Done!</button>').appendTo($target)
     $finalizeButton1.on('click', showFinalizationModal);
 
-    var $finalizeButton2 = $('#finalization-save');
-    $finalizeButton2.on('click', saveMap);
+    var $finalizeButton2 = $('#finalization-save'),
+        $mapTitle = $('input[name="map-title"]');
+    $finalizeButton2.on('click', function() {
+      var title = $mapTitle.val();
+      saveMap(title);
+    });
   }
 
   function showFinalizationModal() {
@@ -212,9 +216,55 @@ var StompingGround = StompingGround || {};
     $('#finalization-modal').modal('show');
   }
 
-  function saveMap() {
-    var $finalizeCarousel = $('#finalization-modal .carousel');
-    $finalizeCarousel.carousel('next');
+  function saveMap(title) {
+    var $finalizeCarousel = $('#finalization-modal .carousel'),
+        $progressBar = $('#finalization-modal .progress .bar'),
+        numPlaces = collection.length,
+        numSavedPlaces = 0,
+
+        goNext = _.after(numPlaces, function() {
+          console.log('next called');
+          $finalizeCarousel.carousel('next');
+        }),
+
+        tryToSave = function(place, data, options, tryCount) {
+          var maxTries = 3,
+              tryCount = tryCount || 1,
+              originalOptions = options;
+
+          options = options || {};
+          options.error = function() {
+            if (tryCount < maxTries) {
+              tryToSave(place, data, originalOptions, tryCount + 1);
+            } else {
+              originalOptions.error();
+            }
+          }
+
+          place.save(data, options);
+        };
+
+
+    collection.each(function(place) {
+      place.set('map_title', title);
+      tryToSave(place,
+        {'map_title': title},
+        {
+          success: function() {
+            numSavedPlaces += 1;
+            $progressBar.css('width', (numSavedPlaces * 100 / numPlaces) + '%');
+            console.log(numSavedPlaces, numPlaces);
+            console.log((numSavedPlaces * 100 / numPlaces) + '%');
+            goNext();
+          },
+          error: function() {
+            // TODO: Handle failure
+          }
+        }
+      );
+    });
+
+
   }
 
   var $finalizeButtonTarget =
