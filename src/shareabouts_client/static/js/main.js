@@ -32,26 +32,76 @@ var StompingGround = StompingGround || {};
   placeTypes = {
     'good': {
       'default': goodIcon,
-      'label': 'Good'
+      'label': 'Good',
+      'onPostInit': markerPostInit
     },
     'bad': {
       'default': badIcon,
-      'label': 'Bad'
+      'label': 'Bad',
+      'onPostInit': markerPostInit
     },
     'comment': {
       'default': commentIcon,
       'label': 'Comment',
-      'onClick': function(evt) {
-        // 'this' is the layer view
-        var comment = this.model.get('comment');
-        if (comment) {
-          // Open popup with comment
-          this.layer.bindPopup(comment).openPopup();
-        }
-      }
+      'onPostInit': markerPostInit
     }
   };
 
+  function markerPostInit() {
+    function elementsIntersect($a, $b) {
+      var aOffset = $a.offset(),
+          aWidth = $a.width(),
+          aHeight = $a.height(),
+          bOffset = $b.offset(),
+          bWidth = $b.width(),
+          bHeight = $b.height(),
+
+          aBounds = L.bounds([aOffset.top, aOffset.left],
+            [aOffset.top+aHeight, aOffset.left+aWidth]),
+
+          bBounds = L.bounds([bOffset.top, bOffset.left],
+            [bOffset.top+bHeight, bOffset.left+bWidth]);
+
+      return aBounds.intersects(bBounds);
+    }
+
+    this.layer.on('click', function(evt) {
+      // 'this' is the layer view
+      var comment = this.model.get('comment');
+      if (comment) {
+        // Open popup with comment
+        this.layer.bindPopup(comment).openPopup();
+      }
+
+      }, this);
+
+    this.layer.on('drag', function(evt) {
+      var $icon = $(evt.target._icon),
+          $trash = $('#control-markers-trash');
+
+      if(elementsIntersect($icon, $trash)) {
+        $trash.addClass('hover');
+      } else {
+        $trash.removeClass('hover');
+      }
+    });
+
+    this.layer.on('dragend', function(evt) {
+      var $icon = $(evt.target._icon),
+          $trash = $('#control-markers-trash');
+
+      if(elementsIntersect($icon, $trash)) {
+        this.model.destroy();
+      } else {
+        var latLng = this.layer.getLatLng();
+
+        this.model.set({
+          location: {lat: latLng.lat, lng: latLng.lng}
+        });
+      }
+    }, this);
+
+  }
 
 /* ==============================
  * Initialization
@@ -106,7 +156,7 @@ var StompingGround = StompingGround || {};
         return;
 
       function createPlace(latlng, placeType, comment) {
-        collection.create({
+        collection.add({
           'location': {
             'lat': latlng.lat,
             'lng': latlng.lng
@@ -114,12 +164,9 @@ var StompingGround = StompingGround || {};
           'location_type': placeType,
           'comment': comment,
           'visible': true
-        }, {
-          wait: true,
-          complete: function() {
-            map.removeLayer(standInMarker);
-          }
         });
+
+        map.removeLayer(standInMarker);
       }
 
       var icon = ui.draggable.data('icon'),
@@ -189,6 +236,12 @@ var StompingGround = StompingGround || {};
   // Init the control marker container
   var $controlMarkerTarget =
     $('<ul id="control-markers"></ul>').appendTo(map.getContainer());
+
+
+  // Init the control marker container
+  var $controlMarkerTrash =
+    $('<div id="control-markers-trash"></div>')
+      .appendTo(map.getContainer());
 
   // Init the control markers
   _.each(placeTypes, function(obj, key) {

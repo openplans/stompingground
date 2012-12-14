@@ -299,6 +299,21 @@ input[name="map-title"] {
 	height: 40px;
 }
 
+#control-markers-trash {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 100px;
+  width: 100px;
+
+  background-color: #efefef;
+  opacity: 0.8;
+}
+
+#control-markers-trash.hover {
+  background-color: red;
+}
+
 
 /* =Media Queries for Responsive Layout
 -------------------------------------------------------------- */

@@ -31,39 +31,24 @@ var Shareabouts = Shareabouts || {};
         return;
       }
 
-      // Don't draw new places. They are shown by the centerpoint in the app view
-      if (!this.model.isNew()) {
-        location = this.model.get('location');
-        this.latLng = L.latLng(location.lat, location.lng);
+      location = this.model.get('location');
+      this.latLng = L.latLng(location.lat, location.lng);
 
-        // Default to true
-        draggable = _.isUndefined(this.placeType.draggable) ? true : this.placeType.draggable;
+      // Default to true
+      draggable = _.isUndefined(this.placeType.draggable) ? true : this.placeType.draggable;
 
-        this.layer = L.marker(this.latLng, {
-          icon: this.placeType['default'],
-          clickable: draggable || !!this.placeType.onClick,
-          draggable: draggable
-        });
+      this.layer = L.marker(this.latLng, {
+        icon: this.placeType['default'],
+        clickable: draggable || !!this.placeType.onClick,
+        draggable: draggable
+      });
 
-        // Focus on the marker onclick
-        if (this.placeType.onClick) {
-          this.layer.on('click', this.placeType.onClick, this);
-        }
-
-        this.layer.on('dragend', function(evt) {
-          var latLng = this.layer.getLatLng();
-          this.model.save({
-            location: {lat: latLng.lat, lng: latLng.lng}
-          }, {
-            complete: function() {
-              console.log(arguments);
-            }
-          });
-
-        }, this);
-
-        this.render();
+      // Focus on the marker onclick
+      if (this.placeType.onPostInit) {
+        this.placeType.onPostInit.call(this);
       }
+
+      this.render();
     },
     updateLayer: function() {
       // Update the marker layer if the model changes and the layer exists
