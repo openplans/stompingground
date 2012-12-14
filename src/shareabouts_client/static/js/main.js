@@ -282,6 +282,7 @@ var StompingGround = StompingGround || {};
   function showFinalizationModal() {
     $('#finalization-modal .carousel').carousel({interval: false}).carousel(0);
     $('#finalization-modal').modal('show');
+    hideFinalizeButtonTooltip();
   }
 
   function saveMap(title) {
@@ -387,6 +388,35 @@ var StompingGround = StompingGround || {};
     $(map.getContainer()).off('drop', hideMarkerControlTooltip);
   }
 
+  function showTrashTooltip() {
+    $('#control-markers-trash')
+      .tooltip({
+        title: 'You can move your stickers around or trash them by dragging them here.',
+        trigger: 'manual',
+        placement: 'left'
+      })
+      .tooltip('show');
+  }
+
+  function hideTrashTooltip() {
+    $('#control-markers-trash').tooltip('hide');
+  }
+
+
+  function showFinalizeButtonTooltip() {
+    $('#finalize-button-wrapper')
+      .tooltip({
+        title: 'Good job! Be sure to click this when you\'re done to save you\'re map.',
+        trigger: 'manual',
+        placement: 'left'
+      })
+      .tooltip('show');
+  }
+
+  function hideFinalizeButtonTooltip() {
+    $('#finalize-button-wrapper').tooltip('hide');
+  }
+
   // Show the zoom tooltip to start
   showZoomTooltip();
 
@@ -400,5 +430,20 @@ var StompingGround = StompingGround || {};
 
   // Hide the marker tooltip whenever the user drops a marker
   $(map.getContainer()).on('drop', hideMarkerControlTooltip);
+
+  // Check to see if we should add a tooltip for the Done button
+  var showFinalizeButtonTooltipOnce = _.once(showFinalizeButtonTooltip),
+      showTrashTooltipOnce = _.once(showTrashTooltip);
+
+  collection.on('add', function(evt) {
+    if(collection.size() === 1) {
+      showTrashTooltipOnce();
+      _.delay(hideTrashTooltip, 7500);
+    }
+
+    if(collection.size() === 5) {
+      showFinalizeButtonTooltipOnce();
+    }
+  });
 
 })(StompingGround, Shareabouts, jQuery, L);
