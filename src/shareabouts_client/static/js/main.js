@@ -1,7 +1,7 @@
 var StompingGround = StompingGround || {};
 
 (function(SG, S, $, L) {
-  var collection, mapView, map, goodIcon, badIcon, placeTypes;
+  var collection, mapView, map, goodIcon, badIcon, placeTypes, router;
 
 /* ==============================
  * Config
@@ -101,12 +101,26 @@ var StompingGround = StompingGround || {};
         });
       }
     }, this);
-
   }
+
 
 /* ==============================
  * Initialization
  * ============================== */
+
+  // Define the router
+  SG.Router = Backbone.Router.extend({
+    routes: {
+      ':id': 'fetch'
+    },
+    initialize: function() {
+      Backbone.history.start({pushState: true});
+    },
+    fetch: function(id) {
+      // Fetch the existing places
+      collection.fetch({'data': {'map_id': id}});
+    }
+  });
 
   // Init the place collection
   collection = new S.PlaceCollection();
@@ -129,11 +143,10 @@ var StompingGround = StompingGround || {};
     placeTypes: placeTypes
   });
 
+  router = new SG.Router();
+
   // So I don't have to type mapView.map all the time
   map = mapView.map;
-
-  // Fetch the existing places
-  collection.fetch();
 
 /* ==============================
  * Controls Setup
