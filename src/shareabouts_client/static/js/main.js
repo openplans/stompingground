@@ -273,12 +273,17 @@ var StompingGround = StompingGround || {};
   function saveMap(title) {
     var $finalizeCarousel = $('#finalization-modal .carousel'),
         $progressBar = $('#finalization-modal .progress .bar'),
+        $permalinkAnchor = $('#finalization-modal .permalink'),
         numPlaces = collection.length,
         numSavedPlaces = 0,
+        mapId = (new Date()).getTime().toString(36),
 
         goNext = _.after(numPlaces, function() {
           console.log('next called');
           $finalizeCarousel.carousel('next');
+          $permalinkAnchor
+            .attr('href', 'http://stompingground.org/' + mapId)
+            .text('stompingground.org/' + mapId);
         }),
 
         tryToSave = function(place, data, options, tryCount) {
@@ -305,7 +310,10 @@ var StompingGround = StompingGround || {};
 
     collection.each(function(place) {
       tryToSave(place,
-        {'map_title': title},
+        {
+          'map_title': title,
+          'map_id': mapId
+        },
         {
           success: function() {
             numSavedPlaces += 1;
