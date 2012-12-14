@@ -72,8 +72,8 @@ h6 { font-size: 1em; }
 html { overflow-y: scroll; }
 /* Accessible focus treatment: people.opera.com/patrickl/experiments/keyboard/test */
 a:hover, a:active { outline: none; }
-a, a:active, a:visited { color: Tomato; }
-a:hover { color: #036; }
+a, a:active, a:visited { color: #0090d9; }
+a:hover { color: DeepPink; }
 ul, ol { margin-left: 1.8em; }
 ol { list-style-type: decimal; }
 /* Remove margins for navigation lists */
@@ -155,7 +155,7 @@ button {width: auto; overflow: visible;}
 -------------------------------------------------------------- */
 
 #branding {
-  height: 3.5em;
+  height: 5em;
   position: relative;
   z-index: 200;
   overflow: hidden;
@@ -164,17 +164,44 @@ button {width: auto; overflow: visible;}
   -webkit-box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
           box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
 }
+#site-marquee {
+  float: left;
+}
 #site-title {
-  display: inline;
   color: #222;
+  margin: 0;
 }
 #site-description {
-  display: none;
+  font-family: 'Chelsea Market', sans-serif;
+  font-weight: normal;
+  font-size: 1.25em;
+  margin: -0.3em 0 0;
+}
+
+#access {
+  float: right;
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  font-family: 'Cabin Sketch', sans-serif;
+  font-size: 2em;
+  font-weight: 700;
+}
+#access li {
+  float: left;
+  margin: 0 0.25em;
+}
+#access li a {
+  display: block;
+  padding: 0 0.5em;
+  line-height: 1.5;
+  text-decoration: none;
+/*  background: rgba(0,0,0,0.1);*/
 }
 
 #map {
   position: absolute;
-  top: 3.5em;
+  top: 5em;
   left: 0;
   bottom: 0;
   right: 0;
@@ -222,7 +249,7 @@ ul#control-markers {
   top: 105px;
   left: -10px;
   z-index: 1040;
-  margin: 3.5em 0 0;
+  margin: 5em 0 0;
   padding: 5px 0 5px 10px;
   list-style-type: none;
   background-color: white;
@@ -322,12 +349,6 @@ input[name="map-title"] {
 
 @media only screen and (min-width: 768px) {
   body { font-size: 16px; }
-  #site-description {
-    display: inline;
-    font-family: 'Chelsea Market', sans-serif;
-    font-weight: normal;
-    font-size: 1.25em;
-  }
 }
 
 @media only screen and (min-width: 1024px) {
