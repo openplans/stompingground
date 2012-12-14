@@ -229,6 +229,22 @@ button {width: auto; overflow: visible;}
   background-color: DeepPink;
 }
 
+.btn {
+  font-size: 1.5em;
+  padding: 0.25em 1em;
+  line-height: 1.5em;
+  color: #fff;
+  text-shadow: none;
+  background: #0090d9;
+  border: 0;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+.btn:hover {
+  background: DeepPink;
+  color: #fff;
+}
+
 #map {
   position: absolute;
   top: 5em;
@@ -245,7 +261,7 @@ button {width: auto; overflow: visible;}
 .leaflet-control-zoom a {
   width: 40px;
   height: 40px;
-  border-radius: 0;
+  border-radius: 3px;
   background-color: rgba(255,255,255,0.9);
 }
 .leaflet-control-zoom-in {
@@ -254,10 +270,14 @@ button {width: auto; overflow: visible;}
 .leaflet-control-zoom-out {
   background-image: url(../img/zoom-minus.png);
 }
+.leaflet-control-zoom a:hover {
+  box-shadow: 0 0 5px rgba(0,0,0,0.25);
+}
 
 .tooltip {
   font-size: 1em;
   padding-left: 15px;
+  padding-right: 15px;
   width: 22em;
 }
 .tooltip-inner {
@@ -272,6 +292,11 @@ button {width: auto; overflow: visible;}
   margin-top: -15px;
   border-right-color: #333;
   border-width: 15px 15px 15px 0;
+}
+.tooltip.left .tooltip-arrow {
+  margin-top: -15px;
+  border-left-color: #333;
+  border-width: 15px 0 15px 15px;
 }
 
 ul#control-markers {
@@ -291,10 +316,16 @@ ul#control-markers li {
   padding: 5px 5px 0 5px;
   position: relative;
 }
-
 ul#control-markers li div {
   cursor: pointer;
   padding: 0 !important; /* this is important! */
+}
+ul#control-markers li img:hover {
+          transform: rotate(15deg);
+      -ms-transform: rotate(15deg); /* IE 9 */
+     -moz-transform: rotate(15deg); /* Firefox */
+  -webkit-transform: rotate(15deg); /* Safari and Chrome */
+       -o-transform: rotate(15deg); /* Opera */
 }
 .control-marker-good:hover:after,
 .control-marker-bad:hover:after,
@@ -323,9 +354,8 @@ ul#control-markers li div {
 
 div#finalize-button-wrapper {
   position: absolute;
-  top: 0;
-  right: 0;
-  padding: 10px;
+  top: 1em;
+  right: 10px;
   z-index: 2;
 }
 
