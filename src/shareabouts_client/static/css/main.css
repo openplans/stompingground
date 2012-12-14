@@ -229,7 +229,7 @@ button {width: auto; overflow: visible;}
   background-color: DeepPink;
 }
 
-.btn {
+.btn, a.btn {
   font-size: 1.5em;
   padding: 0.25em 1em;
   line-height: 1.5em;
@@ -240,7 +240,7 @@ button {width: auto; overflow: visible;}
   border-radius: 3px;
   box-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
-.btn:hover {
+.btn:hover, a.btn:hover {
   background: DeepPink;
   color: #fff;
 }
@@ -367,7 +367,8 @@ div#finalize-button-wrapper {
 }
 
 #finalization-modal .modal-header {
-  min-height: 1.25em;
+/*  min-height: 1.25em;*/
+  display: none;
 }
 
 #finalization-modal .modal-body {
