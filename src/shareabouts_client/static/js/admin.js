@@ -36,7 +36,7 @@ var StompingGround = StompingGround || {};
       goodCnt = getArraySize(placesByType.good);
       badCnt = getArraySize(placesByType.bad);
       commentCnt = getArraySize(placesByType.comment);
-      link = '<a href="http://stompingground.shareabouts.org/' + first.map_id +
+      link = '<a href="/' + first.map_id +
              '" target="_blank">' + first.map_id + '</a>';
 
       aaData.push([title, created, goodCnt, badCnt, commentCnt, link]);
