@@ -5,6 +5,7 @@ gunicorn
 
 # Templates
 django-jstemplate>=1.0.3
+six
 django_compressor
 
 # Web interface helpers
