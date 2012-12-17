@@ -125,20 +125,22 @@ var StompingGround = StompingGround || {};
       $('#loading-map-modal')
         .modal({backdrop: 'static', keyboard: 'false', show: true});
 
+      // Disable dragging on all the place types
+      _.each(placeTypes, function(placeType) {
+        placeType.draggable = false;
+      });
+
       // Fetch the existing places
       collection.fetch({
         'data': {'map_id': id},
-        'complete': function() {
+        'success': function() {
           var placeBounds;
 
-          mapView.placeLayers.eachLayer(function(layer) {
-            layer.dragging.disable();
-            $(layer._icon).removeClass('leaflet-clickable');
-
+          _.each(mapView.layerViews, function(layerView) {
             if (placeBounds) {
-              placeBounds.extend(layer.getLatLng());
+              placeBounds.extend(layerView.latLng);
             } else {
-              placeBounds = L.latLngBounds(layer.getLatLng(), layer.getLatLng());
+              placeBounds = L.latLngBounds(layerView.latLng, layerView.latLng);
             }
           });
 
