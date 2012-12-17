@@ -56,13 +56,12 @@
 	<header id="branding" role="banner">
 		<hgroup id="site-marquee">
 		  <h1 id="site-title">Stomping Ground</h1>
-			<h2 id="site-description">Share something something about your walk&hellip;</h2>
+			<h2 id="site-description">Where is it dangerous to walk?</h2>
 		</hgroup>
 		<nav>
 		  <input type="checkbox" id="nav-bttn-input" class="hidden"><label id="nav-bttn" for="nav-bttn-input">&equiv;</label>
 		  <ul id="access">
-		    <li class="clearfix"><a href="#">Instructions</a></li>
-		    <li class="clearfix"><a href="#">About</a></li>
+		    <li class="clearfix"><a href="#intro-modal" data-toggle="modal">Instructions</a></li>
 	    </ul>
 	  </nav>
   </header>
@@ -85,6 +84,9 @@
       </ul>
     </div>
     <div class="modal-footer">
+      <label id="suppress-intro-modal" class="checkbox">
+        <input type="checkbox"> Don't show this again
+      </label>
       <a href="javascript:void(0);" class="btn btn-primary" data-dismiss="modal">Get Started!</a>
     </div>
   </div>
