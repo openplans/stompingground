@@ -438,6 +438,17 @@ input[name="map-title"] {
   margin: -10px 10px 5px 0;
 }
 
+.thanks-modal p {
+  text-align: center;
+  font-size: 2em;
+  margin-top: 1em;
+}
+
+.thanks-modal img {
+  position: relative;
+  top: 0.15px;
+  left: 0.25em;
+}
 .leaflet-popup-content {
   margin: 20px;
 }
@@ -446,7 +457,6 @@ input[name="map-title"] {
 #comment { margin-bottom: 0.75em; font-size: 1.5em; height: 5em; }
 #cancel-comment { float: left; color: DeepPink; text-transform: uppercase; }
 #save-comment { float: right; }
-
 
 /* =Media Queries for Responsive Layout
 -------------------------------------------------------------- */
