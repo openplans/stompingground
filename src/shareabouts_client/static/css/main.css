@@ -449,6 +449,12 @@ input[name="map-title"] {
   top: 0.15px;
   left: 0.25em;
 }
+
+.modal.small-modal {
+  width: 240px;
+  margin-left: -120px;
+}
+
 .leaflet-popup-content {
   margin: 20px;
 }

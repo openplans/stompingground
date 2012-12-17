@@ -121,6 +121,10 @@ var StompingGround = StompingGround || {};
       initTools();
     },
     fetch: function(id) {
+      // Let the user know that you're loading
+      $('#loading-map-modal')
+        .modal({backdrop: 'static', keyboard: 'false', show: true});
+
       // Fetch the existing places
       collection.fetch({
         'data': {'map_id': id},
@@ -143,6 +147,9 @@ var StompingGround = StompingGround || {};
 
           // Add the map title to the header
           $('#site-description').text(collection.at(0).get('map_title'));
+
+          // Done loading!
+          $('#loading-map-modal').modal('hide');
         }
       });
     }
