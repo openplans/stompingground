@@ -264,6 +264,9 @@ var StompingGround = StompingGround || {};
             evt.preventDefault();
           });
 
+          // Focus on the textarea
+          $('#comment').focus();
+
           // On cancel click, remove popup, marker
           $('#cancel-comment').click(function(evt) {
             map.removeLayer(standInMarker);
