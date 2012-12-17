@@ -44,11 +44,11 @@
 </head>
 <body>
   <script id="comment-form-tpl" type="text/html">
-    <form id="comment-form">
-      <textarea id="comment" placeholder="Add your comment..." required></textarea>
+    <form id="comment-form" class="clearfix">
+      <textarea id="comment" placeholder="My comment..." maxlength="140" required></textarea>
       <div>
         <a href="#" id="cancel-comment">cancel</a>
-        <button id="save-comment">Save</button>
+        <button id="save-comment" class="btn">Save</button>
       </div>
     </form>
   </script>
@@ -100,7 +100,7 @@
         <div class="active item">
           <div class="modal-body">
             <h1>Great! What should we call your map?</h1>
-            <div><input type="text" name="map-title" placeholder="My map's name..."></div>
+            <div><input type="text" name="map-title" placeholder="My map's name..." maxlength="50"></div>
             <p>This information can be used to make the area safer for walking. <a href="#">Find out how.</a>
 
             <div class="progress progress-striped active">
