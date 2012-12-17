@@ -386,6 +386,11 @@ div#finalize-button-wrapper {
 .modal-footer .btn-large {
   margin-left: 20px;
 }
+
+#suppress-intro-modal {
+  float: left;
+}
+
 #intro-modal .modal-header,
 #finalization-modal .modal-header {
 /*  min-height: 1.25em;*/

@@ -199,7 +199,20 @@ var StompingGround = StompingGround || {};
   }
 
   function initTools() {
-    $('#intro-modal').modal('show');
+    if (!S.Util.cookies.get('sg-suppress-intro-modal')) {
+      $('#intro-modal').modal('show');
+      $('#suppress-intro-modal input:checkbox').removeAttr('checked');
+    } else {
+      $('#suppress-intro-modal input:checkbox').attr('checked', 'checked');
+    }
+
+    $('#suppress-intro-modal input:checkbox').change(function(evt) {
+      if ($(this).is(':checked')) {
+        S.Util.cookies.save('sg-suppress-intro-modal', true, 7);
+      } else {
+        S.Util.cookies.destroy('sg-suppress-intro-modal');
+      }
+    });
 
     makeMapDroppable();
 
