@@ -196,7 +196,7 @@ button {width: auto; overflow: visible;}
   z-index: 200;
 }
 #nav-bttn:hover {
-  background-color: DeepPink; 
+  background-color: DeepPink;
 }
 #access {
   display: none;
@@ -364,6 +364,7 @@ div#finalize-button-wrapper {
   top: 1em;
   right: 10px;
   z-index: 2;
+  display: none;
 }
 
 #finalization-modal .modal-header {
@@ -427,8 +428,8 @@ input[name="map-title"] {
 
 @media only screen and (min-width: 768px) {
   #nav-bttn { display: none; }
-  #access { 
-    display: block; 
+  #access {
+    display: block;
     float: right;
     position: absolute;
     top: 0.5em;

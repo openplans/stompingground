@@ -449,10 +449,20 @@ var StompingGround = StompingGround || {};
   var showFinalizeButtonTooltipOnce = _.once(showFinalizeButtonTooltip),
       showTrashTooltipOnce = _.once(showTrashTooltip);
 
+  collection.on('remove', function(evt){
+    if (collection.size() === 0) {
+      $('#finalize-button-wrapper').hide();
+    }
+  });
+
   collection.on('add', function(evt) {
     if(collection.size() === 1) {
       showTrashTooltipOnce();
       _.delay(hideTrashTooltip, 7500);
+    }
+
+    if(collection.size() > 0) {
+      $('#finalize-button-wrapper').show();
     }
 
     if(collection.size() === 5) {
