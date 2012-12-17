@@ -170,6 +170,8 @@ var StompingGround = StompingGround || {};
   }
 
   function initTools() {
+    $('#intro-modal').modal('show');
+
     makeMapDroppable();
 
     // Init the control marker container
