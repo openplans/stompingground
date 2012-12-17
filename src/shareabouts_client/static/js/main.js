@@ -125,10 +125,21 @@ var StompingGround = StompingGround || {};
       collection.fetch({
         'data': {'map_id': id},
         'complete': function() {
+          var placeBounds;
+
           mapView.placeLayers.eachLayer(function(layer) {
             layer.dragging.disable();
             $(layer._icon).removeClass('leaflet-clickable');
+
+            if (placeBounds) {
+              placeBounds.extend(layer.getLatLng());
+            } else {
+              placeBounds = L.latLngBounds(layer.getLatLng(), layer.getLatLng());
+            }
           });
+
+          // Zoom to the bounds of the map places
+          map.fitBounds(placeBounds.pad(0.02));
 
           // Add the map title to the header
           $('#site-description').text(collection.at(0).get('map_title'));
