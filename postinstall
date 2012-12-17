@@ -5,7 +5,6 @@
 
 echo "Writing the local settings file..."
 echo "  - Setting the path to the Shareabouts config"
-echo "  - Adding the flavor to the installed applications"
 echo "  - Setting the dataset access location and key"
 
 cat >> src/project/local_settings.py <<EOF
@@ -16,14 +15,7 @@ import os.path
 with open('/home/dotcloud/environment.json') as f:
     env = json.load(f)
 
-# The SHAREABOUTS_FLAVOR environment variable is used as a prefix for the
-# Shareabouts configuration. configuration is expected to live in a package
-# named 'flavors.<SHAREABOUTS_FLAVOR>'. This package will correspond to a
-# folder in the root of the src tree that contains all the configuration
-# information for the flavor.
-
 SHAREABOUTS = {
-    'FLAVOR': env.get('SHAREABOUTS_FLAVOR', 'SHAREABOUTS_FLAVOR-not-set-in-dotcloud-environment!!!'),
     'DATASET_KEY': env.get('SHAREABOUTS_DATASET_KEY', 'SHAREABOUTS_DATASET_KEY-not-set-in-dotcloud-environment!!!'),
     'DATASET_ROOT': env.get('SHAREABOUTS_DATASET_ROOT', 'SHAREABOUTS_DATASET_ROOT-not-set-in-dotcloud-environment!!!'),
 
@@ -52,6 +44,4 @@ EOF
 echo "Compiling translations..."
 cd src/shareabouts_client
 ../manage.py compilemessages
-cd ../flavors/$SHAREABOUTS_FLAVOR
-../../manage.py compilemessages
-cd ../../..
+cd ../..
