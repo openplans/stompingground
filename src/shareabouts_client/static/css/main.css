@@ -367,6 +367,14 @@ div#finalize-button-wrapper {
   display: none;
 }
 
+.modal {
+  width: 80%;
+  margin-left: -40%;
+}
+.modal-footer .btn-large {
+  margin-left: 20px;
+}
+#intro-modal .modal-header,
 #finalization-modal .modal-header {
 /*  min-height: 1.25em;*/
   display: none;
@@ -384,6 +392,9 @@ div#finalize-button-wrapper {
 #finalization-modal .progress {
   margin-top: 2em;
   display: none;
+}
+#finalization-cancel {
+  color: DeepPink;
 }
 
 input[name="map-title"] {
@@ -461,6 +472,10 @@ input[name="map-title"] {
 
 @media only screen and (min-width: 1024px) {
   body { font-size: 16px; }
+  .modal {
+    width: 760px;
+    margin-left: -380px;
+  }
 }
 
 @media only screen and (min-width: 1300px) {
