@@ -165,19 +165,29 @@ button {width: auto; overflow: visible;}
 }
 #site-marquee {
   float: left;
+  max-width: 80%;
 }
 #site-title {
-  color: #222;
+/*  color: #222;
   margin: 0;
-  font-size: 2.5em;
+  font-size: 2.5em;*/
   line-height: 2;
-}
-#site-description {
-  display: none;
   font-family: 'Chelsea Market', sans-serif;
   font-weight: normal;
   font-size: 1.25em;
-  margin: -0.3em 0 0;
+}
+#site-description {
+/*  display: none;
+  font-family: 'Chelsea Market', sans-serif;
+  font-weight: normal;
+  font-size: 1.25em;
+  margin: -0.3em 0 0;*/
+  color: #222;
+  margin: -0.5em 0 0;
+  font-size: 2em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #nav-bttn {
@@ -465,11 +475,6 @@ input[name="map-title"] {
 }
 
 @media only screen and (min-width: 480px) {
-  #site-title {
-    font-size: 2.75em;
-    line-height: 1.25;
-  }
-  #site-description { display: block; }
 }
 
 @media only screen and (min-width: 768px) {
