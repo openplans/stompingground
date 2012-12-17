@@ -129,6 +129,9 @@ var StompingGround = StompingGround || {};
             layer.dragging.disable();
             $(layer._icon).removeClass('leaflet-clickable');
           });
+
+          // Add the map title to the header
+          $('#site-description').text(collection.at(0).get('map_title'));
         }
       });
     }
