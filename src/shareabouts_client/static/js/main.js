@@ -122,7 +122,15 @@ var StompingGround = StompingGround || {};
     },
     fetch: function(id) {
       // Fetch the existing places
-      collection.fetch({'data': {'map_id': id}});
+      collection.fetch({
+        'data': {'map_id': id},
+        'complete': function() {
+          mapView.placeLayers.eachLayer(function(layer) {
+            layer.dragging.disable();
+            $(layer._icon).removeClass('leaflet-clickable');
+          });
+        }
+      });
     }
   });
 
