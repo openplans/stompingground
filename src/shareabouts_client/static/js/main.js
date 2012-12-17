@@ -123,7 +123,7 @@ var StompingGround = StompingGround || {};
   });
 
   // Init the place collection
-  collection = new S.PlaceCollection();
+  window.c = collection = new S.PlaceCollection();
 
   // Setup the map view
   mapView = new S.MapView({
