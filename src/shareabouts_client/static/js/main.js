@@ -111,10 +111,14 @@ var StompingGround = StompingGround || {};
   // Define the router
   SG.Router = Backbone.Router.extend({
     routes: {
+      '': 'initTools',
       ':id': 'fetch'
     },
     initialize: function() {
       Backbone.history.start({pushState: true});
+    },
+    initTools: function(){
+      initTools();
     },
     fetch: function(id) {
       // Fetch the existing places
@@ -143,10 +147,12 @@ var StompingGround = StompingGround || {};
     placeTypes: placeTypes
   });
 
-  router = new SG.Router();
-
   // So I don't have to type mapView.map all the time
   map = mapView.map;
+
+  // Start router history
+  router = new SG.Router();
+
 
 /* ==============================
  * Controls Setup
@@ -163,67 +169,88 @@ var StompingGround = StompingGround || {};
       y < elOffset.top + elSize.height);
   }
 
-  // Make the map a jQuery UI drop target
-  $(map.getContainer()).droppable({
-    drop: function(event, ui) {
-      if (containsPoint(ui.draggable, event.pageX, event.pageY))
-        return;
+  function initTools() {
+    makeMapDroppable();
 
-      function createPlace(latlng, placeType, comment) {
-        collection.add({
-          'location': {
-            'lat': latlng.lat,
-            'lng': latlng.lng
-          },
-          'location_type': placeType,
-          'comment': comment,
-          'visible': true
-        });
+    // Init the control marker container
+    var $controlMarkerTarget =
+      $('<ul id="control-markers"></ul>').appendTo(map.getContainer());
 
-        map.removeLayer(standInMarker);
-      }
 
-      var icon = ui.draggable.data('icon'),
-          placeType = ui.draggable.data('placeType'),
-          $controlMarker = ui.helper,
+    // Init the control marker container
+    var $controlMarkerTrash =
+      $('<div id="control-markers-trash"></div>')
+        .appendTo(map.getContainer());
 
-      // Calculate the new marker position
-      mapContainerOffset = $(map.getContainer()).offset(),
-      controlMarkerOffset = $controlMarker.offset(),
-      pos = {left: controlMarkerOffset.left - mapContainerOffset.left,
-             top: controlMarkerOffset.top - mapContainerOffset.top},
-      ll = map.containerPointToLatLng([pos.left+icon.options.iconAnchor[0],
-                                               pos.top+icon.options.iconAnchor[1]]),
+    // Init the control markers
+    _.each(placeTypes, function(obj, key) {
+      setControlMarker(key, obj['default'], $controlMarkerTarget);
+    });
+  }
 
-      // Add a temporary marker to the map until we get a response from
-      // the API
-      standInMarker = L.marker(ll, {
-        icon: icon
-      }).addTo(map);
+  function makeMapDroppable() {
+    // Make the map a jQuery UI drop target
+    $(map.getContainer()).droppable({
+      drop: function(event, ui) {
+        if (containsPoint(ui.draggable, event.pageX, event.pageY))
+          return;
 
-      if (placeType === 'comment') {
-        // Show popup with comment form
-        standInMarker.bindPopup(ich['comment-form-tpl']().get(0), {
-          closeButton: false
-        }).openPopup();
+        function createPlace(latlng, placeType, comment) {
+          collection.add({
+            'location': {
+              'lat': latlng.lat,
+              'lng': latlng.lng
+            },
+            'location_type': placeType,
+            'comment': comment,
+            'visible': true
+          });
 
-        // On save click, create model
-        $('#comment-form').submit(function(evt) {
-          createPlace(ll, placeType, $('#comment').val());
-          evt.preventDefault();
-        });
-
-        // On cancel click, remove popup, marker
-        $('#cancel-comment').click(function(evt) {
           map.removeLayer(standInMarker);
-          evt.preventDefault();
-        });
+        }
 
-      } else {
-        createPlace(ll, placeType);
+        var icon = ui.draggable.data('icon'),
+            placeType = ui.draggable.data('placeType'),
+            $controlMarker = ui.helper,
+
+        // Calculate the new marker position
+        mapContainerOffset = $(map.getContainer()).offset(),
+        controlMarkerOffset = $controlMarker.offset(),
+        pos = {left: controlMarkerOffset.left - mapContainerOffset.left,
+               top: controlMarkerOffset.top - mapContainerOffset.top},
+        ll = map.containerPointToLatLng([pos.left+icon.options.iconAnchor[0],
+                                                 pos.top+icon.options.iconAnchor[1]]),
+
+        // Add a temporary marker to the map until we get a response from
+        // the API
+        standInMarker = L.marker(ll, {
+          icon: icon
+        }).addTo(map);
+
+        if (placeType === 'comment') {
+          // Show popup with comment form
+          standInMarker.bindPopup(ich['comment-form-tpl']().get(0), {
+            closeButton: false
+          }).openPopup();
+
+          // On save click, create model
+          $('#comment-form').submit(function(evt) {
+            createPlace(ll, placeType, $('#comment').val());
+            evt.preventDefault();
+          });
+
+          // On cancel click, remove popup, marker
+          $('#cancel-comment').click(function(evt) {
+            map.removeLayer(standInMarker);
+            evt.preventDefault();
+          });
+
+        } else {
+          createPlace(ll, placeType);
+        }
       }
-    }
-  });
+    });
+  }
 
   // Init a new control marker
   function setControlMarker(placeType, icon, $target) {
@@ -246,21 +273,6 @@ var StompingGround = StompingGround || {};
       event.stopPropagation();
     });
   }
-
-  // Init the control marker container
-  var $controlMarkerTarget =
-    $('<ul id="control-markers"></ul>').appendTo(map.getContainer());
-
-
-  // Init the control marker container
-  var $controlMarkerTrash =
-    $('<div id="control-markers-trash"></div>')
-      .appendTo(map.getContainer());
-
-  // Init the control markers
-  _.each(placeTypes, function(obj, key) {
-    setControlMarker(key, obj['default'], $controlMarkerTarget);
-  });
 
 /* ==============================
  * Finalization process
