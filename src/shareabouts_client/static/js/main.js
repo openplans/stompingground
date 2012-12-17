@@ -316,11 +316,16 @@ var StompingGround = StompingGround || {};
         mapId = (new Date()).getTime().toString(36),
 
         goNext = _.after(numPlaces, function() {
+          var host = location.host;
+
           console.log('next called');
           $finalizeCarousel.carousel('next');
           $permalinkAnchor
-            .attr('href', 'http://stompingground.org/' + mapId)
-            .text('stompingground.org/' + mapId);
+            .attr('href', 'http://' + host + '/' + mapId)
+            .text(host + '/' + mapId);
+
+          $('#finalization-review-map')
+            .attr('href', 'http://' + host + '/' + mapId);
         }),
 
         tryToSave = function(place, data, options, tryCount) {
