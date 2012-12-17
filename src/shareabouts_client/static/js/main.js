@@ -328,7 +328,7 @@ var StompingGround = StompingGround || {};
 
   function showFinalizationModal() {
     $('#finalization-modal .carousel').carousel({interval: false}).carousel(0);
-    $('#finalization-modal').modal('show');
+    $('#finalization-modal').modal({backdrop: 'static', keyboard: 'false', show: true});
     hideFinalizeButtonTooltip();
   }
 
