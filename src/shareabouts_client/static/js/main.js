@@ -182,15 +182,16 @@ var StompingGround = StompingGround || {};
 
     makeMapDroppable();
 
+    // Show the zoom tooltip to start
+    showZoomTooltip();
+
     // Init the control marker container
     var $controlMarkerTarget =
       $('<ul id="control-markers"></ul>').appendTo(map.getContainer());
 
-
     // Init the control marker container
-    var $controlMarkerTrash =
-      $('<div id="control-markers-trash"></div>')
-        .appendTo(map.getContainer());
+    $('<div id="control-markers-trash"></div>')
+      .appendTo(map.getContainer());
 
     // Init the control markers
     _.each(placeTypes, function(obj, key) {
@@ -438,9 +439,6 @@ var StompingGround = StompingGround || {};
   function hideFinalizeButtonTooltip() {
     $('#finalize-button-wrapper').tooltip('hide');
   }
-
-  // Show the zoom tooltip to start
-  showZoomTooltip();
 
   // Set it up to hide when the user zooms, or 5 seconds after the user starts
   // panning
