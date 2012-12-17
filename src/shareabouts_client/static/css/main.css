@@ -74,10 +74,12 @@ html { overflow-y: scroll; }
 a:hover, a:active { outline: none; }
 a, a:active, a:visited { color: #0090d9; }
 a:hover { color: DeepPink; }
-ul, ol { margin-left: 1.8em; }
+p, dl { margin-bottom: 1.25em }
+ul, ol { margin-left: 1.8em; padding-bottom: 0.75em; }
 ol { list-style-type: decimal; }
+li {padding-bottom: 0.75em}
 /* Remove margins for navigation lists */
-nav ul, nav li { margin: 0; }
+nav ul, nav li { margin: 0; padding: 0; }
 small { font-size: 85%; }
 strong, th { font-weight: bold; }
 td, td img { vertical-align: top; }
@@ -420,6 +422,20 @@ input[name="map-title"] {
 
 #control-markers-trash.hover {
   background-position: left bottom;
+}
+
+.marker-legend {
+  list-style: none;
+  margin-left: 0;
+  padding-top: 10px;
+  font-family: 'Cabin Sketch', sans-serif;
+  font-weight: 700;
+  font-size: 1.75em;
+  line-height: 1.25;
+}
+.marker-legend img {
+  float: left;
+  margin: -10px 10px 5px 0;
 }
 
 
