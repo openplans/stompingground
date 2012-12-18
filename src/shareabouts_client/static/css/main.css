@@ -270,6 +270,7 @@ button {width: auto; overflow: visible;}
   background: transparent;
   padding: 0;
 }
+.leaflet-touch .leaflet-control-zoom a,
 .leaflet-control-zoom a {
   width: 40px;
   height: 40px;
@@ -537,6 +538,7 @@ input[name="map-title"] {
   .leaflet-control-zoom-in {
     background-image: url(../img/zoom-plus@2x.png);
     background-size: cover;
+    background-color: HotPink;
   }
   .leaflet-control-zoom-out {
     background-image: url(../img/zoom-minus@2x.png);
