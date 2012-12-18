@@ -114,14 +114,15 @@ var StompingGround = StompingGround || {};
   // Define the router
   SG.Router = Backbone.Router.extend({
     routes: {
-      '': 'initTools',
-      ':id': 'fetch'
+      'map/:id': 'fetch',
+      '*path':  'defaultRoute'
     },
     initialize: function() {
       Backbone.history.start({pushState: true});
     },
-    initTools: function(){
+    defaultRoute: function(){
       initTools();
+      this.navigate('/');
     },
     fetch: function(id) {
       // Let the user know that you're loading
@@ -161,7 +162,7 @@ var StompingGround = StompingGround || {};
   });
 
   // Init the place collection
-  window.c = collection = new S.PlaceCollection();
+  collection = new S.PlaceCollection();
 
   // Setup the map view
   mapView = new S.MapView({
@@ -369,11 +370,11 @@ var StompingGround = StompingGround || {};
           console.log('next called');
           $finalizeCarousel.carousel('next');
           $permalinkAnchor
-            .attr('href', 'http://' + host + '/' + mapId)
-            .text(host + '/' + mapId);
+            .attr('href', 'http://' + host + '/map/' + mapId)
+            .text(host + '/map/' + mapId);
 
           $('#finalization-review-map')
-            .attr('href', 'http://' + host + '/' + mapId);
+            .attr('href', 'http://' + host + '/map/' + mapId);
         }),
 
         tryToSave = function(place, data, options, tryCount) {
