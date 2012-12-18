@@ -166,11 +166,12 @@ var StompingGround = StompingGround || {};
     mapConfig: {
       options: {
         center: [40.7873, -73.9753],
-        zoom: 16
+        zoom: 17
       },
-      base_layer: new L.BingLayer('AvwpEJSPGtaU_s5ANOzYMZAesUO0Uit-5NydR60whL3KC0sFFCK-9Ay1jaFZ_s0P', {
-        type: 'Road',
-        maxZoom: 20
+      base_layer: L.tileLayer('http://{s}.tiles.mapbox.com/v3/doittgis.NYC_DoITT_base/{z}/{x}/{y}.png', {
+        attribution: 'Map tiles &copy; <a href="http://www.nyc.gov/doitt/">New York City DoITT</a>. Based on the latest planimetric data.',
+        maxZoom: 18,
+        minZoom: 15
       })
     },
     collection: collection,
