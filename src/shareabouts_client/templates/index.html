@@ -43,15 +43,45 @@
 
 </head>
 <body>
-  <script id="comment-form-tpl" type="text/html">
-    <form id="comment-form" class="clearfix">
-      <textarea id="comment" placeholder="My comment..." maxlength="140" required></textarea>
-      <div>
-        <a href="#" id="cancel-comment">cancel</a>
-        <button id="save-comment" class="btn">Save</button>
-      </div>
-    </form>
+  {% icanhazjs '(.*)' %}
+
+  <script>
+    var StompingGround = StompingGround || {},
+        SG = StompingGround;
+
+    SG.zoomTooltipText = 'Move the map around to find the place you want to start. Use these buttons to move in and out.';
+    SG.controlMarkersTooltipText = 'Choose a sticker to make your map awesome! Drag stickers that show what you think about a place.';
+    SG.controlTrashTooltipText = 'You can move your stickers around or trash them by dragging them here.';
+    SG.mapDoneButtonTooltipText = 'Good job! Be sure to click this when you\'re done to save you\'re map.';
   </script>
+
+<!--  <script id="comment-form-tpl" type="text/html">-->
+<!--    <form id="comment-form" class="clearfix">-->
+<!--      <textarea id="comment" placeholder="My comment..." maxlength="140" required></textarea>-->
+<!--      <div>-->
+<!--        <a href="#" id="cancel-comment">cancel</a>-->
+<!--        <button id="save-comment" class="btn">Save</button>-->
+<!--      </div>-->
+<!--    </form>-->
+<!--  </script>-->
+
+<!--  <script id="control-markers-box-tpl" type="text/html">-->
+<!--    <ul id="control-markers"></ul>-->
+<!--  </script>-->
+
+<!--  <script id="control-trash-tpl" type="text/html">-->
+<!--    <div id="control-markers-trash"></div>-->
+<!--  </script>-->
+
+<!--  <script id="control-marker-tpl" type="text/html">-->
+<!--    <div class="control-marker-{{ placeType }}">-->
+<!--      <img src="{{ imgUrl }}"></img>-->
+<!--    </div>-->
+<!--  </script>-->
+
+<!--  <script id="map-done-button-tpl" type="text/html">-->
+<!--    <button class="btn btn-large">I'm Done!</button>-->
+<!--  </script>-->
 
 	<header id="branding" role="banner">
 		<hgroup id="site-marquee">

@@ -182,7 +182,9 @@ var StompingGround = StompingGround || {};
   map = mapView.map;
 
   // Start router history
-  router = new SG.Router();
+  $(function() {
+    router = new SG.Router();
+  });
 
 
 /* ==============================
@@ -222,12 +224,12 @@ var StompingGround = StompingGround || {};
     showZoomTooltip();
 
     // Init the control marker container
-    var $controlMarkerTarget =
-      $('<ul id="control-markers"></ul>').appendTo(map.getContainer());
+    var $controlMarkerTarget = ich['control-markers-box-tpl']();
+    $controlMarkerTarget.appendTo(map.getContainer());
 
     // Init the control marker container
-    $('<div id="control-markers-trash"></div>')
-      .appendTo(map.getContainer());
+    var $controlTrash = ich['control-trash-tpl']();
+    $controlTrash.appendTo(map.getContainer());
 
     // Init the control markers
     _.each(placeTypes, function(obj, key) {
@@ -306,8 +308,10 @@ var StompingGround = StompingGround || {};
   function setControlMarker(placeType, icon, $target) {
     // Append new element to the target
     var $controlMarkerWrapper = $('<li></li>').appendTo($target),
-        $controlMarker = $('<div class="control-marker-' + placeType + '">' +
-                           '<img src="'+icon.options.iconUrl+'"></img></div>').appendTo($controlMarkerWrapper);
+        $controlMarker = ich['control-marker-tpl']({
+          placeType: placeType,
+          imgUrl: icon.options.iconUrl
+        }).appendTo($controlMarkerWrapper);
 
     // Attach the icon data to the control marker
     $controlMarker.data('placeType', placeType);
@@ -329,13 +333,13 @@ var StompingGround = StompingGround || {};
  * ============================== */
 
   function setupFinalizeProcess($target) {
-    var $finalizeButton1 = $('<button class="btn btn-large">I\'m Done!</button>')
+    var $mapDoneButton = ich['map-done-button-tpl']()
       .appendTo($target)
       .on('click', showFinalizationModal);
 
-    var $finalizeButton2 = $('#finalization-save'),
+    var $finalizeButton = $('#finalization-save'),
         $mapTitle = $('input[name="map-title"]');
-    $finalizeButton2.on('click', function() {
+    $finalizeButton.on('click', function() {
       var title = $mapTitle.val();
       saveMap(title);
     });
@@ -417,7 +421,9 @@ var StompingGround = StompingGround || {};
   var $finalizeButtonTarget =
     $('<div id="finalize-button-wrapper"></div>').appendTo(map.getContainer());
 
-  setupFinalizeProcess($finalizeButtonTarget);
+  $(function() {
+    setupFinalizeProcess($finalizeButtonTarget);
+  });
 
 /* ==============================
  * Tooltips
@@ -426,7 +432,7 @@ var StompingGround = StompingGround || {};
   function showZoomTooltip() {
     $('.leaflet-control-zoom')
       .tooltip({
-        title: 'Move the map around to find the place you want to start. Use these buttons to move in and out.',
+        title: SG.zoomTooltipText,
         trigger: 'manual',
         placement: 'right'
       })
@@ -442,7 +448,7 @@ var StompingGround = StompingGround || {};
   function showMarkerControlTooltip() {
     $('#control-markers')
       .tooltip({
-        title: 'Choose a sticker to make your map awesome! Drag stickers that show what you think about a place.',
+        title: SG.controlMarkersTooltipText,
         trigger: 'manual',
         placement: 'right'
       })
@@ -458,7 +464,7 @@ var StompingGround = StompingGround || {};
   function showTrashTooltip() {
     $('#control-markers-trash')
       .tooltip({
-        title: 'You can move your stickers around or trash them by dragging them here.',
+        title: SG.controlTrashTooltipText,
         trigger: 'manual',
         placement: 'left'
       })
@@ -473,7 +479,7 @@ var StompingGround = StompingGround || {};
   function showFinalizeButtonTooltip() {
     $('#finalize-button-wrapper')
       .tooltip({
-        title: 'Good job! Be sure to click this when you\'re done to save you\'re map.',
+        title: SG.mapDoneButtonTooltipText,
         trigger: 'manual',
         placement: 'left'
       })
