@@ -33,16 +33,19 @@ var StompingGround = StompingGround || {};
     'good': {
       'default': goodIcon,
       'label': 'Good',
+      'clickable': false,
       'onPostInit': markerPostInit
     },
     'bad': {
       'default': badIcon,
       'label': 'Bad',
+      'clickable': false,
       'onPostInit': markerPostInit
     },
     'comment': {
       'default': commentIcon,
       'label': 'Comment',
+      'clickable': true,
       'onPostInit': markerPostInit
     }
   };
@@ -111,14 +114,15 @@ var StompingGround = StompingGround || {};
   // Define the router
   SG.Router = Backbone.Router.extend({
     routes: {
-      '': 'initTools',
-      ':id': 'fetch'
+      'map/:id': 'fetch',
+      '*path':  'defaultRoute'
     },
     initialize: function() {
       Backbone.history.start({pushState: true});
     },
-    initTools: function(){
+    defaultRoute: function(){
       initTools();
+      this.navigate('/');
     },
     fetch: function(id) {
       // Let the user know that you're loading
@@ -158,7 +162,7 @@ var StompingGround = StompingGround || {};
   });
 
   // Init the place collection
-  window.c = collection = new S.PlaceCollection();
+  collection = new S.PlaceCollection();
 
   // Setup the map view
   mapView = new S.MapView({
@@ -166,11 +170,12 @@ var StompingGround = StompingGround || {};
     mapConfig: {
       options: {
         center: [40.7873, -73.9753],
-        zoom: 16
+        zoom: 17
       },
-      base_layer: new L.BingLayer('AvwpEJSPGtaU_s5ANOzYMZAesUO0Uit-5NydR60whL3KC0sFFCK-9Ay1jaFZ_s0P', {
-        type: 'Road',
-        maxZoom: 20
+      base_layer: L.tileLayer('http://{s}.tiles.mapbox.com/v3/doittgis.NYC_DoITT_base/{z}/{x}/{y}.png', {
+        attribution: 'Map tiles &copy; <a href="http://www.nyc.gov/doitt/">New York City DoITT</a>. Based on the latest planimetric data.',
+        maxZoom: 18,
+        minZoom: 15
       })
     },
     collection: collection,
@@ -326,6 +331,10 @@ var StompingGround = StompingGround || {};
     $controlMarker.on('mousedown', function(event) {
       event.stopPropagation();
     });
+
+    $controlMarker.on('touchstart', function(event) {
+      event.stopPropagation();
+    });
   }
 
 /* ==============================
@@ -365,11 +374,11 @@ var StompingGround = StompingGround || {};
           console.log('next called');
           $finalizeCarousel.carousel('next');
           $permalinkAnchor
-            .attr('href', 'http://' + host + '/' + mapId)
-            .text(host + '/' + mapId);
+            .attr('href', 'http://' + host + '/map/' + mapId)
+            .text(host + '/map/' + mapId);
 
           $('#finalization-review-map')
-            .attr('href', 'http://' + host + '/' + mapId);
+            .attr('href', 'http://' + host + '/map/' + mapId);
         }),
 
         tryToSave = function(place, data, options, tryCount) {

@@ -62,10 +62,11 @@ h1,h2,h3,h4,h5,h6 {
   margin: 0 0 0.5em 0;
   line-height: 1.25;
 }
-h1 { font-size: 2.75em; }
+h1 { font-size: 2.75em; margin: 0; }
 h2 { font-size: 2.25em; }
 h3 { font-size: 2em; }
 h4 { font-size: 1.75em; }
+h5, h6 { font-family: 'Chelsea Market', sans-serif; font-weight: normal; }
 h5 { font-size: 1.5em; }
 h6 { font-size: 1em; }
 /* always force a scrollbar in non-IE */
@@ -168,20 +169,13 @@ button {width: auto; overflow: visible;}
   max-width: 80%;
 }
 #site-title {
-/*  color: #222;
-  margin: 0;
-  font-size: 2.5em;*/
   line-height: 2;
   font-family: 'Chelsea Market', sans-serif;
   font-weight: normal;
   font-size: 1.25em;
+  margin: 0 0 0.5em 0;
 }
 #site-description {
-/*  display: none;
-  font-family: 'Chelsea Market', sans-serif;
-  font-weight: normal;
-  font-size: 1.25em;
-  margin: -0.3em 0 0;*/
   color: #222;
   margin: -0.5em 0 0;
   font-size: 2em;
@@ -270,6 +264,7 @@ button {width: auto; overflow: visible;}
   background: transparent;
   padding: 0;
 }
+.leaflet-touch .leaflet-control-zoom a,
 .leaflet-control-zoom a {
   width: 40px;
   height: 40px;
@@ -441,16 +436,19 @@ input[name="map-title"] {
 
 .marker-legend {
   list-style: none;
-  margin-left: 0;
-  padding-top: 10px;
+  margin: 0;
+  padding: 0 0 0.375em;
   font-family: 'Cabin Sketch', sans-serif;
   font-weight: 700;
   font-size: 1.75em;
   line-height: 1.25;
 }
+.marker-legend li {
+  padding: 0.5em 0 0.25em;
+}
 .marker-legend img {
   float: left;
-  margin: -10px 10px 5px 0;
+  margin: -0.375em 10px 0 0;
 }
 
 .thanks-modal p {
@@ -537,6 +535,7 @@ input[name="map-title"] {
   .leaflet-control-zoom-in {
     background-image: url(../img/zoom-plus@2x.png);
     background-size: cover;
+    background-color: HotPink;
   }
   .leaflet-control-zoom-out {
     background-image: url(../img/zoom-minus@2x.png);

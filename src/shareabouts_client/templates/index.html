@@ -13,6 +13,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=IE7">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
   <title>Stomping Ground</title>
 
@@ -86,7 +87,7 @@
 	<header id="branding" role="banner">
 		<hgroup id="site-marquee">
 		  <h1 id="site-title">Stomping Ground</h1>
-			<h2 id="site-description">Where is it dangerous to walk?</h2>
+			<h2 id="site-description">Make a map of walking around your neighborhood</h2>
 		</hgroup>
 		<nav>
 		  <input type="checkbox" id="nav-bttn-input" class="hidden"><label id="nav-bttn" for="nav-bttn-input">&equiv;</label>
@@ -98,32 +99,47 @@
 
   <div id="map"></div>
 
-
   <div id="intro-modal" class="modal hide fade">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     </div>
     <div class="modal-body">
-      <h1>Welcome to your Stomping Ground!</h1>
-      <p>This is useful text, and maybe an image, to set the context of this application so that user is excited, nay joyful, to use it and contribute data to a good cause.</p>
+      <h1>Make a walking map...</h1>
+
       <ul class="marker-legend">
         <li class="clearfix"><img src="{{ STATIC_URL }}img/marker-heart.png"> Mark the places you love to walk.</li>
         <li class="clearfix"><img src="{{ STATIC_URL }}img/marker-heart-broken.png"> Report problematic or dangerous places.</li>
         <li class="clearfix"><img src="{{ STATIC_URL }}img/marker-comment.png"> Leave comments about your walk.</li>
         <li class="clearfix"><img src="{{ STATIC_URL }}img/marker-link.png"> Share your map with friends.</li>
       </ul>
+
+      <h5>Use this website to make a simple map of good and bad places to walk around your neighborhood!</h5>
+      <p><a href="#how-anchor">How?</a> | <a href="#examples-anchor">Examples</a> | <a href="#about-anchor">About</a></p>
+
+      <h3 name="how-anchor" id="how-anchor">How will my map be used?</h3>
+      <p>The information you share on your map will help people working to make the neighborhood safer for everyone. We're not saving anything except the locations and comments you add. Make your comments descriptive so the team at <a href="">Local Walking Activists</a> can learn from them.</p>
+
+      <h3 name="examples-anchor" id="examples-anchor">Examples of great maps</h3>
+      <p>What makes a useful map? Here are some examples:</p>
+      <p>Intersections on Broadway that are hard to cross: <a href="http://sgstaging-civicworks.dotcloud.com/havcrblg">Broadway blues</a>.</p>
+      <p>Great places along the Hudson River: <a href="http://sgstaging-civicworks.dotcloud.com/havcjcjj">Good and bad places along the Hudson</a>.</p>
+      <p>Good and bad things about 62nd Street: <a href="http://sgstaging-civicworks.dotcloud.com/havcmgg0">62nd Street</a>.</p>
+
+      <h3 name="about-anchor" id="about-anchor">What's this website?</h3>
+      <p>Stomping Ground is a project from <a href="http://openplans.org">OpenPlans</a>. We want to make it easy for anyone to tell their neighbors about good and bad places to walk. We're imagining that neighbors who care about walking issues can set up a map for their neighborhood, or schools can use it to map what's good and bad about walking to school. Together, all the information added on individual maps will show a detailed picture of walking in that area.</p>
+      <p>This is the first release of Stomping Ground, so there are lots of things it doesn't yet do. Help us test out the idea of mapping good and bad walking places with this simple interface. Try it out on a desktop computer or a tablet, then <a href="http://openplans.freshdesk.com/">tell us what you think </a> - what's good, what's bad, what else do you want to see?</p>
     </div>
     <div class="modal-footer">
       <label id="suppress-intro-modal" class="checkbox">
         <input type="checkbox"> Don't show this again
       </label>
-      <a href="javascript:void(0);" class="btn btn-primary" data-dismiss="modal">Get Started!</a>
+      <a href="javascript:void(0);" class="btn btn-primary" data-dismiss="modal">Okay!</a>
     </div>
   </div>
 
   <div id="loading-map-modal" class="modal small-modal hide fade">
     <div class="modal-body">
-      <h1>Loading the map...</h1>
+      <h1>Loading...</h1>
     </div>
     <div class="modal-footer">
       <div class="progress progress-striped active">
@@ -144,7 +160,7 @@
           <div class="modal-body">
             <h1>Great! What should we call your map?</h1>
             <div><input type="text" name="map-title" placeholder="My map's name..." maxlength="50"></div>
-            <p>This information can be used to make the area safer for walking. <a href="#">Find out how.</a>
+            <p>This information will be used by your local street advocates to help your streets become safer for everyone!</p>
 
             <div class="progress progress-striped active">
               <div class="bar" style="width: 0%;"></div>
@@ -184,7 +200,8 @@
   <script src="http://cdnjs.cloudflare.com/ajax/libs/ICanHaz.js/0.10/ICanHaz.min.js"></script>
   <script src="{{ STATIC_URL }}lib/bootstrap/js/bootstrap.js"></script>
   <script src="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js"></script>
-  <script src="{{ STATIC_URL }}lib/Leaflet.Bing.js"></script>
+  <script src="{{ STATIC_URL }}lib/jquery.ui.touch-punch.min.js"></script>
+
   <script src="{{ STATIC_URL }}js/utils.js"></script>
   <script src="{{ STATIC_URL }}js/models.js"></script>
   <script src="{{ STATIC_URL }}js/views/layer-view.js"></script>
