@@ -39,7 +39,7 @@ var Shareabouts = Shareabouts || {};
 
       this.layer = L.marker(this.latLng, {
         icon: this.placeType['default'],
-        clickable: draggable || !!this.placeType.onClick,
+        clickable: draggable || this.placeType.clickable,
         draggable: draggable
       });
 

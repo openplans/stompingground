@@ -33,16 +33,19 @@ var StompingGround = StompingGround || {};
     'good': {
       'default': goodIcon,
       'label': 'Good',
+      'clickable': false,
       'onPostInit': markerPostInit
     },
     'bad': {
       'default': badIcon,
       'label': 'Bad',
+      'clickable': false,
       'onPostInit': markerPostInit
     },
     'comment': {
       'default': commentIcon,
       'label': 'Comment',
+      'clickable': true,
       'onPostInit': markerPostInit
     }
   };
