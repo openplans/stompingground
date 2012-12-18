@@ -56,34 +56,6 @@
     SG.mapDoneButtonTooltipText = 'Good job! Be sure to click this when you\'re done to save you\'re map.';
   </script>
 
-<!--  <script id="comment-form-tpl" type="text/html">-->
-<!--    <form id="comment-form" class="clearfix">-->
-<!--      <textarea id="comment" placeholder="My comment..." maxlength="140" required></textarea>-->
-<!--      <div>-->
-<!--        <a href="#" id="cancel-comment">cancel</a>-->
-<!--        <button id="save-comment" class="btn">Save</button>-->
-<!--      </div>-->
-<!--    </form>-->
-<!--  </script>-->
-
-<!--  <script id="control-markers-box-tpl" type="text/html">-->
-<!--    <ul id="control-markers"></ul>-->
-<!--  </script>-->
-
-<!--  <script id="control-trash-tpl" type="text/html">-->
-<!--    <div id="control-markers-trash"></div>-->
-<!--  </script>-->
-
-<!--  <script id="control-marker-tpl" type="text/html">-->
-<!--    <div class="control-marker-{{ placeType }}">-->
-<!--      <img src="{{ imgUrl }}"></img>-->
-<!--    </div>-->
-<!--  </script>-->
-
-<!--  <script id="map-done-button-tpl" type="text/html">-->
-<!--    <button class="btn btn-large">I'm Done!</button>-->
-<!--  </script>-->
-
 	<header id="branding" role="banner">
 		<hgroup id="site-marquee">
 		  <h1 id="site-title">Stomping Ground</h1>
@@ -121,9 +93,9 @@
 
       <h3 name="examples-anchor" id="examples-anchor">Examples of great maps</h3>
       <p>What makes a useful map? Here are some examples:</p>
-      <p>Intersections on Broadway that are hard to cross: <a href="http://sgstaging-civicworks.dotcloud.com/havcrblg">Broadway blues</a>.</p>
-      <p>Great places along the Hudson River: <a href="http://sgstaging-civicworks.dotcloud.com/havcjcjj">Good and bad places along the Hudson</a>.</p>
-      <p>Good and bad things about 62nd Street: <a href="http://sgstaging-civicworks.dotcloud.com/havcmgg0">62nd Street</a>.</p>
+      <p>Intersections on Broadway that are hard to cross: <a href="{% url 'index' %}map/havcrblg">Broadway blues</a>.</p>
+      <p>Great places along the Hudson River: <a href="{% url 'index' %}map/havcjcjj">Good and bad places along the Hudson</a>.</p>
+      <p>Good and bad things about 62nd Street: <a href="{% url 'index' %}map/havcmgg0">62nd Street</a>.</p>
 
       <h3 name="about-anchor" id="about-anchor">What's this website?</h3>
       <p>Stomping Ground is a project from <a href="http://openplans.org">OpenPlans</a>. We want to make it easy for anyone to tell their neighbors about good and bad places to walk. We're imagining that neighbors who care about walking issues can set up a map for their neighborhood, or schools can use it to map what's good and bad about walking to school. Together, all the information added on individual maps will show a detailed picture of walking in that area.</p>
