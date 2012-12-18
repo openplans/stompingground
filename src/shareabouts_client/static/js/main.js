@@ -322,6 +322,10 @@ var StompingGround = StompingGround || {};
     $controlMarker.on('mousedown', function(event) {
       event.stopPropagation();
     });
+
+    $controlMarker.on('touchstart', function(event) {
+      event.stopPropagation();
+    });
   }
 
 /* ==============================
