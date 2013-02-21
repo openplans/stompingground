@@ -1,0 +1,88 @@
+{% load jstemplate %}
+{% load compress %}
+{% load i18n %}
+{% load url from future %}
+{% load shareabouts_utils %}
+{% load verbatim %}
+
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en" class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=IE7">
+
+  <title>Stomping Ground Dashboard</title>
+
+  <!-- Favicon & Progressively-Enhanced Touch Icons: http://mathiasbynens.be/notes/touch-icons#sizes -->
+  <link rel="shortcut icon" href="{{ STATIC_URL }}css/images/favicon.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="{{ STATIC_URL }}css/images/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="{{ STATIC_URL }}css/images/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="{{ STATIC_URL }}css/images/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" href="{{ STATIC_URL }}css/images/apple-touch-icon.png">
+
+  <!-- Legacy HTML5 & Media Queries -->
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+  <![endif]-->
+
+  <link href="{{ STATIC_URL }}lib/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+  <link href="{{ STATIC_URL }}lib/datatables/datatables-bootstrap.css" rel="stylesheet">
+  <link href="{{ STATIC_URL }}css/main.css" rel="stylesheet" media="screen">
+  <link href="{{ STATIC_URL }}css/admin.css" rel="stylesheet" media="screen">
+
+  <!-- Google Webfonts -->
+  <link href='http://fonts.googleapis.com/css?family=Cabin+Sketch:700|Chelsea+Market' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+  <header id="branding" role="banner">
+    <hgroup id="site-marquee">
+      <h1 id="site-title">Stomping Ground</h1>
+      <h2 id="site-description">Dashboard</h2>
+    </hgroup>
+  </header>
+
+  <div class="container">
+
+    <h1>All Maps</h1>
+    <div id="maps-list" class="table table-bordered table-hover"></div>
+
+    {% verbatim %}
+    <script id="park-maps-template" type="text/x-handlebars-template">
+      <ul>
+        {{# maps }}
+        <li>
+          <a href="{{ url }}" target="_blank">{{ title }} ({{ id }})</a><br>
+          Created at {{ created }}<br>
+          Thumbnail at {{ thumb }}<br>
+        </li>
+        {{/ maps }}
+      </ul>
+    </script>
+    {% endverbatim %}
+
+  </div>
+
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js "></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
+  <script src="{{ STATIC_URL }}lib/bootstrap/js/bootstrap.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/jquery.dataTables.min.js"></script>
+  <script src="{{ STATIC_URL }}lib/datatables/datatables-bootstrap.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.js"></script>
+  <script src="{{ STATIC_URL }}js/utils.js"></script>
+  <script src="{{ STATIC_URL }}js/models.js"></script>
+
+  <script>
+    var StompingGround = StompingGround || {};
+    StompingGround.mapRoot = "{% url 'map' %}";
+  </script>
+
+  <script src="{{ STATIC_URL }}js/dashboard.js"></script>
+</body>
+</html>

@@ -17,6 +17,14 @@ def make_resource_uri(resource, root):
 
 
 @ensure_csrf_cookie
+def dashboard(request):
+
+    # Pull in any extra context values
+    context = settings.SHAREABOUTS.get('CONTEXT', {})
+    return render(request, 'dashboard.html', context)
+
+
+@ensure_csrf_cookie
 def map_view(request):
 
     # Pull in any extra context values
