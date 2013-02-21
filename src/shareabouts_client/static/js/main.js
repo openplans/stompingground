@@ -8,26 +8,9 @@ var StompingGround = StompingGround || {};
  * ============================== */
 
   // Icons
-  badIcon = L.icon({
-    iconUrl: '/static/img/marker-heart-broken.png',
-    iconSize: [51, 46],
-    iconAnchor: [25, 26],
-    popupAnchor: [1, -26]
-  });
-
-  goodIcon = L.icon({
-    iconUrl: '/static/img/marker-heart.png',
-    iconSize: [51, 46],
-    iconAnchor: [25, 26],
-    popupAnchor: [1, -26]
-  });
-
-  commentIcon = L.icon({
-    iconUrl: '/static/img/marker-comment.png',
-    iconSize: [51, 46],
-    iconAnchor: [25, 26],
-    popupAnchor: [1, -26]
-  });
+  badIcon = L.icon(StompingGround.Config.icons.bad);
+  goodIcon = L.icon(StompingGround.Config.icons.good);
+  commentIcon = L.icon(StompingGround.Config.icons.comment);
 
   placeTypes = {
     'good': {
