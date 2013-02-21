@@ -8,9 +8,8 @@ var StompingGround = StompingGround || {};
  * ============================== */
 
   // Icons
-  badIcon = L.icon(StompingGround.Config.icons.bad);
-  goodIcon = L.icon(StompingGround.Config.icons.good);
-  commentIcon = L.icon(StompingGround.Config.icons.comment);
+  badIcon = L.icon(StompingGround.Config.icons.one);
+  goodIcon = L.icon(StompingGround.Config.icons.two);
 
   placeTypes = {
     'good': {
@@ -23,12 +22,6 @@ var StompingGround = StompingGround || {};
       'default': badIcon,
       'label': 'Bad',
       'clickable': false,
-      'onPostInit': markerPostInit
-    },
-    'comment': {
-      'default': commentIcon,
-      'label': 'Comment',
-      'clickable': true,
       'onPostInit': markerPostInit
     }
   };

@@ -21,6 +21,7 @@ def dashboard(request):
 
     # Pull in any extra context values
     context = settings.SHAREABOUTS.get('CONTEXT', {})
+    context['request'] = request
     return render(request, 'dashboard.html', context)
 
 
@@ -29,6 +30,7 @@ def map_view(request):
 
     # Pull in any extra context values
     context = settings.SHAREABOUTS.get('CONTEXT', {})
+    context['request'] = request
     return render(request, 'map.html', context)
 
 

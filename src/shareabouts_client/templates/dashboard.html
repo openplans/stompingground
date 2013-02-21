@@ -59,7 +59,7 @@
         <li>
           <a href="{{ url }}" target="_blank">{{ title }} ({{ id }})</a><br>
           Created at {{ created }}<br>
-          Thumbnail at {{ thumb }}<br>
+          <img src="{{ thumb }}" /><br>
         </li>
         {{/ maps }}
       </ul>
@@ -68,6 +68,11 @@
 
   </div>
 
+  <script>
+    var StompingGround = StompingGround || {};
+    StompingGround.mapRoot = "{% url 'map' %}";
+    StompingGround.siteRoot = "{{ request.get_host }}";
+  </script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js "></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
@@ -77,12 +82,7 @@
   <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.js"></script>
   <script src="{{ STATIC_URL }}js/utils.js"></script>
   <script src="{{ STATIC_URL }}js/models.js"></script>
-
-  <script>
-    var StompingGround = StompingGround || {};
-    StompingGround.mapRoot = "{% url 'map' %}";
-  </script>
-
+  <script src="{{ STATIC_URL }}js/config.js"></script>
   <script src="{{ STATIC_URL }}js/dashboard.js"></script>
 </body>
 </html>

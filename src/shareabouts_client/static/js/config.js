@@ -4,25 +4,16 @@ var StompingGround = StompingGround || {};
   StompingGround.Config = {
     icons: {
       bad: {
-        iconUrl: '/static/img/marker-heart-broken.png',
-        iconThumbUrl: '/static/img/marker-heart-broken.png',
-        iconSize: [51, 46],
-        iconAnchor: [25, 26],
-        popupAnchor: [1, -26]
+        iconUrl: StompingGround.siteRoot + '/static/img/markers/sticker-0d85e9.png',
+        iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-0d85e9.png',
+        iconSize: [45, 61],
+        iconAnchor: [21, 50]
       },
       good: {
-        iconUrl: '/static/img/marker-heart.png',
-        iconThumbUrl: '/static/img/marker-heart.png',
-        iconSize: [51, 46],
-        iconAnchor: [25, 26],
-        popupAnchor: [1, -26]
-      },
-      comment: {
-        iconUrl: '/static/img/marker-comment.png',
-        iconThumbUrl: '/static/img/marker-comment.png',
-        iconSize: [51, 46],
-        iconAnchor: [25, 26],
-        popupAnchor: [1, -26]
+        iconUrl: StompingGround.siteRoot + '/static/img/markers/sticker-fa307d.png',
+        iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-fa307d.png',
+        iconSize: [45, 61],
+        iconAnchor: [21, 50]
       }
     }
   };
