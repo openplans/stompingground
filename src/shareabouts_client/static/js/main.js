@@ -88,10 +88,13 @@ var StompingGround = StompingGround || {};
       Backbone.history.start({pushState: true});
     },
     defaultRoute: function(){
+      $('body').addClass('edit');
       initTools();
       this.navigate('/');
     },
     fetch: function(id) {
+      $('body').addClass('view');
+
       // Let the user know that you're loading
       $('#loading-map-modal')
         .modal({backdrop: 'static', keyboard: 'false', show: true});

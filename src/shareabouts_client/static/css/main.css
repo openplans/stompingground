@@ -260,6 +260,22 @@ button {width: auto; overflow: visible;}
   z-index: 100;
 }
 
+.view #map {
+  left: 300px;
+}
+
+.view #comments {
+  position: absolute;
+  top: 5em;
+  left: 0;
+  bottom: 0;
+  right: 300px;
+}
+
+.edit #comments {
+  display:none;
+}
+
 .leaflet-control-zoom {
   background: transparent;
   padding: 0;
