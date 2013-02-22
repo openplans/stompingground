@@ -40,6 +40,7 @@
 
 </head>
 <body>
+  <div id="fb-root"></div>
   <header id="branding" role="banner">
     <hgroup id="site-marquee">
       <h1 id="site-title">Stomping Ground</h1>
@@ -60,6 +61,7 @@
           <a href="{{ url }}" target="_blank">{{ title }} ({{ id }})</a><br>
           Created at {{ created }}<br>
           <img src="{{ thumb }}" /><br>
+          <div class="fb-like" data-url="{{ url }}" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true"></div>
         </li>
         {{/ maps }}
       </ul>

@@ -27,7 +27,7 @@ var StompingGround = StompingGround || {};
 
       mapsContext['maps'].push({
         id: first.map_id,
-        url: SG.mapRoot + id,
+        url: 'http://' + SG.siteRoot +  SG.mapRoot + id,
         title: first.map_title,
         created: first.created_datetime,
         thumb: thumbURL
@@ -35,6 +35,15 @@ var StompingGround = StompingGround || {};
     }); // <-- each placesById
 
     $('#maps-list').html(mapsTemplate(mapsContext));
+
+    // Init Facebook widgets after the markup is in place
+    (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id; js.async = true;
+      js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
   });
 
   collection.fetch();
