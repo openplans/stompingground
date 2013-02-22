@@ -20,6 +20,24 @@ var StompingGround = StompingGround || {};
     return (_.isArray(a) && _.size(a)) || 0;
   }
 
+  function initMap(data) {
+    var map = L.map('heatmap', SG.Config.map),
+        layer = L.tileLayer(SG.Config.layer.url, SG.Config.layer).addTo(map);
+        heatmapLayer = new L.TileLayer.HeatCanvas({},{
+          'step':0.5,
+          'degree':HeatCanvas.LINEAR,
+          'opacity':0.7}
+        ),
+        heatmapData = [];
+
+    _.each(data, function(obj, i) {
+      heatmapData[i] = {lat: obj.location.lat, lon: obj.location.lng, v: 20};
+    });
+
+    heatmapLayer.data = heatmapData;
+    map.addLayer(heatmapLayer);
+  }
+
   collection.on('reset', function(c) {
     var data = c.toJSON();
 
@@ -50,6 +68,9 @@ var StompingGround = StompingGround || {};
     };
 
     $('#admin-table').dataTable(tableOptions);
+
+
+    initMap(data);
   });
 
   collection.fetch();

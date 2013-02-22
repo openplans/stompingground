@@ -2,6 +2,23 @@ var StompingGround = StompingGround || {};
 
 (function(SG, S, $) {
   StompingGround.Config = {
+    map: {
+      center: [40.7873, -73.9753],
+      zoom: 17
+    },
+    layer: {
+      url: 'http://{s}.tiles.mapbox.com/v3/openplans.map-dmar86ym/{z}/{x}/{y}.png',
+      minZoom: 15,
+      maxZoom: 17,
+      attribution: 'Map data &copy; OpenStreetMap contributors, CC-BY-SA <a href="http://mapbox.com/about/maps" target="_blank">Terms &amp; Feedback</a>'
+    },
+    staticMap: {
+      urlRoot: 'http://api.tiles.mapbox.com/v3/openplans.map-dmar86ym/',
+      width: 240,
+      height: 240,
+      center: [40.7873, -73.9753],
+      zoom: 17
+    },
     placeTypes: {
       bad: {
         label: 'Bad',

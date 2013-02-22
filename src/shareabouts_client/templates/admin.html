@@ -34,6 +34,11 @@
   <link href="{{ STATIC_URL }}css/main.css" rel="stylesheet" media="screen">
   <link href="{{ STATIC_URL }}css/admin.css" rel="stylesheet" media="screen">
 
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.css" />
+  <!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.ie.css" />
+  <![endif]-->
+
   <!-- Google Webfonts -->
   <link href='http://fonts.googleapis.com/css?family=Cabin+Sketch:700|Chelsea+Market' rel='stylesheet' type='text/css'>
 
@@ -46,11 +51,26 @@
     </hgroup>
   </header>
 
-  <div class="container">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span3">
+        <ul class="nav nav-tabs nav-stacked">
+          <li><a href="#maplist">Map List</a></li>
+          <li><a href="#heatmap">Heat Map</a></li>
+        </ul>
+      </div>
+      <div class="span9">
+        <section id="maplist">
+          <h1>Map List</h1>
+          <table id="admin-table" class="table table-bordered table-hover"></table>
+        </section>
 
-    <h1>All Maps</h1>
-    <table id="admin-table" class="table table-bordered table-hover"></table>
-
+        <section id="maplist">
+          <h1>Heat Map</h1>
+          <div id="heatmap">map</div>
+        </section>
+      </div>
+    </div>
   </div>
 
   <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js "></script>
@@ -59,7 +79,12 @@
   <script src="{{ STATIC_URL }}lib/bootstrap/js/bootstrap.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/jquery.dataTables.min.js"></script>
   <script src="{{ STATIC_URL }}lib/datatables/datatables-bootstrap.js"></script>
+  <script src="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js"></script>
+  <script src="{{ STATIC_URL }}lib/heatcanvas.js"></script>
+  <script src="{{ STATIC_URL }}lib/heatcanvas-worker.js"></script>
+  <script src="{{ STATIC_URL }}lib/heatcanvas-leaflet.js"></script>
   <script src="{{ STATIC_URL }}js/utils.js"></script>
+  <script src="{{ STATIC_URL }}js/config.js"></script>
   <script src="{{ STATIC_URL }}js/models.js"></script>
   <script src="{{ STATIC_URL }}js/admin.js"></script>
 </body>
