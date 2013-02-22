@@ -36,33 +36,43 @@
   <link href="{{ STATIC_URL }}css/admin.css" rel="stylesheet" media="screen">
 
   <!-- Google Webfonts -->
-  <link href='http://fonts.googleapis.com/css?family=Cabin+Sketch:700|Chelsea+Market' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Changa+One:400,400italic' rel='stylesheet' type='text/css'>
 
 </head>
 <body>
   <div id="fb-root"></div>
   <header id="branding" role="banner">
     <hgroup id="site-marquee">
-      <h1 id="site-title">Stomping Ground</h1>
-      <h2 id="site-description">Dashboard</h2>
+      <h1 id="site-title"><a href="{% url 'dashboard' %}">Stomping Ground</a></h1>
+      <h2 id="site-description">NYC Community Board 4</h2>
     </hgroup>
   </header>
 
-  <div class="container">
+  <div id="main" class="container-fluid">
 
-    <h1>All Maps</h1>
-    <div id="maps-list" class="table table-bordered table-hover"></div>
+    <div class="hero-unit">
+      <p>The welcome message goes hereto let you know what the site isand how to use it. <a href="#">Learn more&hellip;</a></p>
+      <strong><a href="{% url 'map' %}" class="btn btn-large btn-info btn-block btn-block-hero">Add your map!</a></strong>
+    </div>
+
+    <div id="maps-list" class=""></div>
 
     {% verbatim %}
     <script id="park-maps-template" type="text/x-handlebars-template">
-      <ul>
+      <ul class="maps-list">
         {{# maps }}
-        <li>
-          <a href="{{ url }}" target="_blank">{{ title }} ({{ id }})</a><br>
-          Created at {{ created }}<br>
-          <img src="{{ thumb }}" /><br>
-          <div class="fb-like" data-url="{{ url }}" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true"></div>
-          <div><span class="fb-comments-count" data-href="{{ url }}">0</span> Comments</div>
+        <li class="maps-list-item" id="map-{{ id }}">
+          <div class="well well-small">
+            <a href="{{ url }}" class="map-permalink">
+              <img src="{{ thumb }}" class="map-thumbnail">
+              <span class="maps-list-item-meta">
+                <span class="title">{{ title }}</span>
+                <span class="timestamp">{{ created }}</span>
+                <span class="comment-count"><span class="fb-comments-count" data-href="{{ url }}">0</span> Comment(s)</span>
+              </span>
+            </a>
+            <div class="fb-like" data-url="{{ url }}" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true"></div>
+          </div>
         </li>
         {{/ maps }}
       </ul>
