@@ -46,11 +46,26 @@
     </hgroup>
   </header>
 
-  <div class="container">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span3">
+        <ul class="nav nav-tabs nav-stacked">
+          <li><a href="#maplist">Map List</a></li>
+          <li><a href="#heatmap">Heat Map</a></li>
+        </ul>
+      </div>
+      <div class="span9">
+        <section id="maplist">
+          <h1>Map List</h1>
+          <table id="admin-table" class="table table-bordered table-hover"></table>
+        </section>
 
-    <h1>All Maps</h1>
-    <table id="admin-table" class="table table-bordered table-hover"></table>
-
+        <section id="maplist">
+          <h1>Heat Map</h1>
+          <div id="heatmap">map</div>
+        </section>
+      </div>
+    </div>
   </div>
 
   <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js "></script>
