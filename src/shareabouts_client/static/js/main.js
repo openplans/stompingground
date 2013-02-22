@@ -1,30 +1,21 @@
 var StompingGround = StompingGround || {};
 
 (function(SG, S, $, L) {
-  var collection, mapView, map, goodIcon, badIcon, placeTypes, router;
+  var placeTypes = {},
+      collection, mapView, map, router;
 
 /* ==============================
  * Config
  * ============================== */
 
-  // Icons
-  badIcon = L.icon(StompingGround.Config.icons.good);
-  goodIcon = L.icon(StompingGround.Config.icons.bad);
-
-  placeTypes = {
-    'good': {
-      'default': goodIcon,
-      'label': 'Good',
+  _.each(StompingGround.Config.placeTypes, function(config, key) {
+    placeTypes[key] = {
+      'default': L.icon(config.icon),
+      'label': config.label,
       'clickable': false,
       'onPostInit': markerPostInit
-    },
-    'bad': {
-      'default': badIcon,
-      'label': 'Bad',
-      'clickable': false,
-      'onPostInit': markerPostInit
-    }
-  };
+    };
+  });
 
   function markerPostInit() {
     function elementsIntersect($a, $b) {
