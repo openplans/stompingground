@@ -8,8 +8,8 @@ var StompingGround = StompingGround || {};
  * ============================== */
 
   // Icons
-  badIcon = L.icon(StompingGround.Config.icons.one);
-  goodIcon = L.icon(StompingGround.Config.icons.two);
+  badIcon = L.icon(StompingGround.Config.icons.good);
+  goodIcon = L.icon(StompingGround.Config.icons.bad);
 
   placeTypes = {
     'good': {
