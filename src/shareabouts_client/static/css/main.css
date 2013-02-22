@@ -31,6 +31,11 @@
   text-overflow: ellipsis;
 }
 
+#branding nav {
+  float: right;
+  padding: 15px 0 0 0;
+}
+
 
 /* =Maps List
 -------------------------------------------------------------- */

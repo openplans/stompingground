@@ -65,17 +65,14 @@
     SG.mapDoneButtonTooltipText = 'Good job! Be sure to click this when you\'re done to save you\'re map.';
   </script>
 
-	<header id="branding" role="banner">
-		<hgroup id="site-marquee">
-		  <h1 id="site-title">Stomping Ground</h1>
-			<h2 id="site-description">Make a map of walking around your neighborhood</h2>
-		</hgroup>
-		<nav>
-		  <input type="checkbox" id="nav-bttn-input" class="hidden"><label id="nav-bttn" for="nav-bttn-input">&equiv;</label>
-		  <ul id="access">
-		    <li class="clearfix"><a href="#intro-modal" data-toggle="modal">Instructions</a></li>
-	    </ul>
-	  </nav>
+  <header id="branding" role="banner">
+    <hgroup id="site-marquee">
+      <h1 id="site-title"><a href="{% url 'dashboard' %}">Stomping Ground</a></h1>
+      <h2 id="site-description">NYC Community Board 4</h2>
+    </hgroup>
+    <nav>
+      <strong><a href="#intro-modal" data-toggle="modal" class="btn btn-info">Help</a></strong>
+    </nav>
   </header>
 
   <div id="map"></div>
