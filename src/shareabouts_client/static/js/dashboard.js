@@ -2,8 +2,6 @@ var StompingGround = StompingGround || {};
 
 (function(SG, S, $) {
   var collection = new S.PlaceCollection(),
-      thumbCenter = [-73.9753, 40.7873],
-      thumbZoom = 17,
       mapsTemplateHtml = $('#park-maps-template').html(),
       mapsTemplate = Handlebars.compile(mapsTemplateHtml),
       mapsContext = {'maps': []};
@@ -23,7 +21,9 @@ var StompingGround = StompingGround || {};
       });
       // TODO: Should we limit the size of this URL to something like 2048
       //       characters?
-      thumbURL = 'http://api.tiles.mapbox.com/v3/openplans.map-dmar86ym/' + encodeURIComponent(placeURLData.join(',')) + '/'+thumbCenter.join(',')+',15/240x240.png';
+      thumbURL = SG.Config.staticMap.urlRoot + encodeURIComponent(placeURLData.join(',')) +
+        '/'+SG.Config.staticMap.center[1]+','+SG.Config.staticMap.center[0]+','+SG.Config.staticMap.zoom+'/'+
+        SG.Config.staticMap.width+'x'+SG.Config.staticMap.height+'.png';
 
       mapsContext['maps'].push({
         id: first.map_id,

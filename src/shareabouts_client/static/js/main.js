@@ -138,15 +138,8 @@ var StompingGround = StompingGround || {};
   mapView = new S.MapView({
     el: '#map',
     mapConfig: {
-      options: {
-        center: [40.7873, -73.9753],
-        zoom: 17
-      },
-      base_layer: L.tileLayer('http://{s}.tiles.mapbox.com/v3/doittgis.NYC_DoITT_base/{z}/{x}/{y}.png', {
-        attribution: 'Map tiles &copy; <a href="http://www.nyc.gov/doitt/">New York City DoITT</a>. Based on the latest planimetric data.',
-        maxZoom: 18,
-        minZoom: 15
-      })
+      options: SG.Config.map,
+      base_layer: L.tileLayer(SG.Config.layer.url, SG.Config.layer)
     },
     collection: collection,
     router: null,
