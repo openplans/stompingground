@@ -108,7 +108,12 @@
   margin-top: 0;
 }
 
+#comments {
+  display: none;
+}
+
 .view #comments {
+  display: block;
   position: absolute;
   top: 100%;
   right: 0;
@@ -118,11 +123,6 @@
   padding: 10px 10px 30px 10px;
 }
 .fb-comments, .fb-comments span, .fb-comments iframe { width: 100% !important; }
-
-.edit #comments {
-  display:none;
-}
-
 
 .tooltip {
   font-size: 1em;
