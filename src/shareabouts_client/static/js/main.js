@@ -121,8 +121,8 @@ var StompingGround = StompingGround || {};
           // Zoom to the bounds of the map places
           map.fitBounds(placeBounds.pad(0.02));
 
-          // Add the map title to the header
-          $('#site-description').text(collection.at(0).get('map_title'));
+          // Add the map title above the comments
+          $('#map-title').text(collection.at(0).get('map_title'));
 
           // Done loading!
           $('#loading-map-modal').modal('hide');

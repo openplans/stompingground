@@ -97,20 +97,32 @@
 }
 
 .view #map {
-  left: 300px;
+  bottom: 100px;
+}
+
+
+/* =Comments
+-------------------------------------------------------------- */
+
+#map-title {
+  margin-top: 0;
 }
 
 .view #comments {
   position: absolute;
-  top: 5em;
+  top: 100%;
+  right: 0;
+  bottom: auto;
   left: 0;
-  bottom: 0;
-  right: 300px;
+  margin-top: -100px;
+  padding: 10px 10px 30px 10px;
 }
+.fb-comments, .fb-comments span, .fb-comments iframe { width: 100% !important; }
 
 .edit #comments {
   display:none;
 }
+
 
 .tooltip {
   font-size: 1em;
@@ -375,6 +387,24 @@ input[name="map-title"] {
     width: 268px;
   }
 
+
+  .view #map {
+    left: 350px;
+    bottom: 0;
+  }
+
+  .view #comments {
+    top: 4.5em;
+    bottom: 0;
+    right: auto;
+    overflow: scroll;
+    margin-top: 0;
+    width: 350px;
+  	-webkit-box-sizing: border-box;
+  	   -moz-box-sizing: border-box;
+  	        box-sizing: border-box;
+  }
+
 }
 
 @media only screen and (min-width: 1024px) {
@@ -384,9 +414,20 @@ input[name="map-title"] {
     margin-left: -380px;
   }
 
+  /* make the logo bigger */
+  #branding { height: 6em; }
+  #site-title { font-size: 2.25em; }
+  #site-description { font-size: 1.5em; }
+
+  .view #map { top: 6em; left: 400px; }
+  .view #comments { top: 6em; width: 400px; }
+
 }
 
 @media only screen and (min-width: 1300px) {
+
+  .view #map { left: 500px; }
+  .view #comments { width: 500px; }
 
 }
 
