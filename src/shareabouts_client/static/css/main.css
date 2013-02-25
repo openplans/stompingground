@@ -76,6 +76,9 @@
   line-height: 1.5em;
   overflow: hidden;
 }
+.maps-list-item-meta .meta-sep { 
+  color: #ddd;
+}
 .maps-list-item-meta .title {
   font-weight: bold;
   display: block;
