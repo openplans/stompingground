@@ -1,3 +1,8 @@
+
+body {
+  background: #e9eff2;
+}
+
 /* =Header
 -------------------------------------------------------------- */
 
@@ -8,7 +13,7 @@
   padding: 0 10px;
   margin: 0 0 20px 0;
   background: #fff;
-  box-shadow: 0px 0 5px rgba(0,0,0,0.2);
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
 }
 #site-marquee {
   float: left;
@@ -35,6 +40,20 @@
   float: right;
   padding: 15px 0 0 0;
 }
+
+#add-map-btn { 
+  display: none; 
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 89px;
+  height: 92px;
+  background: transparent url(../img/add-map-btn.png) left bottom no-repeat scroll;
+  text-indent: -9999px;
+}
+.view #add-map-btn, #add-map-btn.visible { display: block; }
+.view #add-map-btn { position: absolute; }
+.view #help-btn { display: none; }
 
 
 /* =Maps List
@@ -114,6 +133,10 @@
 
 #comments {
   display: none;
+  background: #fff;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  position: relative;
+  z-index: 150;
 }
 
 .view #comments {
@@ -391,6 +414,7 @@ input[name="map-title"] {
     width: 268px;
   }
 
+  #add-map-btn.visible { position: absolute; }
 
   .view #map {
     left: 350px;
@@ -419,13 +443,16 @@ input[name="map-title"] {
   }
 
   /* make the logo bigger */
-  #branding { height: 6em; }
-  #site-title { font-size: 2.25em; }
-  #site-description { font-size: 1.5em; }
+/*  #branding { height: 6em; }*/
+/*  #site-title { font-size: 2.25em; }*/
+/*  #site-description { font-size: 1.5em; }*/
 
-  #map { top: 6em; }
+/*  #map { top: 6em; }*/
   .view #map { left: 400px; }
-  .view #comments { top: 6em; width: 400px; }
+  .view #comments { 
+/*    top: 6em; */
+    width: 400px; 
+  }
 
 }
 
