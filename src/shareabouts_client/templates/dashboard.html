@@ -62,7 +62,7 @@
 
     {% verbatim %}
     <script id="park-maps-template" type="text/x-handlebars-template">
-      <ul class="maps-list">
+      <ul class="maps-list clearfix">
         {{# maps }}
         <li class="maps-list-item" id="map-{{ id }}">
           <div class="well well-small">
@@ -82,6 +82,12 @@
       </ul>
     </script>
     {% endverbatim %}
+
+    <div class="navbar site-footer">
+      <div class="navbar-inner">
+        <p class="navbar-text pull-right">A Project of <a class="" href="http://openplans.org/">OpenPlans</a></p>
+      </div>
+    </div>
 
   </div>
 

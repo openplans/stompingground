@@ -59,6 +59,19 @@ body {
 /* =Maps List
 -------------------------------------------------------------- */
 
+.site-footer {
+  margin-top: 20px;
+  margin-bottom: 60px;
+}
+.site-footer .navbar-inner {
+  background: #fff;
+  border-radius: 6px;
+}
+
+
+/* =Maps List
+-------------------------------------------------------------- */
+
 .maps-list {
   list-style: none;
   margin: 0;
