@@ -22,19 +22,18 @@ var StompingGround = StompingGround || {};
 
   function initMap(data) {
     var map = L.map('heatmap', SG.Config.map),
-        layer = L.tileLayer(SG.Config.layer.url, SG.Config.layer).addTo(map);
-        heatmapLayer = new L.TileLayer.HeatCanvas({},{
-          'step':0.5,
-          'degree':HeatCanvas.LINEAR,
-          'opacity':0.7}
-        ),
+        layer = L.tileLayer(SG.Config.layer.url, SG.Config.layer).addTo(map),
+        heatmapLayer,
         heatmapData = [];
 
     _.each(data, function(obj, i) {
-      heatmapData[i] = {lat: obj.location.lat, lon: obj.location.lng, v: 20};
+      heatmapData[i] = [[obj.location.lat, obj.location.lng], 20];
     });
 
-    heatmapLayer.data = heatmapData;
+    heatmapLayer = new L.ImageOverlay.HeatCanvas(heatmapData,{
+      bgcolor: [0, 0, 0, 0]
+    });
+
     map.addLayer(heatmapLayer);
   }
 
