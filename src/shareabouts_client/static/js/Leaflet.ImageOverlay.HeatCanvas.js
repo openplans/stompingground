@@ -32,14 +32,10 @@ L.ImageOverlay.HeatCanvas = L.ImageOverlay.Canvas.extend({
   },
 
   _reset: function () {
-    var canvas   = this.canvas,
-        topLeft = this._map.latLngToLayerPoint(this._bounds.getNorthWest()),
-        size = this._map.latLngToLayerPoint(this._bounds.getSouthEast())._subtract(topLeft),
+    L.ImageOverlay.Canvas.prototype._reset.call(this);
+
+    var topLeft = this._map.latLngToLayerPoint(this._bounds.getNorthWest()),
         i, len, pixel;
-
-    L.DomUtil.setPosition(canvas, topLeft);
-
-    this.heatCanvas.resize(size.x, size.y);
 
     this.heatCanvas.clear();
     for (i=0, len=this.data.length; i<len; i++) {
