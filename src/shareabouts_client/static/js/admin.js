@@ -27,11 +27,20 @@ var StompingGround = StompingGround || {};
         heatmapData = [];
 
     _.each(data, function(obj, i) {
-      heatmapData[i] = [[obj.location.lat, obj.location.lng], 20];
+      heatmapData[i] = [[obj.location.lat, obj.location.lng], 1];
     });
 
-    heatmapLayer = new L.ImageOverlay.HeatCanvas(heatmapData,{
-      bgcolor: [0, 0, 0, 0]
+    heatmapLayer = new L.ImageOverlay.HeatCanvas(heatmapData, {
+      bgcolor: [0, 0, 0, 0],
+      bufferRatio: 0.05,
+      step: 0.05,
+      colorscheme: function(value){
+        var h = (1 - value);
+        var l = 0.5;
+        var s = 1;
+        var a = value + 0.03;
+        return [h, s, l, a];
+      }
     });
 
     map.addLayer(heatmapLayer);
