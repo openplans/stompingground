@@ -13,9 +13,13 @@ L.ImageOverlay.HeatCanvas = L.ImageOverlay.Canvas.extend({
   },
 
   initialize: function (data, options) { // ([[latLng, value], ...], Object)
-    var i, len;
-
     L.setOptions(this, options);
+
+    this.setData(data);
+  },
+
+  setData: function(data) {
+    var i, len;
 
     this._bounds = L.latLngBounds([data[0][0], data[0][0]]);
 
@@ -27,7 +31,11 @@ L.ImageOverlay.HeatCanvas = L.ImageOverlay.Canvas.extend({
       this._bounds = this._bounds.pad(this.options.bufferRatio);
     }
 
-    this.data = data;
+    this._data = data;
+
+    if (this.canvas) {
+      this._reset();
+    }
   },
 
   _initImage: function () {
@@ -45,12 +53,12 @@ L.ImageOverlay.HeatCanvas = L.ImageOverlay.Canvas.extend({
         i, len, pixel;
 
     this.heatCanvas.clear();
-    for (i=0, len=this.data.length; i<len; i++) {
-      pixel = this._map.latLngToLayerPoint(this.data[i][0]);
+    for (i=0, len=this._data.length; i<len; i++) {
+      pixel = this._map.latLngToLayerPoint(this._data[i][0]);
       this.heatCanvas.push(
               Math.floor(pixel.x - topLeft.x),
               Math.floor(pixel.y - topLeft.y),
-              this.data[i][1]);
+              this._data[i][1]);
     }
     this.heatCanvas.render(this.options.step, this.options.degree, this.options.colorscheme);
   }
