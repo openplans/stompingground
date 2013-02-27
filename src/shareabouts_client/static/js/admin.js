@@ -1,7 +1,8 @@
 var StompingGround = StompingGround || {};
 
 (function(SG, S, $) {
-  var collection, aoColumns, aaData;
+  var _heatmapData = {},
+      collection, aoColumns, aaData, _heatmapLayer;
 
   aoColumns = [
     {sTitle: 'Map Name'},
@@ -22,15 +23,18 @@ var StompingGround = StompingGround || {};
 
   function initMap(data) {
     var map = L.map('heatmap', SG.Config.map),
-        layer = L.tileLayer(SG.Config.layer.url, SG.Config.layer).addTo(map),
-        heatmapLayer,
-        heatmapData = [];
+        layer = L.tileLayer(SG.Config.layer.url, SG.Config.layer).addTo(map);
+
+    _heatmapData['all'] = [];
 
     _.each(data, function(obj, i) {
-      heatmapData[i] = [[obj.location.lat, obj.location.lng], 1];
+      _heatmapData[obj.location_type] = _heatmapData[obj.location_type] || [];
+
+      _heatmapData['all'][i] = [[obj.location.lat, obj.location.lng], 1];
+      _heatmapData[obj.location_type].push([[obj.location.lat, obj.location.lng], 1]);
     });
 
-    heatmapLayer = new L.ImageOverlay.HeatCanvas(heatmapData, {
+    _heatmapLayer = new L.ImageOverlay.HeatCanvas(_heatmapData['all'], {
       bgcolor: [0, 0, 0, 0],
       bufferRatio: 0.05,
       step: 0.05,
@@ -43,7 +47,20 @@ var StompingGround = StompingGround || {};
       }
     });
 
-    map.addLayer(heatmapLayer);
+    map.addLayer(_heatmapLayer);
+  }
+
+  function initLocationTypeSelector(data) {
+    var $locationTypeSelector = $('#heatmap-location-type'),
+        types = _.uniq(_.pluck(data, 'location_type'));
+
+    _.each(types, function(type, i) {
+      $locationTypeSelector.append('<option value="'+type+'">'+type.charAt(0).toUpperCase() + type.substring(1)+'</option>');
+    });
+
+    $locationTypeSelector.change(function(evt) {
+      _heatmapLayer.setData(_heatmapData[evt.target.value]);
+    });
   }
 
   collection.on('reset', function(c) {
@@ -77,8 +94,8 @@ var StompingGround = StompingGround || {};
 
     $('#admin-table').dataTable(tableOptions);
 
-
     initMap(data);
+    initLocationTypeSelector(data);
   });
 
   collection.fetch();
