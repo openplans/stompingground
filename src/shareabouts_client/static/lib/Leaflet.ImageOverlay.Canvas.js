@@ -3,6 +3,14 @@
  */
 
 L.ImageOverlay.Canvas = L.ImageOverlay.extend({
+  options: {
+    opacity: 1,
+    // Should the pixel of the canvas resize on reset? If false, the CSS width
+    // and height change but not the canvas pixel content. If true, then the
+    // canvas is also resized and new data will need to be provided.
+    resizeCanvas: false
+  },
+
   initialize: function (bounds, options) { // (LatLngBounds, Object)
     this._bounds = L.latLngBounds(bounds);
 
@@ -13,19 +21,20 @@ L.ImageOverlay.Canvas = L.ImageOverlay.extend({
     var topLeft = this._map.latLngToLayerPoint(this._bounds.getNorthWest()),
         size = this._map.latLngToLayerPoint(this._bounds.getSouthEast())._subtract(topLeft);
 
-    this._image = this.canvas = L.DomUtil.create('canvas', 'leaflet-image-layer');
-    this._image.width  = size.x;
-    this._image.height = size.y;
+    // Publicly accessible canvas to draw on.
+    this.canvas = this._image = L.DomUtil.create('canvas', 'leaflet-image-layer');
+    this.canvas.width  = size.x;
+    this.canvas.height = size.y;
 
     if (this._map.options.zoomAnimation && L.Browser.any3d) {
-      L.DomUtil.addClass(this._image, 'leaflet-zoom-animated');
+      L.DomUtil.addClass(this.canvas, 'leaflet-zoom-animated');
     } else {
-      L.DomUtil.addClass(this._image, 'leaflet-zoom-hide');
+      L.DomUtil.addClass(this.canvas, 'leaflet-zoom-hide');
     }
 
     this._updateOpacity();
 
-    L.extend(this._image, {
+    L.extend(this.canvas, {
       galleryimg: 'no',
       onselectstart: L.Util.falseFn,
       onmousemove: L.Util.falseFn,
@@ -34,18 +43,22 @@ L.ImageOverlay.Canvas = L.ImageOverlay.extend({
   },
 
   _reset: function () {
-    var image   = this._image,
-        topLeft = this._map.latLngToLayerPoint(this._bounds.getNorthWest()),
+    var topLeft = this._map.latLngToLayerPoint(this._bounds.getNorthWest()),
         size = this._map.latLngToLayerPoint(this._bounds.getSouthEast())._subtract(topLeft);
 
-    L.DomUtil.setPosition(image, topLeft);
+    L.DomUtil.setPosition(this.canvas, topLeft);
 
-    image.style.width  = size.x + 'px';
-    image.style.height = size.y + 'px';
-  },
+    if (this.options.resizeCanvas) {
+      this.canvas.width  = size.x;
+      this.canvas.height = size.y;
+    }
 
-  _onImageLoad: function () {
-    this.fire('load');
+    this.canvas.style.width  = size.x + 'px';
+    this.canvas.style.height = size.y + 'px';
+
+    // This layer has updated itself per the map's viewreset event. Update
+    // the canvas if you need to.
+    this.fire('viewreset');
   }
 });
 
