@@ -79,7 +79,11 @@
   <div id="map"></div>
 
   <div id="comments">
-    <h3 id="map-title">My Map</h3>
+    <h3>
+      <span id="map-title">My Map</span>
+      <div class="fb-like" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false"></div>
+    </h3>
+    <h5>Add a comment</h5>
     <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-width="300" data-num-posts="10"></div>
   </div>
 
