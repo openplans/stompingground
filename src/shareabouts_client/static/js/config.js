@@ -3,7 +3,7 @@ var StompingGround = StompingGround || {};
 (function(SG, S, $) {
   StompingGround.Config = {
     map: {
-      center: [40.7873, -73.9753],
+      center: [40.7573, -73.9947],
       zoom: 17
     },
     layer: {
@@ -16,7 +16,7 @@ var StompingGround = StompingGround || {};
       urlRoot: 'http://api.tiles.mapbox.com/v3/openplans.map-dmar86ym/',
       width: 240,
       height: 240,
-      center: [40.7873, -73.9753],
+      center: [40.7573, -73.9947],
       zoom: 17
     },
     placeTypes: {
