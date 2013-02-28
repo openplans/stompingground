@@ -54,7 +54,7 @@
   <div id="main" class="container-fluid">
 
     <div class="hero-unit">
-      <p>The welcome message goes hereto let you know what the site isand how to use it. <a href="#">Learn more&hellip;</a></p>
+      <p>The welcome message goes here to let you know what the site is and how to use it. <a href="#">Learn more&hellip;</a></p>
       <strong><a href="{% url 'map' %}" class="btn btn-large btn-info btn-block btn-block-hero">Add your map!</a></strong>
     </div>
 
@@ -75,7 +75,7 @@
                 <span class="comment-count"><span class="fb-comments-count" data-href="{{ url }}">0</span> Comment(s)</span>
               </span>
             </a>
-            <div class="fb-like" data-url="{{ url }}" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true"></div>
+            <div class="fb-like" data-href="{{ url }}" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true"></div>
           </div>
         </li>
         {{/ maps }}
