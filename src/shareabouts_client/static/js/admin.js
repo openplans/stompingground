@@ -22,7 +22,7 @@ var StompingGround = StompingGround || {};
   }
 
   function initMap(data) {
-    var map = L.map('heatmap', SG.Config.map),
+    var map = L.map('adminmap', SG.Config.map),
         layer = L.tileLayer(SG.Config.layer.url, SG.Config.layer).addTo(map);
 
     _heatmapData['all'] = [];
