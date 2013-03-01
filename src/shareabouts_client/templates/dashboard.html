@@ -15,7 +15,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=IE7">
 
-  <title>Stomping Ground Dashboard</title>
+  <title>{{ config.app.title }} | Home</title>
 
   <!-- Favicon & Progressively-Enhanced Touch Icons: http://mathiasbynens.be/notes/touch-icons#sizes -->
   <link rel="shortcut icon" href="{{ STATIC_URL }}css/images/favicon.png">
@@ -43,8 +43,8 @@
   <div id="fb-root"></div>
   <header id="branding" role="banner">
     <hgroup id="site-marquee">
-      <h1 id="site-title"><a href="{% url 'dashboard' %}">Stomping Ground</a></h1>
-      <h2 id="site-description">NYC Community Board 4</h2>
+      <h1 id="site-title"><a href="{% url 'dashboard' %}">{{config.app.name}}</a></h1>
+      <h2 id="site-description">{{config.app.subname}}</h2>
     </hgroup>
     <nav>
       <a href="{% url 'map' %}" id="add-map-btn" class="visible">Add your map!</a>
@@ -54,7 +54,7 @@
   <div id="main" class="container-fluid">
 
     <div class="hero-unit">
-      <p>The welcome message goes here to let you know what the site is and how to use it. <a href="#">Learn more&hellip;</a></p>
+      <p>{{ config.app.description|safe }}</p>
       <strong><a href="{% url 'map' %}" class="btn btn-large btn-info btn-block btn-block-hero">Add your map!</a></strong>
     </div>
 

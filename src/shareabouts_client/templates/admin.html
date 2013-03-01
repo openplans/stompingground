@@ -14,7 +14,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=IE7">
 
-  <title>Stomping Ground Admin</title>
+  <title>{{ config.app.title }} | Admin</title>
 
   <!-- Favicon & Progressively-Enhanced Touch Icons: http://mathiasbynens.be/notes/touch-icons#sizes -->
   <link rel="shortcut icon" href="{{ STATIC_URL }}css/images/favicon.png">
@@ -46,8 +46,8 @@
 <body>
   <header id="branding" role="banner">
     <hgroup id="site-marquee">
-      <h1 id="site-title">Stomping Ground</h1>
-      <h2 id="site-description">Administration</h2>
+      <h1 id="site-title"><a href="{% url 'dashboard' %}">{{config.app.name}}</a></h1>
+      <h2 id="site-description">{{config.app.subname}} Admin</h2>
     </hgroup>
   </header>
 

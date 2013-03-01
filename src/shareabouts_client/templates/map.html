@@ -15,7 +15,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=IE7">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-  <title>Stomping Ground</title>
+  <title>{{ config.app.title }} | Maps</title>
 
   <!-- Favicon & Progressively-Enhanced Touch Icons: http://mathiasbynens.be/notes/touch-icons#sizes -->
   <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.png">
@@ -67,8 +67,8 @@
 
   <header id="branding" role="banner">
     <hgroup id="site-marquee">
-      <h1 id="site-title"><a href="{% url 'dashboard' %}">Stomping Ground</a></h1>
-      <h2 id="site-description">NYC Community Board 4</h2>
+      <h1 id="site-title"><a href="{% url 'dashboard' %}">{{config.app.name}}</a></h1>
+      <h2 id="site-description">{{config.app.subname}}</h2>
     </hgroup>
     <nav>
       <a href="#intro-modal" data-toggle="modal" id="help-btn" class="btn btn-info">Help</a>

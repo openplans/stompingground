@@ -1,0 +1,12 @@
+# Settings for the app
+app:
+  # HTML Title
+  title: Stomping Ground | NYC CB4
+  # Header name
+  name: Stomping Ground
+  # Small text below the name
+  subname: NYC Community Board 4
+  # Meta description that will show up in Google search results
+  meta_description:
+  # Home page description
+  description: The welcome message goes here to let you know what the site is and how to use it. <a href="#">Learn more&hellip;</a>

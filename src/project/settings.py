@@ -14,7 +14,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-    
+
         # Sometimes, you don't need a database for a shareabouts client, but
         # Django still requires a databse setting.  For this case, we can just
         # use the dummy backend.
@@ -144,7 +144,7 @@ INSTALLED_APPS = (
 # Use a test runner that does not use a database.
 TEST_RUNNER = 'shareabouts_client.test_runner.DatabaselessTestSuiteRunner'
 
-# Shareabouts flavor config
+# Shareabouts config
 SHAREABOUTS = {
     'DATASET_ROOT': 'http://api.shareabouts.org/api/v1/datasets/demo-user/demo-data/',
     # The root URL of the dataset API
@@ -153,7 +153,10 @@ SHAREABOUTS = {
     # The API key for writing to the dataset.  You must set this in order to be
     # able to write to the dataset
 
-  # 'CONTEXT': {},
+    'CONFIG': os.path.abspath(os.path.join(os.path.dirname(__file__)))
+    # The path to the config file
+
+    # 'CONTEXT': {},
     # Additional values to make available in the template context
 }
 
