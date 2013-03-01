@@ -53,6 +53,26 @@ var Shareabouts = Shareabouts || {};
       error: function(){}
     },
 
+    fetchWithRetries: function(collection, options, retryCount) {
+      var errorHandler = options.error,
+          retries = 0;
+
+      options.error = function(model, xhr, options) {
+        if (retries < retryCount) {
+          retries++;
+          setTimeout(fetch, retries * 100);
+        } else {
+          errorHandler.call(this, model, xhr, options);
+        }
+      };
+
+      function fetch() {
+        collection.fetch(options);
+      }
+
+      fetch();
+    },
+
     // Cookies! Om nom nom
     // Thanks ppk! http://www.quirksmode.org/js/cookies.html
     cookies: {

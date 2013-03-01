@@ -98,7 +98,13 @@ var StompingGround = StompingGround || {};
     initLocationTypeSelector(data);
   });
 
-  collection.fetch();
+  $(function() {
+    S.Util.fetchWithRetries(collection, {
+      error: function() {
+        $('#error-modal').modal({backdrop: 'static', keyboard: 'false', show: true});
+      }
+    }, 3);
+  });
 
 })(StompingGround, Shareabouts, jQuery);
 

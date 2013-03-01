@@ -38,7 +38,7 @@ var StompingGround = StompingGround || {};
 
     // Init Facebook widgets after the markup is in place
     (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
+      var js, fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) return;
       js = d.createElement(s); js.id = id; js.async = true;
       js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
@@ -46,6 +46,12 @@ var StompingGround = StompingGround || {};
     }(document, 'script', 'facebook-jssdk'));
   });
 
-  collection.fetch();
+  $(function() {
+    S.Util.fetchWithRetries(collection, {
+      error: function() {
+        $('#error-modal').modal({backdrop: 'static', keyboard: 'false', show: true});
+      }
+    }, 3);
+  });
 
 })(StompingGround, Shareabouts, jQuery);

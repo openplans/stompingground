@@ -90,10 +90,12 @@ var StompingGround = StompingGround || {};
     defaultRoute: function(){
       $('body').addClass('edit');
       initTools();
-      this.navigate('/');
     },
     fetch: function(id) {
       $('body').addClass('view');
+
+      // Update the url to reload to this map id
+      $('#error-modal a').attr('href', '/map/' + id);
 
       // Let the user know that you're loading
       $('#loading-map-modal')
@@ -105,7 +107,7 @@ var StompingGround = StompingGround || {};
       });
 
       // Fetch the existing places
-      collection.fetch({
+      S.Util.fetchWithRetries(collection, {
         'data': {'map_id': id},
         'success': function() {
           var placeBounds;
@@ -126,8 +128,15 @@ var StompingGround = StompingGround || {};
 
           // Done loading!
           $('#loading-map-modal').modal('hide');
+        },
+        error: function() {
+          $('#loading-map-modal').modal('hide');
+
+          setTimeout(function() {
+            $('#error-modal').modal({backdrop: 'static', keyboard: 'false', show: true});
+          }, 500);
         }
-      });
+      }, 3);
     }
   });
 
