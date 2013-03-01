@@ -29,7 +29,7 @@ var StompingGround = StompingGround || {};
         id: first.map_id,
         url: 'http://' + SG.siteRoot +  SG.mapRoot + id,
         title: first.map_title,
-        created: first.created_datetime,
+        created: moment(first.created_datetime).fromNow(),
         thumb: thumbURL
       });
     }); // <-- each placesById
