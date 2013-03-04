@@ -153,8 +153,8 @@ SHAREABOUTS = {
     # The API key for writing to the dataset.  You must set this in order to be
     # able to write to the dataset
 
-    'CONFIG': os.path.abspath(os.path.join(os.path.dirname(__file__)))
-    # The path to the config file
+    'CONFIG': os.path.abspath(os.path.dirname(__file__))
+    # The path to the directory containing the config file(s)
 
     # 'CONTEXT': {},
     # Additional values to make available in the template context
