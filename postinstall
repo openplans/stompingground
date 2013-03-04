@@ -18,6 +18,7 @@ with open('/home/dotcloud/environment.json') as f:
 SHAREABOUTS = {
     'DATASET_KEY': env.get('SHAREABOUTS_DATASET_KEY', 'SHAREABOUTS_DATASET_KEY-not-set-in-dotcloud-environment!!!'),
     'DATASET_ROOT': env.get('SHAREABOUTS_DATASET_ROOT', 'SHAREABOUTS_DATASET_ROOT-not-set-in-dotcloud-environment!!!'),
+    'CONFIG': os.path.abspath(os.path.dirname(__file__)),
 
     'CONTEXT': {
         'analytics_key': env.get('SHAREABOUTS_ANALYTICS_KEY', 'SHAREABOUTS_ANALYTICS_KEY-not-set-in-dotcloud-environment!!!'),
