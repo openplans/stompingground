@@ -41,8 +41,8 @@ body {
   padding: 15px 0 0 0;
 }
 
-#add-map-btn { 
-  display: none; 
+#add-map-btn {
+  display: none;
   position: fixed;
   top: 0;
   right: 0;
@@ -108,7 +108,7 @@ body {
   line-height: 1.5em;
   overflow: hidden;
 }
-.maps-list-item-meta .meta-sep { 
+.maps-list-item-meta .meta-sep {
   color: #ddd;
 }
 .maps-list-item-meta .title {
@@ -117,6 +117,16 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.maps-list-item-meta .comment-count {
+  /*FB color*/
+  color: rgb(59, 89, 152);
+  font-size: 11px;
+}
+.maps-list-item-meta .comment-icon {
+  height: 16px;
+  width: 16px;
+  margin-right: 5px;
 }
 
 
@@ -462,9 +472,9 @@ input[name="map-title"] {
 
 /*  #map { top: 6em; }*/
   .view #map { left: 400px; }
-  .view #comments { 
+  .view #comments {
 /*    top: 6em; */
-    width: 400px; 
+    width: 400px;
   }
 
 }
