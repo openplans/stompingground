@@ -448,7 +448,7 @@ input[name="map-title"] {
     top: 4.5em;
     bottom: 0;
     right: auto;
-    overflow: scroll;
+    overflow: auto;
     margin-top: 0;
     width: 350px;
   	-webkit-box-sizing: border-box;
