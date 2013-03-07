@@ -234,11 +234,9 @@ ul#control-markers li img:hover {
   -webkit-transform: rotate(15deg); /* Safari and Chrome */
        -o-transform: rotate(15deg); /* Opera */
 }
-.control-marker-good:hover:after,
-.control-marker-bad:hover:after,
-.control-marker-comment:hover:after {
-  display: block;
-  content: "\0020";
+
+.control-marker-tooltip {
+  display:none;
   position: absolute;
   top: -8px;
   left: 100%;
@@ -249,14 +247,9 @@ ul#control-markers li img:hover {
   padding: 0.25em 0.5em;
   z-index: 5000;
 }
-.control-marker-good:hover:after {
-  content: "Stick on nice-to-walk places.";
-}
-.control-marker-bad:hover:after {
-  content: "Stick on bad-to-walk places.";
-}
-.control-marker-comment:hover:after {
-  content: "Add comments to your map.";
+
+.control-marker:hover .control-marker-tooltip {
+  display: block;
 }
 
 #control-markers-trash {

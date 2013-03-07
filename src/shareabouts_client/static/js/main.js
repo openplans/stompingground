@@ -210,7 +210,7 @@ var StompingGround = StompingGround || {};
 
     // Init the control markers
     _.each(placeTypes, function(obj, key) {
-      setControlMarker(key, obj['default'], $controlMarkerTarget);
+      setControlMarker(key, obj['default'], obj.label, $controlMarkerTarget);
     });
   }
 
@@ -282,12 +282,13 @@ var StompingGround = StompingGround || {};
   }
 
   // Init a new control marker
-  function setControlMarker(placeType, icon, $target) {
+  function setControlMarker(placeType, icon, label, $target) {
     // Append new element to the target
     var $controlMarkerWrapper = $('<li></li>').appendTo($target),
         $controlMarker = ich['control-marker-tpl']({
           placeType: placeType,
-          imgUrl: icon.options.iconUrl
+          imgUrl: icon.options.iconUrl,
+          label: label.toLowerCase()
         }).appendTo($controlMarkerWrapper);
 
     // Attach the icon data to the control marker
