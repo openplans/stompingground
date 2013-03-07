@@ -1,12 +1,12 @@
 # Settings for the app
 app:
   # HTML Title
-  title: Stomping Ground | NYC CB4
+  title: Stomping Ground | Imagine Eakins
   # Header name
-  name: Stomping Ground
+  name: Imagine Eakins
   # Small text below the name
-  subname: NYC Community Board 4
+  subname: What do you want to see in Eakins Oval?
   # Meta description that will show up in Google search results
-  meta_description:
+  meta_description: A demo of Stomping Ground, from OpenPlans
   # Home page description
-  description: The welcome message goes here to let you know what the site is and how to use it. <a href="#">Learn more&hellip;</a>
+  description: What park facilities do you want to see in Eakins Oval? Design your perfect park and share the design! This is a demo of Stomping Ground, a mapping tool from OpenPlans.
