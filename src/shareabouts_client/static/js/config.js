@@ -3,7 +3,7 @@ var StompingGround = StompingGround || {};
 (function(SG, S, $) {
   StompingGround.Config = {
     map: {
-      center: [40.7573, -73.9947],
+      center: [39.9638, -75.1785],
       zoom: 17
     },
     layer: {
@@ -16,26 +16,63 @@ var StompingGround = StompingGround || {};
       urlRoot: 'http://api.tiles.mapbox.com/v3/openplans.map-dmar86ym/',
       width: 240,
       height: 240,
-      center: [40.7573, -73.9947],
+      center: [39.9638, -75.1785],
       zoom: 17
     },
     placeTypes: {
-      bad: {
-        label: 'Bad',
+      bench: {
+        label: 'Bench',
         icon: {
-          iconUrl: StompingGround.siteRoot + '/static/img/markers/sticker-0d85e9.png',
-          iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-0d85e9.png',
-          iconSize: [45, 61],
-          iconAnchor: [22, 5]
+          iconUrl: StompingGround.siteRoot + '/static/img/markers/marker-dbcf2c.png',
+          iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-dbcf2c.png',
+          shadowUrl: '/static/img/markers/marker-shadow.png',
+          shadowSize: [41, 41],
+          iconSize: [25, 41],
+          iconAnchor: [12, 41]
         }
       },
-      good: {
-        label: 'Good',
+      tree: {
+        label: 'Tree',
         icon: {
-          iconUrl: StompingGround.siteRoot + '/static/img/markers/sticker-fa307d.png',
+          iconUrl: StompingGround.siteRoot + '/static/img/markers/marker-4ab767.png',
+          iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-4ab767.png',
+          shadowUrl: '/static/img/markers/marker-shadow.png',
+          shadowSize: [41, 41],
+          iconSize: [25, 41],
+          iconAnchor: [12, 41]
+        }
+      },
+      playarea: {
+        label: 'Play Area',
+        icon: {
+          iconUrl: StompingGround.siteRoot + '/static/img/markers/marker-fa307d.png',
           iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-fa307d.png',
-          iconSize: [45, 61],
-          iconAnchor: [22, 5]
+          shadowUrl: '/static/img/markers/marker-shadow.png',
+          shadowSize: [41, 41],
+          iconSize: [25, 41],
+          iconAnchor: [12, 41]
+        }
+      },
+      fountain: {
+        label: 'Fountain',
+        icon: {
+          iconUrl: StompingGround.siteRoot + '/static/img/markers/marker-0d85e9.png',
+          iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-0d85e9.png',
+          shadowUrl: '/static/img/markers/marker-shadow.png',
+          shadowSize: [41, 41],
+          iconSize: [25, 41],
+          iconAnchor: [12, 41]
+        }
+      },
+      dogrun: {
+        label: 'Dog Run',
+        icon: {
+          iconUrl: StompingGround.siteRoot + '/static/img/markers/marker-a542e5.png',
+          iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-a542e5.png',
+          shadowUrl: '/static/img/markers/marker-shadow.png',
+          shadowSize: [41, 41],
+          iconSize: [25, 41],
+          iconAnchor: [12, 41]
         }
       }
     }
