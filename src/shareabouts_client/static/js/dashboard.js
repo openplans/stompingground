@@ -17,7 +17,9 @@ var StompingGround = StompingGround || {};
           thumbURL;
 
       _.each(places, function(place) {
-        placeURLData.push('url-'+StompingGround.Config.placeTypes[place.location_type].icon.iconThumbUrl + '(' + place.location.lng.toFixed(5) + ',' + place.location.lat.toFixed(5) + ')');
+        if (SG.Config.placeTypes[place.location_type]) {
+          placeURLData.push('url-'+SG.Config.placeTypes[place.location_type].icon.iconThumbUrl + '(' + place.location.lng.toFixed(5) + ',' + place.location.lat.toFixed(5) + ')');
+        }
       });
       // TODO: Should we limit the size of this URL to something like 2048
       //       characters?
