@@ -36,7 +36,7 @@ var StompingGround = StompingGround || {};
 
     _heatmapLayer = new L.ImageOverlay.HeatCanvas(_heatmapData['all'], {
       bgcolor: [0, 0, 0, 0],
-      bufferRatio: 0.05,
+      bufferPixels: 100,
       step: 0.05,
       colorscheme: function(value){
         var h = (1 - value);

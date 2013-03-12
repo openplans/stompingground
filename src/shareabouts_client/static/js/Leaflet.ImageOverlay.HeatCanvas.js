@@ -9,7 +9,7 @@ L.ImageOverlay.HeatCanvas = L.ImageOverlay.Canvas.extend({
     opacity: 1,
     colorscheme: null,
     resizeCanvas: true,
-    bufferRatio: 0
+    bufferPixels: 0
   },
 
   initialize: function (data, options) { // ([[latLng, value], ...], Object)
@@ -19,17 +19,7 @@ L.ImageOverlay.HeatCanvas = L.ImageOverlay.Canvas.extend({
   },
 
   setData: function(data) {
-    var i, len;
-
-    this._bounds = L.latLngBounds([data[0][0], data[0][0]]);
-
-    for (i=1, len=data.length; i<len; i++) {
-      this._bounds.extend(data[i][0]);
-    }
-
-    if (this.options.bufferRatio) {
-      this._bounds = this._bounds.pad(this.options.bufferRatio);
-    }
+    var i, len, nePoint, swPoint;
 
     this._data = data;
 
@@ -39,6 +29,22 @@ L.ImageOverlay.HeatCanvas = L.ImageOverlay.Canvas.extend({
   },
 
   _initImage: function () {
+    this._bounds = L.latLngBounds([this._data[0][0], this._data[0][0]]);
+
+    for (i=1, len=this._data.length; i<len; i++) {
+      this._bounds.extend(this._data[i][0]);
+    }
+
+    if (this.options.bufferPixels) {
+      nePoint = this._map.project(this._bounds.getNorthEast());
+      swPoint = this._map.project(this._bounds.getSouthWest());
+
+      this._bounds.extend(this._map.unproject([nePoint.x + this.options.bufferPixels,
+                                               nePoint.y - this.options.bufferPixels]));
+      this._bounds.extend(this._map.unproject([swPoint.x - this.options.bufferPixels,
+                                               swPoint.y + this.options.bufferPixels]));
+    }
+
     L.ImageOverlay.Canvas.prototype._initImage.call(this);
 
     //this.canvas is a thing
