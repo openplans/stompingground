@@ -23,56 +23,46 @@ var StompingGround = StompingGround || {};
       bench: {
         label: 'Bench',
         icon: {
-          iconUrl: StompingGround.siteRoot + '/static/img/markers/marker-dbcf2c.png',
+          iconUrl: StompingGround.siteRoot + '/static/img/noun_project_11579.png',
           iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-dbcf2c.png',
-          shadowUrl: '/static/img/markers/marker-shadow.png',
-          shadowSize: [41, 41],
-          iconSize: [25, 41],
-          iconAnchor: [12, 41]
+          iconSize: [27, 13],
+          iconAnchor: [13, 13]
         }
       },
       tree: {
         label: 'Tree',
         icon: {
-          iconUrl: StompingGround.siteRoot + '/static/img/markers/marker-4ab767.png',
+          iconUrl: StompingGround.siteRoot + '/static/img/noun_project_1535.png',
           iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-4ab767.png',
-          shadowUrl: '/static/img/markers/marker-shadow.png',
-          shadowSize: [41, 41],
-          iconSize: [25, 41],
-          iconAnchor: [12, 41]
+          iconSize: [30, 41],
+          iconAnchor: [15, 41]
         }
       },
       playarea: {
         label: 'Play Area',
         icon: {
-          iconUrl: StompingGround.siteRoot + '/static/img/markers/marker-fa307d.png',
+          iconUrl: StompingGround.siteRoot + '/static/img/noun_project_712.png',
           iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-fa307d.png',
-          shadowUrl: '/static/img/markers/marker-shadow.png',
-          shadowSize: [41, 41],
-          iconSize: [25, 41],
-          iconAnchor: [12, 41]
+          iconSize: [29, 16],
+          iconAnchor: [15, 16]
         }
       },
       fountain: {
         label: 'Fountain',
         icon: {
-          iconUrl: StompingGround.siteRoot + '/static/img/markers/marker-0d85e9.png',
+          iconUrl: StompingGround.siteRoot + '/static/img/noun_project_3837.png',
           iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-0d85e9.png',
-          shadowUrl: '/static/img/markers/marker-shadow.png',
-          shadowSize: [41, 41],
-          iconSize: [25, 41],
-          iconAnchor: [12, 41]
+          iconSize: [26, 36],
+          iconAnchor: [13, 36]
         }
       },
       dogrun: {
         label: 'Dog Run',
         icon: {
-          iconUrl: StompingGround.siteRoot + '/static/img/markers/marker-a542e5.png',
+          iconUrl: StompingGround.siteRoot + '/static/img/noun_project_6323.png',
           iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-a542e5.png',
-          shadowUrl: '/static/img/markers/marker-shadow.png',
-          shadowSize: [41, 41],
-          iconSize: [25, 41],
-          iconAnchor: [12, 41]
+          iconSize: [26, 26],
+          iconAnchor: [13, 13]
         }
       }
     }
