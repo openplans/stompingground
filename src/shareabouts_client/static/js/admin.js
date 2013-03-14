@@ -2,20 +2,29 @@ var StompingGround = StompingGround || {};
 
 (function(SG, S, $) {
   var _heatmapData = {},
-      collection, aoColumns, aaData, _heatmapLayer;
+      aaData = [],
+      collection = new S.PlaceCollection(),
+      aoColumns, _heatmapLayer, sortedPlaceTypes;
 
+  sortedPlaceTypes = _.map(SG.Config.placeTypes, function(pt, id) {
+    return {label: pt.label, id: id};
+  });
+
+  sortedPlaceTypes = _.sortBy(sortedPlaceTypes, function(pt) {
+    return pt.label;
+  });
+
+  // Init the column headers
   aoColumns = [
-    {sTitle: 'Map Name'},
-    {sTitle: 'Created'},
-    {sTitle: 'Happy Stickers'},
-    {sTitle: 'Sad Sticker'},
-    {sTitle: 'Comments'},
-    {sTitle: 'Link'}
+    {sTitle: 'Name'},
+    {sTitle: 'Created'}
   ];
 
-  aaData = [];
+  _.each(sortedPlaceTypes, function(pt, i) {
+    aoColumns.push({sTitle: pt.label});
+  });
 
-  collection = new S.PlaceCollection();
+  aoColumns.push({sTitle: 'Link'});
 
   function getArraySize(a) {
     return (_.isArray(a) && _.size(a)) || 0;
@@ -69,20 +78,21 @@ var StompingGround = StompingGround || {};
     var placesById = _.groupBy(data, 'map_id');
 
     _.each(placesById, function(places, id) {
-      var placesByType, title, created, goodCnt, badCnt, commentCnt, link,
+      var row, placesByType, link,
           first = places[0];
 
       placesByType = _.groupBy(places, 'location_type');
 
-      title = first.map_title;
-      created = first.created_datetime;
-      goodCnt = getArraySize(placesByType.good);
-      badCnt = getArraySize(placesByType.bad);
-      commentCnt = getArraySize(placesByType.comment);
-      link = '<a href="/map/' + first.map_id +
-             '" target="_blank">' + first.map_id + '</a>';
+      row = [first.map_title, first.created_datetime];
 
-      aaData.push([title, created, goodCnt, badCnt, commentCnt, link]);
+      _.each(sortedPlaceTypes, function(pt, i) {
+        row.push(getArraySize(placesByType[pt.id]));
+      });
+
+      row.push('<a href="/map/' + first.map_id +
+             '" target="_blank">' + first.map_id + '</a>');
+
+      aaData.push(row);
     });
 
     var tableOptions = {
