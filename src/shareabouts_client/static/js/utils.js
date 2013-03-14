@@ -53,24 +53,31 @@ var Shareabouts = Shareabouts || {};
       error: function(){}
     },
 
-    fetchWithRetries: function(collection, options, retryCount) {
-      var errorHandler = options.error,
+    callWithRetries: function(func, retryCount, context) {
+      var args = Array.prototype.slice.call(arguments, 3),
+          options = _.last(args),
+          errorHandler = options.error,
           retries = 0;
 
-      options.error = function(model, xhr, options) {
+      if (!options) {
+        options = {};
+        args.push(options);
+      }
+
+      options.error = function() {
         if (retries < retryCount) {
           retries++;
-          setTimeout(fetch, retries * 100);
+          setTimeout(function() {
+            func.apply(context, args);
+          }, retries * 100);
         } else {
-          errorHandler.call(this, model, xhr, options);
+          if (errorHandler) {
+            errorHandler.apply(context, arguments);
+          }
         }
       };
 
-      function fetch() {
-        collection.fetch(options);
-      }
-
-      fetch();
+      func.apply(context, args);
     },
 
     // Cookies! Om nom nom

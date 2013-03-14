@@ -107,7 +107,7 @@ var StompingGround = StompingGround || {};
       });
 
       // Fetch the existing places
-      S.Util.fetchWithRetries(collection, {
+      S.Util.callWithRetries(collection.fetch, 3, collection, {
         'data': {'map_id': id},
         'success': function() {
           var placeBounds;
@@ -136,7 +136,7 @@ var StompingGround = StompingGround || {};
             $('#error-modal').modal({backdrop: 'static', keyboard: 'false', show: true});
           }, 500);
         }
-      }, 3);
+      });
     }
   });
 
@@ -330,6 +330,7 @@ var StompingGround = StompingGround || {};
   function showFinalizationModal() {
     $('#finalization-modal .carousel').carousel({interval: false}).carousel(0);
     $('#finalization-modal').modal({backdrop: 'static', keyboard: 'false', show: true});
+    $('#finalization-modal .progress').hide();
     hideFinalizeButtonTooltip();
   }
 
@@ -339,12 +340,11 @@ var StompingGround = StompingGround || {};
         $permalinkAnchor = $('#finalization-modal .permalink'),
         numPlaces = collection.length,
         numSavedPlaces = 0,
-        mapId = (new Date()).getTime().toString(36),
+        mapId = (new Date()).getTime().toString(36);
 
         goNext = _.after(numPlaces, function() {
           var host = location.host;
 
-          console.log('next called');
           $finalizeCarousel.carousel('next');
           $permalinkAnchor
             .attr('href', 'http://' + host + '/map/' + mapId)
@@ -352,24 +352,7 @@ var StompingGround = StompingGround || {};
 
           $('#finalization-review-map')
             .attr('href', 'http://' + host + '/map/' + mapId);
-        }),
-
-        tryToSave = function(place, data, options, tryCount) {
-          var maxTries = 5,
-              originalOptions = options;
-
-          tryCount = tryCount || 1;
-          options = options || {};
-          options.error = function() {
-            if (tryCount < maxTries) {
-              tryToSave(place, data, originalOptions, tryCount + 1);
-            } else {
-              originalOptions.error();
-            }
-          };
-
-          place.save(data, options);
-        };
+        });
 
     // Initialize the progress bar with a little sliver, to give the user
     // an indication that something's going on.
@@ -377,27 +360,23 @@ var StompingGround = StompingGround || {};
     $progressBar.parent().fadeIn();
 
     collection.each(function(place) {
-      tryToSave(place,
-        {
+
+      S.Util.callWithRetries(place.save, 3, place, {
           'map_title': title,
           'map_id': mapId
-        },
-        {
+        }, {
           success: function() {
             numSavedPlaces += 1;
             $progressBar.css('width', ((numSavedPlaces + 1) * 100 / (numPlaces + 1)) + '%');
-            console.log(numSavedPlaces, numPlaces);
-            console.log((numSavedPlaces * 100 / numPlaces) + '%');
             goNext();
           },
-          error: function() {
-            // TODO: Handle failure
-          }
+          error: _.once(function() {
+            $('#finalization-modal').modal('hide');
+            $('#map-save-error-modal').modal({backdrop: 'static', keyboard: 'false', show: true});
+          })
         }
       );
     });
-
-
   }
 
   var $finalizeButtonTarget =

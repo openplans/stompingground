@@ -99,11 +99,11 @@ var StompingGround = StompingGround || {};
   });
 
   $(function() {
-    S.Util.fetchWithRetries(collection, {
+    S.Util.callWithRetries(collection.fetch, 3, collection, {
       error: function() {
         $('#error-modal').modal({backdrop: 'static', keyboard: 'false', show: true});
       }
-    }, 3);
+    });
   });
 
 })(StompingGround, Shareabouts, jQuery);
