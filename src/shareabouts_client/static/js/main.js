@@ -1,54 +1,21 @@
 var StompingGround = StompingGround || {};
 
 (function(SG, S, $, L) {
-  var collection, mapView, map, goodIcon, badIcon, placeTypes, router;
+  var placeTypes = {},
+      collection, mapView, map, router;
 
 /* ==============================
  * Config
  * ============================== */
 
-  // Icons
-  badIcon = L.icon({
-    iconUrl: '/static/img/marker-heart-broken.png',
-    iconSize: [51, 46],
-    iconAnchor: [25, 26],
-    popupAnchor: [1, -26]
-  });
-
-  goodIcon = L.icon({
-    iconUrl: '/static/img/marker-heart.png',
-    iconSize: [51, 46],
-    iconAnchor: [25, 26],
-    popupAnchor: [1, -26]
-  });
-
-  commentIcon = L.icon({
-    iconUrl: '/static/img/marker-comment.png',
-    iconSize: [51, 46],
-    iconAnchor: [25, 26],
-    popupAnchor: [1, -26]
-  });
-
-  placeTypes = {
-    'good': {
-      'default': goodIcon,
-      'label': 'Good',
+  _.each(StompingGround.Config.placeTypes, function(config, key) {
+    placeTypes[key] = {
+      'default': L.icon(config.icon),
+      'label': config.label,
       'clickable': false,
       'onPostInit': markerPostInit
-    },
-    'bad': {
-      'default': badIcon,
-      'label': 'Bad',
-      'clickable': false,
-      'onPostInit': markerPostInit
-    },
-    'comment': {
-      'default': commentIcon,
-      'label': 'Comment',
-      'clickable': true,
-      'onPostInit': markerPostInit
-    }
-  };
+    };
+  });
 
   function markerPostInit() {
     function elementsIntersect($a, $b) {
@@ -121,10 +88,15 @@ var StompingGround = StompingGround || {};
       Backbone.history.start({pushState: true});
     },
     defaultRoute: function(){
+      $('body').addClass('edit');
       initTools();
-      this.navigate('/');
     },
     fetch: function(id) {
+      $('body').addClass('view');
+
+      // Update the url to reload to this map id
+      $('#error-modal a').attr('href', '/map/' + id);
+
       // Let the user know that you're loading
       $('#loading-map-modal')
         .modal({backdrop: 'static', keyboard: 'false', show: true});
@@ -135,7 +107,7 @@ var StompingGround = StompingGround || {};
       });
 
       // Fetch the existing places
-      collection.fetch({
+      S.Util.callWithRetries(collection.fetch, 3, collection, {
         'data': {'map_id': id},
         'success': function() {
           var placeBounds;
@@ -151,11 +123,18 @@ var StompingGround = StompingGround || {};
           // Zoom to the bounds of the map places
           map.fitBounds(placeBounds.pad(0.02));
 
-          // Add the map title to the header
-          $('#site-description').text(collection.at(0).get('map_title'));
+          // Add the map title above the comments
+          $('#map-title').text(collection.at(0).get('map_title'));
 
           // Done loading!
           $('#loading-map-modal').modal('hide');
+        },
+        error: function() {
+          $('#loading-map-modal').modal('hide');
+
+          setTimeout(function() {
+            $('#error-modal').modal({backdrop: 'static', keyboard: 'false', show: true});
+          }, 500);
         }
       });
     }
@@ -168,15 +147,8 @@ var StompingGround = StompingGround || {};
   mapView = new S.MapView({
     el: '#map',
     mapConfig: {
-      options: {
-        center: [40.7873, -73.9753],
-        zoom: 17
-      },
-      base_layer: L.tileLayer('http://{s}.tiles.mapbox.com/v3/doittgis.NYC_DoITT_base/{z}/{x}/{y}.png', {
-        attribution: 'Map tiles &copy; <a href="http://www.nyc.gov/doitt/">New York City DoITT</a>. Based on the latest planimetric data.',
-        maxZoom: 18,
-        minZoom: 15
-      })
+      options: SG.Config.map,
+      base_layer: L.tileLayer(SG.Config.layer.url, SG.Config.layer)
     },
     collection: collection,
     router: null,
@@ -238,7 +210,7 @@ var StompingGround = StompingGround || {};
 
     // Init the control markers
     _.each(placeTypes, function(obj, key) {
-      setControlMarker(key, obj['default'], $controlMarkerTarget);
+      setControlMarker(key, obj['default'], obj.label, $controlMarkerTarget);
     });
   }
 
@@ -310,12 +282,13 @@ var StompingGround = StompingGround || {};
   }
 
   // Init a new control marker
-  function setControlMarker(placeType, icon, $target) {
+  function setControlMarker(placeType, icon, label, $target) {
     // Append new element to the target
     var $controlMarkerWrapper = $('<li></li>').appendTo($target),
         $controlMarker = ich['control-marker-tpl']({
           placeType: placeType,
-          imgUrl: icon.options.iconUrl
+          imgUrl: icon.options.iconUrl,
+          label: label.toLowerCase()
         }).appendTo($controlMarkerWrapper);
 
     // Attach the icon data to the control marker
@@ -357,6 +330,7 @@ var StompingGround = StompingGround || {};
   function showFinalizationModal() {
     $('#finalization-modal .carousel').carousel({interval: false}).carousel(0);
     $('#finalization-modal').modal({backdrop: 'static', keyboard: 'false', show: true});
+    $('#finalization-modal .progress').hide();
     hideFinalizeButtonTooltip();
   }
 
@@ -366,12 +340,11 @@ var StompingGround = StompingGround || {};
         $permalinkAnchor = $('#finalization-modal .permalink'),
         numPlaces = collection.length,
         numSavedPlaces = 0,
-        mapId = (new Date()).getTime().toString(36),
+        mapId = (new Date()).getTime().toString(36);
 
         goNext = _.after(numPlaces, function() {
           var host = location.host;
 
-          console.log('next called');
           $finalizeCarousel.carousel('next');
           $permalinkAnchor
             .attr('href', 'http://' + host + '/map/' + mapId)
@@ -379,24 +352,7 @@ var StompingGround = StompingGround || {};
 
           $('#finalization-review-map')
             .attr('href', 'http://' + host + '/map/' + mapId);
-        }),
-
-        tryToSave = function(place, data, options, tryCount) {
-          var maxTries = 5,
-              originalOptions = options;
-
-          tryCount = tryCount || 1;
-          options = options || {};
-          options.error = function() {
-            if (tryCount < maxTries) {
-              tryToSave(place, data, originalOptions, tryCount + 1);
-            } else {
-              originalOptions.error();
-            }
-          };
-
-          place.save(data, options);
-        };
+        });
 
     // Initialize the progress bar with a little sliver, to give the user
     // an indication that something's going on.
@@ -404,27 +360,23 @@ var StompingGround = StompingGround || {};
     $progressBar.parent().fadeIn();
 
     collection.each(function(place) {
-      tryToSave(place,
-        {
+
+      S.Util.callWithRetries(place.save, 3, place, {
           'map_title': title,
           'map_id': mapId
-        },
-        {
+        }, {
           success: function() {
             numSavedPlaces += 1;
             $progressBar.css('width', ((numSavedPlaces + 1) * 100 / (numPlaces + 1)) + '%');
-            console.log(numSavedPlaces, numPlaces);
-            console.log((numSavedPlaces * 100 / numPlaces) + '%');
             goNext();
           },
-          error: function() {
-            // TODO: Handle failure
-          }
+          error: _.once(function() {
+            $('#finalization-modal').modal('hide');
+            $('#map-save-error-modal').modal({backdrop: 'static', keyboard: 'false', show: true});
+          })
         }
       );
     });
-
-
   }
 
   var $finalizeButtonTarget =

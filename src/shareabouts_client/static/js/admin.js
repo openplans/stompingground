@@ -1,23 +1,75 @@
 var StompingGround = StompingGround || {};
 
 (function(SG, S, $) {
-  var collection, aoColumns, aaData;
+  var _heatmapData = {},
+      aaData = [],
+      collection = new S.PlaceCollection(),
+      aoColumns, _heatmapLayer, sortedPlaceTypes;
 
+  sortedPlaceTypes = _.map(SG.Config.placeTypes, function(pt, id) {
+    return {label: pt.label, id: id};
+  });
+
+  sortedPlaceTypes = _.sortBy(sortedPlaceTypes, function(pt) {
+    return pt.label;
+  });
+
+  // Init the column headers
   aoColumns = [
-    {sTitle: 'Map Name'},
-    {sTitle: 'Created'},
-    {sTitle: 'Happy Stickers'},
-    {sTitle: 'Sad Sticker'},
-    {sTitle: 'Comments'},
-    {sTitle: 'Link'}
+    {sTitle: 'Name'},
+    {sTitle: 'Created'}
   ];
 
-  aaData = [];
+  _.each(sortedPlaceTypes, function(pt, i) {
+    aoColumns.push({sTitle: pt.label});
+  });
 
-  collection = new S.PlaceCollection();
+  aoColumns.push({sTitle: 'Link'});
 
   function getArraySize(a) {
     return (_.isArray(a) && _.size(a)) || 0;
+  }
+
+  function initMap(data) {
+    var map = L.map('adminmap', SG.Config.map),
+        layer = L.tileLayer(SG.Config.layer.url, SG.Config.layer).addTo(map);
+
+    _heatmapData['all'] = [];
+
+    _.each(data, function(obj, i) {
+      _heatmapData[obj.location_type] = _heatmapData[obj.location_type] || [];
+
+      _heatmapData['all'][i] = [[obj.location.lat, obj.location.lng], 1];
+      _heatmapData[obj.location_type].push([[obj.location.lat, obj.location.lng], 1]);
+    });
+
+    _heatmapLayer = new L.ImageOverlay.HeatCanvas(_heatmapData['all'], {
+      bgcolor: [0, 0, 0, 0],
+      bufferPixels: 100,
+      step: 0.05,
+      colorscheme: function(value){
+        var h = (1 - value);
+        var l = 0.5;
+        var s = 1;
+        var a = value + 0.03;
+        return [h, s, l, a];
+      }
+    });
+
+    map.addLayer(_heatmapLayer);
+  }
+
+  function initLocationTypeSelector(data) {
+    var $locationTypeSelector = $('#heatmap-location-type'),
+        types = _.uniq(_.pluck(data, 'location_type'));
+
+    _.each(types, function(type, i) {
+      $locationTypeSelector.append('<option value="'+type+'">'+type.charAt(0).toUpperCase() + type.substring(1)+'</option>');
+    });
+
+    $locationTypeSelector.change(function(evt) {
+      _heatmapLayer.setData(_heatmapData[evt.target.value]);
+    });
   }
 
   collection.on('reset', function(c) {
@@ -26,20 +78,21 @@ var StompingGround = StompingGround || {};
     var placesById = _.groupBy(data, 'map_id');
 
     _.each(placesById, function(places, id) {
-      var placesByType, title, created, goodCnt, badCnt, commentCnt, link,
+      var row, placesByType, link,
           first = places[0];
 
       placesByType = _.groupBy(places, 'location_type');
 
-      title = first.map_title;
-      created = first.created_datetime;
-      goodCnt = getArraySize(placesByType.good);
-      badCnt = getArraySize(placesByType.bad);
-      commentCnt = getArraySize(placesByType.comment);
-      link = '<a href="/map/' + first.map_id +
-             '" target="_blank">' + first.map_id + '</a>';
+      row = [first.map_title, first.created_datetime];
 
-      aaData.push([title, created, goodCnt, badCnt, commentCnt, link]);
+      _.each(sortedPlaceTypes, function(pt, i) {
+        row.push(getArraySize(placesByType[pt.id]));
+      });
+
+      row.push('<a href="/map/' + first.map_id +
+             '" target="_blank">' + first.map_id + '</a>');
+
+      aaData.push(row);
     });
 
     var tableOptions = {
@@ -50,9 +103,18 @@ var StompingGround = StompingGround || {};
     };
 
     $('#admin-table').dataTable(tableOptions);
+
+    initMap(data);
+    initLocationTypeSelector(data);
   });
 
-  collection.fetch();
+  $(function() {
+    S.Util.callWithRetries(collection.fetch, 3, collection, {
+      error: function() {
+        $('#error-modal').modal({backdrop: 'static', keyboard: 'false', show: true});
+      }
+    });
+  });
 
 })(StompingGround, Shareabouts, jQuery);
 

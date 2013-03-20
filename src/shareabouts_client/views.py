@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import time
+from .config import get_shareabouts_config
 from django.shortcuts import render
 from django.conf import settings
 from django.utils.timezone import now
@@ -17,17 +18,40 @@ def make_resource_uri(resource, root):
 
 
 @ensure_csrf_cookie
-def index(request):
+def dashboard(request):
 
     # Pull in any extra context values
+    config = get_shareabouts_config(settings.SHAREABOUTS.get('CONFIG'))
     context = settings.SHAREABOUTS.get('CONTEXT', {})
-    return render(request, 'index.html', context)
+
+    context['request'] = request
+    context['config'] = config
+    return render(request, 'dashboard.html', context)
+
+
+@ensure_csrf_cookie
+def map_view(request):
+
+    # Pull in any extra context values
+    config = get_shareabouts_config(settings.SHAREABOUTS.get('CONFIG'))
+    context = settings.SHAREABOUTS.get('CONTEXT', {})
+
+    context['request'] = request
+    context['config'] = config
+    return render(request, 'map.html', context)
 
 
 @ensure_csrf_cookie
 def admin(request):
 
-    return render(request, 'admin.html')
+    # Pull in any extra context values
+    config = get_shareabouts_config(settings.SHAREABOUTS.get('CONFIG'))
+    context = settings.SHAREABOUTS.get('CONTEXT', {})
+
+    context['request'] = request
+    context['config'] = config
+
+    return render(request, 'admin.html', context)
 
 
 def api(request, path):

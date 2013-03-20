@@ -53,6 +53,33 @@ var Shareabouts = Shareabouts || {};
       error: function(){}
     },
 
+    callWithRetries: function(func, retryCount, context) {
+      var args = Array.prototype.slice.call(arguments, 3),
+          options = _.last(args),
+          errorHandler = options.error,
+          retries = 0;
+
+      if (!options) {
+        options = {};
+        args.push(options);
+      }
+
+      options.error = function() {
+        if (retries < retryCount) {
+          retries++;
+          setTimeout(function() {
+            func.apply(context, args);
+          }, retries * 100);
+        } else {
+          if (errorHandler) {
+            errorHandler.apply(context, arguments);
+          }
+        }
+      };
+
+      func.apply(context, args);
+    },
+
     // Cookies! Om nom nom
     // Thanks ppk! http://www.quirksmode.org/js/cookies.html
     cookies: {

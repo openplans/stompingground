@@ -15,7 +15,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=IE7">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-  <title>Stomping Ground</title>
+  <title>{{ config.app.title }} | Maps</title>
 
   <!-- Favicon & Progressively-Enhanced Touch Icons: http://mathiasbynens.be/notes/touch-icons#sizes -->
   <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.png">
@@ -40,10 +40,19 @@
   <link href="{{ STATIC_URL }}css/main.css" rel="stylesheet" media="screen">
 
   <!-- Google Webfonts -->
-  <link href='http://fonts.googleapis.com/css?family=Cabin+Sketch:700|Chelsea+Market' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Changa+One:400,400italic' rel='stylesheet' type='text/css'>
 
 </head>
-<body>
+  <body>
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
   {% icanhazjs '(.*)' %}
 
   <script>
@@ -51,55 +60,42 @@
         SG = StompingGround;
 
     SG.zoomTooltipText = 'Move the map around to find the place you want to start. Use these buttons to move in and out.';
-    SG.controlMarkersTooltipText = 'Choose a sticker to make your map awesome! Drag stickers that show what you think about a place.';
+    SG.controlMarkersTooltipText = 'Choose a sticker to make your map awesome! Drag stickers to show where you want things.';
     SG.controlTrashTooltipText = 'You can move your stickers around or trash them by dragging them here.';
     SG.mapDoneButtonTooltipText = 'Good job! Be sure to click this when you\'re done to save you\'re map.';
   </script>
 
-	<header id="branding" role="banner">
-		<hgroup id="site-marquee">
-		  <h1 id="site-title">Stomping Ground</h1>
-			<h2 id="site-description">Make a map of walking around your neighborhood</h2>
-		</hgroup>
-		<nav>
-		  <input type="checkbox" id="nav-bttn-input" class="hidden"><label id="nav-bttn" for="nav-bttn-input">&equiv;</label>
-		  <ul id="access">
-		    <li class="clearfix"><a href="#intro-modal" data-toggle="modal">Instructions</a></li>
-	    </ul>
-	  </nav>
+  <header id="branding" role="banner">
+    <hgroup id="site-marquee">
+      <h1 id="site-title"><a href="{% url 'dashboard' %}">{{config.app.name}}</a></h1>
+      <h2 id="site-description">{{config.app.subname}}</h2>
+    </hgroup>
+    <nav>
+      <a href="#intro-modal" data-toggle="modal" id="help-btn" class="btn btn-info">Help</a>
+      <a href="{% url 'map' %}" id="add-map-btn" class="">Add your map!</a>
+    </nav>
   </header>
 
   <div id="map"></div>
+
+  <div id="comments">
+    <h3>
+      <span id="map-title">My Map</span>
+      <div class="fb-like" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false"></div>
+    </h3>
+    <h5>Add a comment</h5>
+    <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-width="300" data-num-posts="10"></div>
+  </div>
 
   <div id="intro-modal" class="modal hide fade">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     </div>
     <div class="modal-body">
-      <h1>Make a walking map...</h1>
-
-      <ul class="marker-legend">
-        <li class="clearfix"><img src="{{ STATIC_URL }}img/marker-heart.png"> Mark the places you love to walk.</li>
-        <li class="clearfix"><img src="{{ STATIC_URL }}img/marker-heart-broken.png"> Report problematic or dangerous places.</li>
-        <li class="clearfix"><img src="{{ STATIC_URL }}img/marker-comment.png"> Leave comments about your walk.</li>
-        <li class="clearfix"><img src="{{ STATIC_URL }}img/marker-link.png"> Share your map with friends.</li>
-      </ul>
-
-      <h5>Use this website to make a simple map of good and bad places to walk around your neighborhood!</h5>
-      <p><a href="#how-anchor">How?</a> | <a href="#examples-anchor">Examples</a> | <a href="#about-anchor">About</a></p>
-
-      <h3 name="how-anchor" id="how-anchor">How will my map be used?</h3>
-      <p>The information you share on your map will help people working to make the neighborhood safer for everyone. We're not saving anything except the locations and comments you add. Make your comments descriptive so the team at <a href="">Local Walking Activists</a> can learn from them.</p>
-
-      <h3 name="examples-anchor" id="examples-anchor">Examples of great maps</h3>
-      <p>What makes a useful map? Here are some examples:</p>
-      <p>Intersections on Broadway that are hard to cross: <a href="{% url 'index' %}map/havcrblg">Broadway blues</a>.</p>
-      <p>Great places along the Hudson River: <a href="{% url 'index' %}map/havcjcjj">Good and bad places along the Hudson</a>.</p>
-      <p>Good and bad things about 62nd Street: <a href="{% url 'index' %}map/havcmgg0">62nd Street</a>.</p>
-
-      <h3 name="about-anchor" id="about-anchor">What's this website?</h3>
-      <p>Stomping Ground is a project from <a href="http://openplans.org">OpenPlans</a>. We want to make it easy for anyone to tell their neighbors about good and bad places to walk. We're imagining that neighbors who care about walking issues can set up a map for their neighborhood, or schools can use it to map what's good and bad about walking to school. Together, all the information added on individual maps will show a detailed picture of walking in that area.</p>
-      <p>This is the first release of Stomping Ground, so there are lots of things it doesn't yet do. Help us test out the idea of mapping good and bad walking places with this simple interface. Try it out on a desktop computer or a tablet, then <a href="http://openplans.freshdesk.com/">tell us what you think </a> - what's good, what's bad, what else do you want to see?</p>
+      <h1>What do you want to see in Eakins Oval?</h1>
+      <p>Let's imagine a better Eakins Oval. Create your ideal park, by adding benches, planting and trees, play areas, fountains and dog runs.</p>
+      <p>Once you've created your park design, other people can comment and discuss your proposal.</p>
+      <p>Icons courtesy of <a href="http://thenounproject.com/shiningvale/">Valentina Piccione</a>, <a href="http://thenounproject.com/jmkeuning/">James Keuning</a>, and <a href="http://thenounproject.com/">The Noun Project</a>.</p>
     </div>
     <div class="modal-footer">
       <label id="suppress-intro-modal" class="checkbox">
@@ -120,6 +116,25 @@
     </div>
   </div>
 
+  <div id="error-modal" class="modal small-modal hide fade">
+    <div class="modal-body">
+      <strong>That's embarassing.</strong> We weren't able to get the details of
+      this awesome citizen-made map. Try <a href="/map/">reloading the page</a>.
+      That usually does the trick.
+    </div>
+  </div>
+
+  <div id="map-save-error-modal" class="modal small-modal hide fade">
+    <div class="modal-header">
+      <strong>That's embarassing.</strong>
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body">
+      We weren't able to save your map for some reason. Give it a minute then click done again. Sorry about that!
+    </div>
+  </div>
+
+
   <div id="finalization-modal" class="modal hide fade">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -132,7 +147,7 @@
           <div class="modal-body">
             <h1>Great! What should we call your map?</h1>
             <div><input type="text" name="map-title" placeholder="My map's name..." maxlength="50"></div>
-            <p>This information will be used by your local street advocates to help your streets become safer for everyone!</p>
+            <p>Once your map is saved, other people can view and comment on it.</p>
 
             <div class="progress progress-striped active">
               <div class="bar" style="width: 0%;"></div>
@@ -154,7 +169,7 @@
           </div>
           <div class="modal-footer">
             <div class="actions">
-              <a id="finalization-start-over" href="/">Make another map</a>
+              <a id="finalization-start-over" href="/map/">Make another map</a>
               <a id="finalization-review-map" class="btn btn-large" href="/">View your map</a>
             </div>
           </div>
@@ -165,6 +180,11 @@
 
   </div>
 
+  <script>
+    var StompingGround = StompingGround || {};
+    StompingGround.mapRoot = "{% url 'map' %}";
+    StompingGround.siteRoot = "http://{{ request.get_host }}";
+  </script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js "></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js"></script>
@@ -178,6 +198,7 @@
   <script src="{{ STATIC_URL }}js/models.js"></script>
   <script src="{{ STATIC_URL }}js/views/layer-view.js"></script>
   <script src="{{ STATIC_URL }}js/views/map-view.js"></script>
+  <script src="{{ STATIC_URL }}js/config.js"></script>
   <script src="{{ STATIC_URL }}js/main.js"></script>
 </body>
 </html>
