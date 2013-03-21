@@ -1,10 +1,14 @@
+/*global Shareabouts _ L jQuery*/
+
 var StompingGround = StompingGround || {};
 
 (function(SG, S, $) {
+  'use strict';
+
   var _heatmapData = {},
       aaData = [],
       collection = new S.PlaceCollection(),
-      aoColumns, _heatmapLayer, sortedPlaceTypes;
+      aoColumns, _heatmap, sortedPlaceTypes;
 
   sortedPlaceTypes = _.map(SG.Config.placeTypes, function(pt, id) {
     return {label: pt.label, id: id};
@@ -34,16 +38,16 @@ var StompingGround = StompingGround || {};
     var map = L.map('adminmap', SG.Config.map),
         layer = L.tileLayer(SG.Config.layer.url, SG.Config.layer).addTo(map);
 
-    _heatmapData['all'] = [];
+    _heatmapData.all = [];
 
     _.each(data, function(obj, i) {
       _heatmapData[obj.location_type] = _heatmapData[obj.location_type] || [];
 
-      _heatmapData['all'][i] = [[obj.location.lat, obj.location.lng], 1];
-      _heatmapData[obj.location_type].push([[obj.location.lat, obj.location.lng], 1]);
+      _heatmapData.all[i] = obj;
+      _heatmapData[obj.location_type].push(obj);
     });
 
-    _heatmapLayer = new L.ImageOverlay.HeatCanvas(_heatmapData['all'], {
+    _heatmap = S.heatmap(_heatmapData.all, {
       bgcolor: [0, 0, 0, 0],
       bufferPixels: 100,
       step: 0.05,
@@ -56,7 +60,7 @@ var StompingGround = StompingGround || {};
       }
     });
 
-    map.addLayer(_heatmapLayer);
+    map.addLayer(_heatmap.layer);
   }
 
   function initLocationTypeSelector(data) {
@@ -68,7 +72,7 @@ var StompingGround = StompingGround || {};
     });
 
     $locationTypeSelector.change(function(evt) {
-      _heatmapLayer.setData(_heatmapData[evt.target.value]);
+      _heatmap.setData(_heatmapData[evt.target.value]);
     });
   }
 
@@ -116,5 +120,5 @@ var StompingGround = StompingGround || {};
     });
   });
 
-})(StompingGround, Shareabouts, jQuery);
+}(StompingGround, Shareabouts, jQuery));
 
