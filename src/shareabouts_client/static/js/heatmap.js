@@ -132,7 +132,14 @@ L.ImageOverlay.HeatCanvas = L.ImageOverlay.Canvas.extend({
     L.ImageOverlay.Canvas.prototype._reset.call(this);
 
     var topLeft = this._map.latLngToLayerPoint(this._bounds.getNorthWest()),
+        size = this._map.latLngToLayerPoint(this._bounds.getSouthEast())._subtract(topLeft),
         i, len, pixel;
+
+    // Update the bounds on view reset since pixel buffers are very different
+    // at different zoom levels
+    this._updateBounds();
+    // Be sure to update the size properties for heatcanvas.js
+    this.heatCanvas.resize(size.x, size.y);
 
     this.heatCanvas.clear();
     for (i=0, len=this._data.length; i<len; i++) {
