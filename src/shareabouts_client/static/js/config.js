@@ -16,8 +16,9 @@ var StompingGround = StompingGround || {};
       urlRoot: 'http://api.tiles.mapbox.com/v3/openplans.map-dmar86ym/',
       width: 240,
       height: 240,
-      center: [41.30702,-72.923298],
-      zoom: 15
+      minZoom: 11,
+      maxZoom: 21,
+      padding: [30, 30]
     },
     placeTypes: {
       community: {

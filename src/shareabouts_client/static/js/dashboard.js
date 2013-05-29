@@ -1,10 +1,65 @@
+/*globals _ Handlebars moment Shareabouts jQuery L */
+
 var StompingGround = StompingGround || {};
 
 (function(SG, S, $) {
+  'use strict';
+
   var collection = new S.PlaceCollection(),
       mapsTemplateHtml = $('#park-maps-template').html(),
       mapsTemplate = Handlebars.compile(mapsTemplateHtml),
       mapsContext = {'maps': []};
+
+  // Borrowed and refactored from Leaflet source
+  var getBoundsZoom = function (bounds, minZoom, maxZoom, size, padding) {
+    bounds = L.latLngBounds(bounds);
+
+    var zoom = minZoom,
+        nw = bounds.getNorthWest(),
+        se = bounds.getSouthEast(),
+        zoomNotFound = true,
+        boundsSize;
+
+    padding = L.point(padding || [0, 0]);
+
+    do {
+      zoom++;
+      boundsSize = L.CRS.EPSG3857.latLngToPoint(se, zoom).subtract(L.CRS.EPSG3857.latLngToPoint(nw, zoom)).add(padding);
+      zoomNotFound = boundsSize.x < size.x || boundsSize.y < size.y;
+
+    } while (zoomNotFound && zoom <= maxZoom);
+
+    return zoom - 1;
+  };
+
+  // Construct the static thumbnail url
+  var getThumbUrl = function(places) {
+    var placeURLData = [],
+        bounds, zoom, center;
+
+    _.each(places, function(place) {
+      if (SG.Config.placeTypes[place.location_type]) {
+        // placeURLData.push('url-'+SG.Config.placeTypes[place.location_type].icon.iconThumbUrl + '(' + place.location.lng.toFixed(5) + ',' + place.location.lat.toFixed(5) + ')');
+
+        if (bounds) {
+          bounds.extend([place.location.lng, place.location.lat]);
+        } else {
+          bounds = L.latLngBounds([place.location.lng, place.location.lat], [place.location.lng, place.location.lat]);
+        }
+      }
+    });
+
+    zoom = SG.Config.staticMap.zoom || getBoundsZoom(bounds, SG.Config.staticMap.minZoom, SG.Config.staticMap.maxZoom,
+                         L.point([SG.Config.staticMap.width, SG.Config.staticMap.height]),
+                         SG.Config.staticMap.padding);
+    center = SG.Config.staticMap.center || bounds.getCenter();
+
+    // TODO: Should we limit the size of this URL to something like 2048
+    //       characters?
+    return SG.Config.staticMap.urlRoot + encodeURIComponent(placeURLData.join(',')) + // '/' +
+      center.lat.toFixed(5)+','+center.lng.toFixed(5)+','+zoom+'/'+
+      SG.Config.staticMap.width+'x'+SG.Config.staticMap.height+'.png';
+  };
 
   collection.on('reset', function(c) {
     var data = c.toJSON();
@@ -16,18 +71,9 @@ var StompingGround = StompingGround || {};
           placeURLData = [],
           thumbURL;
 
-      _.each(places, function(place) {
-        if (SG.Config.placeTypes[place.location_type]) {
-          placeURLData.push('url-'+SG.Config.placeTypes[place.location_type].icon.iconThumbUrl + '(' + place.location.lng.toFixed(5) + ',' + place.location.lat.toFixed(5) + ')');
-        }
-      });
-      // TODO: Should we limit the size of this URL to something like 2048
-      //       characters?
-      thumbURL = SG.Config.staticMap.urlRoot + encodeURIComponent(placeURLData.join(',')) +
-        '/'+SG.Config.staticMap.center[1]+','+SG.Config.staticMap.center[0]+','+SG.Config.staticMap.zoom+'/'+
-        SG.Config.staticMap.width+'x'+SG.Config.staticMap.height+'.png';
+      thumbURL = getThumbUrl(places);
 
-      mapsContext['maps'].push({
+      mapsContext.maps.push({
         id: first.map_id,
         url: 'http://' + SG.siteRoot +  SG.mapRoot + id,
         title: first.map_title,
@@ -56,4 +102,4 @@ var StompingGround = StompingGround || {};
     });
   });
 
-})(StompingGround, Shareabouts, jQuery);
+}(StompingGround, Shareabouts, jQuery));
