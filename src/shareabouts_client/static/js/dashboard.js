@@ -39,7 +39,7 @@ var StompingGround = StompingGround || {};
 
     _.each(places, function(place) {
       if (SG.Config.placeTypes[place.location_type]) {
-        // placeURLData.push('url-'+SG.Config.placeTypes[place.location_type].icon.iconThumbUrl + '(' + place.location.lng.toFixed(5) + ',' + place.location.lat.toFixed(5) + ')');
+        placeURLData.push('url-'+SG.Config.placeTypes[place.location_type].icon.iconThumbUrl + '(' + place.location.lng.toFixed(5) + ',' + place.location.lat.toFixed(5) + ')');
 
         if (bounds) {
           bounds.extend([place.location.lng, place.location.lat]);
@@ -56,7 +56,7 @@ var StompingGround = StompingGround || {};
 
     // TODO: Should we limit the size of this URL to something like 2048
     //       characters?
-    return SG.Config.staticMap.urlRoot + encodeURIComponent(placeURLData.join(',')) + // '/' +
+    return SG.Config.staticMap.urlRoot + encodeURIComponent(placeURLData.join(',')) + '/' +
       center.lat.toFixed(5)+','+center.lng.toFixed(5)+','+zoom+'/'+
       SG.Config.staticMap.width+'x'+SG.Config.staticMap.height+'.png';
   };
