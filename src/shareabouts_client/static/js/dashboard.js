@@ -17,19 +17,22 @@ var StompingGround = StompingGround || {};
     var zoom = minZoom,
         nw = bounds.getNorthWest(),
         se = bounds.getSouthEast(),
-        zoomNotFound = true,
+        fitsInMap = true,
         boundsSize;
 
     padding = L.point(padding || [0, 0]);
 
     do {
       zoom++;
-      boundsSize = L.CRS.EPSG3857.latLngToPoint(se, zoom).subtract(L.CRS.EPSG3857.latLngToPoint(nw, zoom)).add(padding);
-      zoomNotFound = boundsSize.x < size.x || boundsSize.y < size.y;
+      boundsSize = L.CRS.EPSG4326.latLngToPoint(se, zoom).subtract(L.CRS.EPSG4326.latLngToPoint(nw, zoom)).add(padding);
+      fitsInMap = boundsSize.x < size.x && boundsSize.y < size.y;
 
-    } while (zoomNotFound && zoom <= maxZoom);
+    } while (fitsInMap && zoom <= maxZoom);
 
-    return zoom - 1;
+    if (!fitsInMap) {
+      return zoom - 1;
+    }
+    return zoom;
   };
 
   // Construct the static thumbnail url
