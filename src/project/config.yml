@@ -1,12 +1,12 @@
 # Settings for the app
 app:
   # HTML Title
-  title: Stomping Ground | Imagine Eakins
+  title: Stomping Ground | Imagine New Haven
   # Header name
-  name: Imagine Eakins
+  name: Imagine New Haven
   # Small text below the name
-  subname: What do you want to see in Eakins Oval?
+  subname: What would make your neighborhood a better, healthier place to live?
   # Meta description that will show up in Google search results
-  meta_description: A demo of Stomping Ground, from OpenPlans
+  meta_description: Create maps of a better, healthier New Haven. Powered by Stomping Ground, by OpenPlans.
   # Home page description
-  description: What park facilities do you want to see in Eakins Oval? Design your perfect park and share the design! This is a demo of Stomping Ground, a mapping tool from OpenPlans.
+  description: What would you add to your neighborhood to make it a better, healthier place to live? Create a map that shows where you'd like to see improvements, and share the design!

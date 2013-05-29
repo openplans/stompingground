@@ -3,66 +3,84 @@ var StompingGround = StompingGround || {};
 (function(SG, S, $) {
   StompingGround.Config = {
     map: {
-      center: [39.9638, -75.1785],
-      zoom: 17
+      center: [41.30702,-72.923298],
+      zoom: 15
     },
     layer: {
       url: 'http://{s}.tiles.mapbox.com/v3/openplans.map-dmar86ym/{z}/{x}/{y}.png',
-      minZoom: 15,
-      maxZoom: 17,
+      minZoom: 14,
+      maxZoom: 21,
       attribution: 'Map data &copy; OpenStreetMap contributors, CC-BY-SA <a href="http://mapbox.com/about/maps" target="_blank">Terms &amp; Feedback</a>'
     },
     staticMap: {
       urlRoot: 'http://api.tiles.mapbox.com/v3/openplans.map-dmar86ym/',
       width: 240,
       height: 240,
-      center: [39.9638, -75.1785],
-      zoom: 17
+      center: [41.30702,-72.923298],
+      zoom: 15
     },
     placeTypes: {
-      bench: {
-        label: 'Bench',
+      community: {
+        label: 'Community Activity Space',
         icon: {
-          iconUrl: StompingGround.siteRoot + '/static/img/noun_project_11579.png',
-          iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-dbcf2c.png',
-          iconSize: [27, 13],
-          iconAnchor: [13, 13]
+          iconUrl: StompingGround.siteRoot + '/static/img/icon-community-space.png',
+          iconThumbUrl: StompingGround.siteRoot + '/static/img/icon-community-space.png',
+          iconSize: [55, 50],
+          iconAnchor: [27, 25]
         }
       },
-      tree: {
-        label: 'Tree',
+      garden: {
+        label: 'Neighborhood Garden or Park',
         icon: {
-          iconUrl: StompingGround.siteRoot + '/static/img/noun_project_1535.png',
-          iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-4ab767.png',
-          iconSize: [30, 41],
-          iconAnchor: [15, 41]
+          iconUrl: StompingGround.siteRoot + '/static/img/icon-community-garden.png',
+          iconThumbUrl: StompingGround.siteRoot + '/static/img/icon-community-garden.png',
+          iconSize: [52, 55],
+          iconAnchor: [26, 27]
         }
       },
-      playarea: {
-        label: 'Play Area',
+      police: {
+        label: 'More Police Presence',
         icon: {
-          iconUrl: StompingGround.siteRoot + '/static/img/noun_project_712.png',
-          iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-fa307d.png',
-          iconSize: [29, 16],
-          iconAnchor: [15, 16]
+          iconUrl: StompingGround.siteRoot + '/static/img/icon-police-presence.png',
+          iconThumbUrl: StompingGround.siteRoot + '/static/img/icon-police-presence.png',
+          iconSize: [48, 52],
+          iconAnchor: [24, 26]
         }
       },
-      fountain: {
-        label: 'Fountain',
+      lighting: {
+        label: 'Outdoor Lighting',
         icon: {
-          iconUrl: StompingGround.siteRoot + '/static/img/noun_project_3837.png',
-          iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-0d85e9.png',
-          iconSize: [26, 36],
-          iconAnchor: [13, 36]
+          iconUrl: StompingGround.siteRoot + '/static/img/icon-outdoor-lighting.png',
+          iconThumbUrl: StompingGround.siteRoot + '/static/img/icon-outdoor-lighting.png',
+          iconSize: [44, 55],
+          iconAnchor: [22, 27]
         }
       },
-      dogrun: {
-        label: 'Dog Run',
+      traffic: {
+        label: 'Traffic Calming',
         icon: {
-          iconUrl: StompingGround.siteRoot + '/static/img/noun_project_6323.png',
-          iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-a542e5.png',
-          iconSize: [26, 26],
-          iconAnchor: [13, 13]
+          iconUrl: StompingGround.siteRoot + '/static/img/icon-traffic-calming.png',
+          iconThumbUrl: StompingGround.siteRoot + '/static/img/icon-traffic-calming.png',
+          iconSize: [43, 55],
+          iconAnchor: [21, 27]
+        }
+      },
+      food: {
+        label: 'Healthy Food',
+        icon: {
+          iconUrl: StompingGround.siteRoot + '/static/img/icon-healthy-food.png',
+          iconThumbUrl: StompingGround.siteRoot + '/static/img/icon-healthy-food.png',
+          iconSize: [48, 65],
+          iconAnchor: [26, 32]
+        }
+      },
+      bikelane: {
+        label: 'Bike Lane',
+        icon: {
+          iconUrl: StompingGround.siteRoot + '/static/img/icon-bike-lane.png',
+          iconThumbUrl: StompingGround.siteRoot + '/static/img/icon-bike-lane.png',
+          iconSize: [50, 55],
+          iconAnchor: [25, 27]
         }
       }
     }
