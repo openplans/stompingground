@@ -137,12 +137,12 @@ INSTALLED_APPS = (
     'compressor',
 
     # Project apps
-    'shareabouts_client',
+    'stompingground',
     'proxy',
 )
 
 # Use a test runner that does not use a database.
-TEST_RUNNER = 'shareabouts_client.test_runner.DatabaselessTestSuiteRunner'
+TEST_RUNNER = 'stompingground.test_runner.DatabaselessTestSuiteRunner'
 
 # Shareabouts config
 SHAREABOUTS = {
