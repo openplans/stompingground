@@ -1,19 +1,39 @@
-Shareabouts Client Starter Kit [![Build Status](https://secure.travis-ci.org/openplans/shareabouts-django-client.png)](http://travis-ci.org/openplans/shareabouts-django-client)
+Stomping Ground [![Build Status](https://secure.travis-ci.org/openplans/stompingground.png)](http://travis-ci.org/openplans/stompingground)
 ==============================
 
-This starter kit allows you to quickly get started with creating a client
-application built on the [Shareabouts API](https://github.com/openplans/shareabouts-api).
+Stomping Ground is a digital stickers-on-a-map application.
 
 Quick Start
 -----------
 
-1. In *src/project/*, copy *local_settings.py.template* to *local_settings.py*
-2. Set your dataset root and api key in the local_settings.py file
-3. Place your *index.html* in *shareabouts_client/templates/* folder
-4. Place your static files in the *shareabouts_client/static/* folder; refer to 
-   the static files folder with the {{ STATIC_URL }} variable
-   
-For documentation on using the API see ...
+You will need:
+* Two sticker icons for each type of thing you want to put on the map -- one large sticker icon for the map screen, and one tiny pin icon for the dashboard.
+* A base map to use beneath the stickers (*is this Map Box-specific?*).
+
+1.  Place your sticker and pin icons in the `src/stompingground/static/img/`
+    folder.
+2.  Open the file `src/stompingground/static/js/config.js` and find the
+    `placeTypes` section.
+3.  Copy one of the sample place types for each of your types of things.
+4.  Fill in the values for each of your icons. The sticker goes in the 
+    `iconUrl`, and the pin in the `iconThumbUrl`. For example, if you are 
+    adding trees to the map, and your icons are named `tree-sticker.png` and
+    `tree-pin.png`, the you may have a place type that looks like:
+
+        tree: {
+          label: 'Tree',
+          icon: {
+            iconUrl: StompingGround.siteRoot + '/static/img/tree-sticker.png',
+            iconThumbUrl: StompingGround.siteRoot + '/static/img/tree-pin.png',
+            iconSize: [30, 41],
+            iconAnchor: [15, 41]
+          }
+        },
+5.  Find the `layer` section and enter the information for your desired base
+    map. Also enter this information into the `staticMap` section. The `layer`
+    section controls how the big sticker map looks, and `staticMap` is for the
+    little maps on the dashboard. Fill out how far in an out (`maxZoom` and 
+    `minZoom`) the user should be able to go on sticker map.
 
 Contributing
 ------------
