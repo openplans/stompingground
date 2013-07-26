@@ -32,6 +32,63 @@ STATIC_ROOT = '/home/dotcloud/current/static/'
 DEBUG = (env.get('DEBUG', 'False') in ['true', 'True'])
 TEMPLATE_DEBUG = DEBUG
 
+ALLOWED_HOSTS = ['*']
+
+# The ADMINS enviromnent variable should be a comma-separated list of email
+# addresses that should be notified when an error is logged in the app.
+ADMINS = [
+    (admin.split('@')[0], admin)
+    for admin in env.get('ADMINS', '').split(',')
+]
+
+# Use the DotCloud project name as the prefix on all log emails.
+EMAIL_SUBJECT_PREFIX = '[' + env.get('DOTCLOUD_PROJECT', 'StompingGround') + '] '
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'simple': {
+            'format': '%(levelname)s %(asctime)s\n%(message)s',
+        },
+    },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'log_file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'simple',
+            'filename': '/var/log/supervisor/app.log',
+            'maxBytes': 1024*1024*25, # 25 MB
+            'backupCount': 5,
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'log_file', 'mail_admins'],
+            'level': 'WARNING',
+        },
+        'stompingground': {
+            'handlers': ['console', 'log_file', 'mail_admins'],
+            'level': 'DEBUG',
+        },
+    }
+}
 EOF
 
 echo "Setting up static file service..."
