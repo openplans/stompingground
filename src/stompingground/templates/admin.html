@@ -89,7 +89,13 @@
   </div>
 
   <script>
-    var Shareabouts = Shareabouts || {};
+    var StompingGround = StompingGround || {};
+    StompingGround.mapGroup = "{{ instance|default:'default' }}";
+    StompingGround.mapRoot = "{% url 'map' instance_slug=instance %}";
+    StompingGround.siteRoot = "http://{{ request.get_host }}";
+    StompingGround.pathRoot = "{% url 'dashboard' instance_slug=instance %}";
+
+    var Shareabouts = Shareabouts || {}
     Shareabouts.apiRoot = "{% url 'api_proxy' instance_slug=instance path='' %}";
   </script>
 

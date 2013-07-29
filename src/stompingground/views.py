@@ -45,6 +45,21 @@ def get_dataset_settings(instance_slug):
 
 
 @ensure_csrf_cookie
+def portal(request):
+
+    # Pull in configuration and any extra context values
+    all_context = {'instances': []}
+    for instance_slug in settings.SHAREABOUTS:
+        config, context = get_config_settings(instance_slug)
+        context['config'] = config
+        context['slug'] = instance_slug
+        all_context['instances'].append(context)
+
+    all_context['request'] = request
+    return render(request, 'portal.html', all_context)
+
+
+@ensure_csrf_cookie
 def dashboard(request, instance_slug=None):
 
     # Pull in configuration and any extra context values

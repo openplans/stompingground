@@ -114,6 +114,9 @@ var StompingGround = StompingGround || {};
 
   $(function() {
     S.Util.callWithRetries(collection.fetch, 3, collection, {
+      data: {
+        group_id: SG.mapGroup
+      },
       error: function() {
         $('#error-modal').modal({backdrop: 'static', keyboard: 'false', show: true});
       }

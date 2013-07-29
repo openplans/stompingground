@@ -92,9 +92,14 @@
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     </div>
     <div class="modal-body">
-      <h1>What do you want to see in Eakins Oval?</h1>
-      <p>Let's imagine a better Eakins Oval. Create your ideal park, by adding benches, planting and trees, play areas, fountains and dog runs.</p>
-      <p>Once you've created your park design, other people can comment and discuss your proposal.</p>
+      <h1>Making streets safer for kids.</h1>
+      <p>We want our sidewalks and streets to be safe, so that children can walk or bike to school. Please help us by identifying unsafe conditions on your route to school, and giving us suggestions about how to improve them.</p>
+
+      <p>This information will be shared with the principals and parents associations of each school, to assist them with their own safety initiatives. </p>
+
+      <p><b>Disclaimer:</b></br>
+      Your participation in this project is voluntary. Any personal information you share with us is also voluntary, and will be used only for verification purposes.</p>
+
       <p>Icons courtesy of <a href="http://thenounproject.com/shiningvale/">Valentina Piccione</a>, <a href="http://thenounproject.com/jmkeuning/">James Keuning</a>, and <a href="http://thenounproject.com/">The Noun Project</a>.</p>
     </div>
     <div class="modal-footer">
@@ -182,8 +187,10 @@
 
   <script>
     var StompingGround = StompingGround || {};
+    StompingGround.mapGroup = "{{ instance|default:'default' }}";
     StompingGround.mapRoot = "{% url 'map' instance_slug=instance %}";
     StompingGround.siteRoot = "http://{{ request.get_host }}";
+    StompingGround.pathRoot = "{% url 'dashboard' instance_slug=instance %}";
 
     var Shareabouts = Shareabouts || {};
     Shareabouts.apiRoot = "{% url 'api_proxy' instance_slug=instance path='' %}";

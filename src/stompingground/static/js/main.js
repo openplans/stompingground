@@ -85,7 +85,7 @@ var StompingGround = StompingGround || {};
       '*path':  'defaultRoute'
     },
     initialize: function() {
-      Backbone.history.start({pushState: true});
+      Backbone.history.start({pushState: true, root: SG.pathRoot});
     },
     defaultRoute: function(){
       $('body').addClass('edit');
@@ -108,7 +108,7 @@ var StompingGround = StompingGround || {};
 
       // Fetch the existing places
       S.Util.callWithRetries(collection.fetch, 3, collection, {
-        'data': {'map_id': id},
+        'data': {'map_id': id, 'group_id': SG.mapGroup},
         'success': function() {
           var placeBounds;
 
@@ -347,11 +347,11 @@ var StompingGround = StompingGround || {};
 
           $finalizeCarousel.carousel('next');
           $permalinkAnchor
-            .attr('href', 'http://' + host + '/map/' + mapId)
-            .text(host + '/map/' + mapId);
+            .attr('href', 'http://' + host + SG.pathRoot + 'map/' + mapId)
+            .text(host + SG.pathRoot + 'map/' + mapId);
 
           $('#finalization-review-map')
-            .attr('href', 'http://' + host + '/map/' + mapId);
+            .attr('href', 'http://' + host + SG.pathRoot + 'map/' + mapId);
         });
 
     // Initialize the progress bar with a little sliver, to give the user
@@ -363,7 +363,8 @@ var StompingGround = StompingGround || {};
 
       S.Util.callWithRetries(place.save, 3, place, {
           'map_title': title,
-          'map_id': mapId
+          'map_id': mapId,
+          'group_id': SG.mapGroup
         }, {
           success: function() {
             numSavedPlaces += 1;

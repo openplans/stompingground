@@ -8,6 +8,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urls = (
     url(r'^(?P<instance_slug>[^/]+)/', include('stompingground.urls')),
+    url(r'^$', 'stompingground.views.portal', name='portal'),
 )
 
 urlpatterns = (
