@@ -86,6 +86,8 @@ class ShareaboutsRemoteConfig (_ShareaboutsConfig):
 
 class ShareaboutsLocalConfig (_ShareaboutsConfig):
     def __init__(self, path):
+        if not os.path.exists(os.path.join(path, 'config.yml')):
+            raise ValueError('Path does not exist: %s' % (path,))
         self.path = path
 
     def static_url(self):

@@ -7,7 +7,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 # static files with Django for your deploy platform.
 
 urls = (
-    url(r'^', include('stompingground.urls')),
+    url(r'^(?P<instance_slug>[^/]+)/', include('stompingground.urls')),
 )
 
 urlpatterns = (
