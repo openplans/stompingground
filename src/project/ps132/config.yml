@@ -1,9 +1,9 @@
 # Settings for the app
 app:
   # HTML Title
-  title: Stomping Ground | Imagine Eakins
+  title: PS 132 | Safe Routes to School | Stomping Ground
   # Header name
-  name: Imagine Eakins
+  name: PS 132
   # Small text below the name
   subname: What do you want to see in Eakins Oval?
   # Meta description that will show up in Google search results
