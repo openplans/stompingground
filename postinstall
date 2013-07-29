@@ -119,6 +119,6 @@ location /static/ { root /home/dotcloud/current ; }
 EOF
 
 echo "Compiling translations..."
-cd src/shareabouts_client
+cd src/stompingground
 ../manage.py compilemessages
 cd ../..
