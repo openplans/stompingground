@@ -43,11 +43,11 @@
   <div id="fb-root"></div>
   <header id="branding" role="banner">
     <hgroup id="site-marquee">
-      <h1 id="site-title"><a href="{% url 'dashboard' %}">{{config.app.name}}</a></h1>
+      <h1 id="site-title"><a href="{% url 'dashboard' instance_slug=instance %}">{{config.app.name}}</a></h1>
       <h2 id="site-description">{{config.app.subname}}</h2>
     </hgroup>
     <nav>
-      <a href="{% url 'map' %}" id="add-map-btn" class="visible">Add your map!</a>
+      <a href="{% url 'map' instance_slug=instance %}" id="add-map-btn" class="visible">Add your map!</a>
     </nav>
   </header>
 
@@ -55,7 +55,7 @@
 
     <div class="hero-unit">
       <p>{{ config.app.description|safe }}</p>
-      <strong><a href="{% url 'map' %}" class="btn btn-large btn-info btn-block btn-block-hero">Add your map!</a></strong>
+      <strong><a href="{% url 'map' instance_slug=instance %}" class="btn btn-large btn-info btn-block btn-block-hero">Add your map!</a></strong>
     </div>
 
     <div id="maps-list" class=""></div>
@@ -100,9 +100,13 @@
 
   <script>
     var StompingGround = StompingGround || {};
-    StompingGround.mapRoot = "{% url 'map' %}";
+    StompingGround.mapRoot = "{% url 'map' instance_slug=instance %}";
     StompingGround.siteRoot = "{{ request.get_host }}";
+
+    var Shareabouts = Shareabouts || {}
+    Shareabouts.apiRoot = "{% url 'api_proxy' instance_slug=instance path='' %}";
   </script>
+
   <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js "></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
@@ -111,9 +115,9 @@
   <script src="{{ STATIC_URL }}lib/datatables/datatables-bootstrap.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
-  <script src="{{ STATIC_URL }}js/utils.min.js"></script>
+  <script src="{{ STATIC_URL }}js/utils.js"></script>
   <script src="{{ STATIC_URL }}js/models.js"></script>
-  <script src="{{ STATIC_URL }}js/config.js"></script>
+  <script src="{{ STATIC_URL }}js/{{ instance|default:'' }}config.js"></script>
   <script src="{{ STATIC_URL }}js/dashboard.js"></script>
 </body>
 </html>

@@ -63,7 +63,7 @@ var Shareabouts = Shareabouts || {};
                                       'must save the Place before saving ' +
                                       'its ' + submissionType + '.'); }
 
-      return '/api/places/' + placeId + '/' + submissionType + '/';
+      return (S.apiRoot || '/api/') + 'places/' + placeId + '/' + submissionType + '/';
     }
   });
 
@@ -132,7 +132,7 @@ var Shareabouts = Shareabouts || {};
   });
 
   S.PlaceCollection = Backbone.Collection.extend({
-    url: '/api/places/',
+    url: (S.apiRoot || '/api/') + 'places/',
     model: S.PlaceModel,
 
     initialize: function(models, options) {
@@ -216,7 +216,7 @@ var Shareabouts = Shareabouts || {};
   });
 
   S.ActivityCollection = Backbone.Collection.extend({
-    url: '/api/activity/'
+    url: (S.apiRoot || '/api/') + 'activity/'
   });
 
 }(Shareabouts, jQuery, Shareabouts.Util.console));

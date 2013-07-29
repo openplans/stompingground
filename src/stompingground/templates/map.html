@@ -67,12 +67,12 @@
 
   <header id="branding" role="banner">
     <hgroup id="site-marquee">
-      <h1 id="site-title"><a href="{% url 'dashboard' %}">{{config.app.name}}</a></h1>
+      <h1 id="site-title"><a href="{% url 'dashboard' instance_slug=instance %}">{{config.app.name}}</a></h1>
       <h2 id="site-description">{{config.app.subname}}</h2>
     </hgroup>
     <nav>
       <a href="#intro-modal" data-toggle="modal" id="help-btn" class="btn btn-info">Help</a>
-      <a href="{% url 'map' %}" id="add-map-btn" class="">Add your map!</a>
+      <a href="{% url 'map' instance_slug=instance %}" id="add-map-btn" class="">Add your map!</a>
     </nav>
   </header>
 
@@ -182,9 +182,13 @@
 
   <script>
     var StompingGround = StompingGround || {};
-    StompingGround.mapRoot = "{% url 'map' %}";
+    StompingGround.mapRoot = "{% url 'map' instance_slug=instance %}";
     StompingGround.siteRoot = "http://{{ request.get_host }}";
+
+    var Shareabouts = Shareabouts || {};
+    Shareabouts.apiRoot = "{% url 'api_proxy' instance_slug=instance path='' %}";
   </script>
+
   <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js "></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js"></script>
@@ -198,7 +202,7 @@
   <script src="{{ STATIC_URL }}js/models.js"></script>
   <script src="{{ STATIC_URL }}js/views/layer-view.js"></script>
   <script src="{{ STATIC_URL }}js/views/map-view.js"></script>
-  <script src="{{ STATIC_URL }}js/config.js"></script>
+  <script src="{{ STATIC_URL }}js/{{ instance|default:'' }}config.js"></script>
   <script src="{{ STATIC_URL }}js/main.js"></script>
 </body>
 </html>
