@@ -183,8 +183,8 @@
           </div>
           <div class="modal-footer">
             <div class="actions">
-              <a id="finalization-start-over" href="/map/">Make another map</a>
-              <a id="finalization-review-map" class="btn btn-large" href="/">View your map</a>
+              <a id="finalization-start-over" href="{% url 'map' instance_slug=instance %}">Make another map</a>
+              <a id="finalization-review-map" class="btn btn-large" href="{% url 'dashboard' instance_slug=instance %}">View your map</a>
             </div>
           </div>
         </div>
