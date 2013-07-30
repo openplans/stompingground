@@ -21,7 +21,7 @@ var StompingGround = StompingGround || {};
     },
     placeTypes: {
       speeding: {
-        label: 'Speeding',
+        label: 'Speeding zone',
         icon: {
           iconUrl: StompingGround.siteRoot + '/static/img/noun_project_11579.png',
           iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-dbcf2c.png',
@@ -39,7 +39,7 @@ var StompingGround = StompingGround || {};
         }
       },
       crosswalk_needs_painting: {
-        label: 'Crosswalk Needs Painting',
+        label: 'Crosswalk that Needs Painting',
         icon: {
           iconUrl: StompingGround.siteRoot + '/static/img/noun_project_712.png',
           iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-fa307d.png',
@@ -66,10 +66,10 @@ var StompingGround = StompingGround || {};
         }
       },
       this_spot_is_nice: {
-        label: 'This Spot is Nice!',
+        label: 'Nice Spot!',
         icon: {
-          iconUrl: StompingGround.siteRoot + '/static/img/noun_project_6323.png',
-          iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-a542e5.png',
+          iconUrl: StompingGround.siteRoot + '/static/img/noun_project_16102.png',
+          iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-f39914.png',
           iconSize: [26, 26],
           iconAnchor: [13, 13]
         }
