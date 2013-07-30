@@ -111,6 +111,9 @@ LOGGING = {
 }
 EOF
 
+export PYTHONPATH=$PYTHONPATH:$(pwd)/src/
+export DJANGO_SETTINGS_MODULE=project.settings
+
 echo "Setting up static file service..."
 src/manage.py collectstatic --noinput
 
