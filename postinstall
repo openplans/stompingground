@@ -11,7 +11,7 @@ cat >> src/project/local_settings.py <<EOF
 
 import json
 import os.path
-from os.path import abspath, dirname, path as pathjoin
+from os.path import abspath, dirname, join as pathjoin
 
 with open('/home/dotcloud/environment.json') as f:
     env = json.load(f)
@@ -111,7 +111,7 @@ LOGGING = {
 }
 EOF
 
-export PYTHONPATH=$PYTHONPATH:$(pwd)/src/
+export PYTHONPATH=$PYTHONPATH:$(pwd)/src
 export DJANGO_SETTINGS_MODULE=project.settings
 
 echo "Setting up static file service..."
