@@ -37,7 +37,7 @@ if instances is not None:
         SHAREABOUTS[instance] = {
             'DATASET_KEY': env.get('SHAREABOUTS_DATASET_KEY', 'SHAREABOUTS_DATASET_KEY-not-set-in-dotcloud-environment!!!'),
             'DATASET_ROOT': env.get('SHAREABOUTS_DATASET_ROOT', 'SHAREABOUTS_DATASET_ROOT-not-set-in-dotcloud-environment!!!'),
-            'CONFIG': abspath(pathjoin(dirname(__file__), instance))
+            'CONFIG': abspath(pathjoin(dirname(__file__), instance)),
 
             'CONTEXT': {
                 'analytics_key': env.get('SHAREABOUTS_ANALYTICS_KEY', 'SHAREABOUTS_ANALYTICS_KEY-not-set-in-dotcloud-environment!!!'),
