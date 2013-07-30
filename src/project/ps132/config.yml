@@ -5,8 +5,8 @@ app:
   # Header name
   name: PS 132
   # Small text below the name
-  subname: What do you want to see in Eakins Oval?
+  subname: Making streets safer for kids.
   # Meta description that will show up in Google search results
-  meta_description: A demo of Stomping Ground, from OpenPlans
+  meta_description: We want our sidewalks and streets to be safe, so that children can walk or bike to school. Please help us by identifying unsafe conditions on your route to school, and giving us suggestions about how to improve them.
   # Home page description
-  description: What park facilities do you want to see in Eakins Oval? Design your perfect park and share the design! This is a demo of Stomping Ground, a mapping tool from OpenPlans.
+  description: We want our sidewalks and streets to be safe, so that children can walk or bike to school. Please help us by identifying unsafe conditions on your route to school, and giving us suggestions about how to improve them.
