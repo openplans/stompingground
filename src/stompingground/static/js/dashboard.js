@@ -29,7 +29,7 @@ var StompingGround = StompingGround || {};
 
       mapsContext['maps'].push({
         id: first.map_id,
-        url: 'http://' + SG.siteRoot +  SG.mapRoot + id,
+        url: SG.siteRoot +  SG.mapRoot + id,
         title: first.map_title,
         created: moment(first.created_datetime).fromNow(),
         thumb: thumbURL
