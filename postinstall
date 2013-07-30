@@ -11,6 +11,7 @@ cat >> src/project/local_settings.py <<EOF
 
 import json
 import os.path
+from os.path import abspath, dirname, path as pathjoin
 
 with open('/home/dotcloud/environment.json') as f:
     env = json.load(f)
