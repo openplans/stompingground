@@ -9,7 +9,7 @@ var StompingGround = StompingGround || {};
     layer: {
       url: 'http://{s}.tiles.mapbox.com/v3/doittgis.NYC_DoITT_base/{z}/{x}/{y}.png',
       minZoom: 15,
-      maxZoom: 17,
+      maxZoom: 18,
       attribution: 'Map data &copy; OpenStreetMap contributors, CC-BY-SA <a href="http://mapbox.com/about/maps" target="_blank">Terms &amp; Feedback</a>'
     },
     staticMap: {
