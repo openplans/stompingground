@@ -151,8 +151,17 @@
         <div class="active item">
           <div class="modal-body">
             <h1>Great! What should we call your map?</h1>
-            <div><input type="text" name="map-title" placeholder="My map's name..." maxlength="50"></div>
+            <div><input type="text" name="map-title" placeholder="My map's name..." maxlength="100" required></div>
             <p>Once your map is saved, other people can view and comment on it.</p>
+
+            <div><input type="text" name="submitter_name" placeholder="My name is..." maxlength="100" required></div>
+
+            <hr>
+
+            <p>The following information will not be shared with anyone.</p>
+            <div><input type="email" name="private-email" placeholder="My email address is..." maxlength="100" required></div>
+            <div><textarea name="private-route_to_school" placeholder="How my child gets to school..."></textarea></div>
+
 
             <div class="progress progress-striped active">
               <div class="bar" style="width: 0%;"></div>

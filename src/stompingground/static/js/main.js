@@ -322,8 +322,12 @@ var StompingGround = StompingGround || {};
     var $finalizeButton = $('#finalization-save'),
         $mapTitle = $('input[name="map-title"]');
     $finalizeButton.on('click', function() {
-      var title = $mapTitle.val();
-      saveMap(title);
+      var data = {
+        'submitter_name': $('[name="submitter_name"]').val(),
+        'private-email': $('[name="private-email"]').val(),
+        'private-route_to_school': $('[name="private-route_to_school"]').val()
+      };
+      saveMap($mapTitle.val(), data);
     });
   }
 
@@ -334,7 +338,7 @@ var StompingGround = StompingGround || {};
     hideFinalizeButtonTooltip();
   }
 
-  function saveMap(title) {
+  function saveMap(title, extraInfo) {
     var $finalizeCarousel = $('#finalization-modal .carousel'),
         $progressBar = $('#finalization-modal .progress .bar'),
         $permalinkAnchor = $('#finalization-modal .permalink'),
@@ -361,11 +365,11 @@ var StompingGround = StompingGround || {};
 
     collection.each(function(place) {
 
-      S.Util.callWithRetries(place.save, 3, place, {
+      S.Util.callWithRetries(place.save, 3, place, _.extend({
           'map_title': title,
           'map_id': mapId,
           'group_id': SG.mapGroup
-        }, {
+        }, extraInfo), {
           success: function() {
             numSavedPlaces += 1;
             $progressBar.css('width', ((numSavedPlaces + 1) * 100 / (numPlaces + 1)) + '%');
