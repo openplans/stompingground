@@ -40,6 +40,7 @@ var StompingGround = StompingGround || {};
       },
       crosswalk_needs_painting: {
         label: 'Crosswalk that Needs Painting',
+        // <a href="http://thenounproject.com/noun/road/#icon-No16010" target="_blank">Road</a> designed by <a href="http://thenounproject.com/misirlou" target="_blank">Benjamin Orlovski</a> from The Noun Project
         icon: {
           iconUrl: StompingGround.siteRoot + '/static/img/noun_project_712.png',
           iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-fa307d.png',
@@ -59,8 +60,8 @@ var StompingGround = StompingGround || {};
       generic_safety_issue: {
         label: 'Generic Safety Issue',
         icon: {
-          iconUrl: StompingGround.siteRoot + '/static/img/noun_project_6323.png',
-          iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-a542e5.png',
+          iconUrl: StompingGround.siteRoot + '/static/img/caution.png',
+          iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-dbcf2c.png',
           iconSize: [26, 26],
           iconAnchor: [13, 13]
         }
