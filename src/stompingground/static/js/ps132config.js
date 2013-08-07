@@ -13,7 +13,7 @@ var StompingGround = StompingGround || {};
       attribution: 'Map data &copy; OpenStreetMap contributors, CC-BY-SA <a href="http://mapbox.com/about/maps" target="_blank">Terms &amp; Feedback</a>'
     },
     staticMap: {
-      urlRoot: 'http://api.tiles.mapbox.com/v3/doittgis.NYC_DoITT_base/',
+      urlRoot: 'http://{s}.tiles.mapbox.com/v3/openplans.map-jo9bww2s/{z}/{x}/{y}.png',
       width: 240,
       height: 240,
       center: [40.71475, -73.94571],
