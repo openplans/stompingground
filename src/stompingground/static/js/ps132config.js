@@ -7,7 +7,7 @@ var StompingGround = StompingGround || {};
       zoom: 17
     },
     layer: {
-      url: 'http://{s}.tiles.mapbox.com/v3/doittgis.NYC_DoITT_base/{z}/{x}/{y}.png',
+      url: 'http://{s}.tiles.mapbox.com/v3/openplans.map-jo9bww2s/{z}/{x}/{y}.png',
       minZoom: 15,
       maxZoom: 18,
       attribution: 'Map data &copy; OpenStreetMap contributors, CC-BY-SA <a href="http://mapbox.com/about/maps" target="_blank">Terms &amp; Feedback</a>'
@@ -21,57 +21,39 @@ var StompingGround = StompingGround || {};
     },
     placeTypes: {
       speeding: {
-        label: 'Speeding zone',
+        label: 'Drivers are speeding',
         icon: {
-          iconUrl: StompingGround.siteRoot + '/static/img/noun_project_11579.png',
+          iconUrl: StompingGround.siteRoot + '/static/img/marker-heart-broken-yellow.png',
           iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-dbcf2c.png',
-          iconSize: [27, 13],
-          iconAnchor: [13, 13]
+          iconSize: [51, 46],
+          iconAnchor: [25, 20]
         }
       },
       failure_to_yield: {
-        label: 'Failure to Yield',
+        label: 'Drivers don\'t yield',
         icon: {
-          iconUrl: StompingGround.siteRoot + '/static/img/noun_project_1535.png',
+          iconUrl: StompingGround.siteRoot + '/static/img/marker-heart-broken-blue.png',
           iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-4ab767.png',
-          iconSize: [30, 41],
-          iconAnchor: [15, 41]
+          iconSize: [51, 46],
+          iconAnchor: [25, 20]
         }
       },
       crosswalk_needs_painting: {
-        label: 'Crosswalk that Needs Painting',
+        label: 'Crosswalk is faded',
         icon: {
-          iconUrl: StompingGround.siteRoot + '/static/img/noun_project_712.png',
+          iconUrl: StompingGround.siteRoot + '/static/img/marker-heart-broken-red.png',
           iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-fa307d.png',
-          iconSize: [29, 16],
-          iconAnchor: [15, 16]
+          iconSize: [51, 46],
+          iconAnchor: [25, 20]
         }
       },
       sidewalk_problem: {
-        label: 'Sidewalk Problem',
+        label: 'Bad quality sidewalk',
         icon: {
-          iconUrl: StompingGround.siteRoot + '/static/img/noun_project_3837.png',
+          iconUrl: StompingGround.siteRoot + '/static/img/marker-heart-broken-green.png',
           iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-0d85e9.png',
-          iconSize: [26, 36],
-          iconAnchor: [13, 36]
-        }
-      },
-      generic_safety_issue: {
-        label: 'Generic Safety Issue',
-        icon: {
-          iconUrl: StompingGround.siteRoot + '/static/img/noun_project_6323.png',
-          iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-a542e5.png',
-          iconSize: [26, 26],
-          iconAnchor: [13, 13]
-        }
-      },
-      this_spot_is_nice: {
-        label: 'Nice Spot!',
-        icon: {
-          iconUrl: StompingGround.siteRoot + '/static/img/noun_project_16102.png',
-          iconThumbUrl: StompingGround.siteRoot + '/static/img/markers/dot-f39914.png',
-          iconSize: [26, 26],
-          iconAnchor: [13, 13]
+          iconSize: [51, 46],
+          iconAnchor: [25, 20]
         }
       }
     }

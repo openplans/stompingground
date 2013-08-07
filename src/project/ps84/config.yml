@@ -1,12 +1,12 @@
 # Settings for the app
 app:
   # HTML Title
-  title: PS 84 | Safe Routes to School | Stomping Ground
+  title: Mapping Safe Routes to School for PS 84
   # Header name
   name: PS 84
   # Small text below the name
-  subname: Making streets safer for kids.
+  subname: Identify unsafe streets on your route to school
   # Meta description that will show up in Google search results
   meta_description: We want our sidewalks and streets to be safe, so that children can walk or bike to school. Please help us by identifying unsafe conditions on your route to school, and giving us suggestions about how to improve them.
   # Home page description
-  description: We want our sidewalks and streets to be safe, so that children can walk or bike to school. Please help us by identifying unsafe conditions on your route to school, and giving us suggestions about how to improve them.
+  description: We want our sidewalks and streets to be safe, so that children can walk or bike to school. Please help us by identifying unsafe conditions on your route to school, and giving us suggestions about how to improve them. <a href="/">More information</a>

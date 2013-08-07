@@ -15,7 +15,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=IE7">
 
-  <title>{{ config.app.title }} | Portal</title>
+  <title>{{ config.app.title }}</title>
 
   <!-- Favicon & Progressively-Enhanced Touch Icons: http://mathiasbynens.be/notes/touch-icons#sizes -->
   <link rel="shortcut icon" href="{{ STATIC_URL }}css/images/favicon.png">
@@ -40,8 +40,46 @@
 
 </head>
 <body>
+  
+  <header id="branding" role="banner">
+     <hgroup id="site-marquee">
+       <h1 id="site-title">Safe Routes to School in Brooklyn</h1>
+       <h2 id="site-description">Identify unsafe streets on your route to school</h2>
+     </hgroup>
+     <nav>
+     </nav>
+   </header>
+   
+  <div id="main" class="container-fluid">
+
+  <p>We want our sidewalks and streets to be safe, so that children can walk or bike to school. Please help us by identifying unsafe conditions on your route to school, and giving us suggestions about how to improve them.</p>
+
+  <p>This information will be shared with the principals and parents associations of each school, to assist them with their own safety initiatives.</p>
+  
+  <h3>Pick your school:</h3>
+  
+  <ul>
   {% for instance in instances %}
-    <p><a href="{% url 'dashboard' instance_slug=instance.slug %}">{{ instance.config.app.name }}</a></p>
+    <li><a href="{% url 'dashboard' instance_slug=instance.slug %}">{{ instance.config.app.name }}</a></li>
   {% endfor %}
+  </ul>
+
+  <h3>Issues to put on the map</h3>
+  <p>Here are the main issues to note on your maps:</p>
+  <ul>
+    <li>Drivers are speeding</li>
+    <li>Drivers don't yield</li>
+    <li>Crosswalk is faded</li>
+    <li>Bad quality sidewalk</li>
+    </ul>
+  <p>If you spot something else you want to note, leave a comment on your map.</p>
+  
+   <h3>Map credits</h3>
+   <p>This map was set up by Make Brooklyn Safer, with technical assistance from <a href="http://openplans.org" title="OpenPlans | We help cities work better.">OpenPlans</a>.</p>
+   
+   <p>Map icons courtesy of <a href="http://thenounproject.com/shiningvale/">Valentina Piccione</a>, <a href="http://thenounproject.com/jmkeuning/">James Keuning</a>, and <a href="http://thenounproject.com/">The Noun Project</a>.</p
+     
+  </ul>
+  </div>
 </body>
 </html>
