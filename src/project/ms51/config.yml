@@ -1,7 +1,7 @@
 # Settings for the app
 app:
   # HTML Title
-  title: Mapping Safe Routes to School for MS 51
+  title: MS 51
   # Header name
   name: MS 51
   # Small text below the name

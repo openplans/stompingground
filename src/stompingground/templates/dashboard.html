@@ -43,7 +43,7 @@
   <div id="fb-root"></div>
   <header id="branding" role="banner">
     <hgroup id="site-marquee">
-      <h1 id="site-title"><a href="{% url 'dashboard' instance_slug=instance %}">Mapping Safe Routes to {{config.app.name}}</a></h1>
+      <h1 id="site-title"><a href="/">Safe Routes Brooklyn</a> | <a href="{% url 'dashboard' instance_slug=instance %}">{{config.app.name}}</a></h1>
       <h2 id="site-description">{{config.app.subname}}</h2>
     </hgroup>
     <nav>
@@ -85,14 +85,14 @@
 
     <div class="navbar site-footer">
       <div class="navbar-inner">
-        <p class="navbar-text pull-right">Organized by Make Brooklyn Safer, with technical assistance from <a class="" href="http://openplans.org/">OpenPlans</a></p>
+        <p class="navbar-text pull-right">Organized by <a href="http://makebrooklynsafer.org/" title="">Make Brooklyn Safer</a>, with technical assistance from <a class="" href="http://openplans.org/">OpenPlans</a></p>
       </div>
     </div>
   </div>
 
   <div id="error-modal" class="modal small-modal hide fade">
     <div class="modal-body">
-      <strong>That's embarassing.</strong> We weren't able to get the great
+      <strong>That's embarrassing.</strong> We weren't able to get the great
       citizen-made maps we wanted to show you.
       Try <a href="/">reloading the page</a>. That usually does the trick.
     </div>

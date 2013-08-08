@@ -67,7 +67,7 @@
 
   <header id="branding" role="banner">
     <hgroup id="site-marquee">
-      <h1 id="site-title"><a href="{% url 'dashboard' instance_slug=instance %}">Mapping Safe Routes to {{config.app.name}}</a></h1>
+      <h1 id="site-title"><a href="/">Safe Routes Brooklyn</a> | <a href="{% url 'dashboard' instance_slug=instance %}">{{config.app.name}}</a></h1>
       <h2 id="site-description">{{config.app.subname}}</h2>
     </hgroup>
     <nav>
@@ -122,7 +122,7 @@
 
   <div id="error-modal" class="modal small-modal hide fade">
     <div class="modal-body">
-      <strong>That's embarassing.</strong> We weren't able to get the details of
+      <strong>That's embarrassing.</strong> We weren't able to get the details of
       this awesome citizen-made map. Try <a href="/map/">reloading the page</a>.
       That usually does the trick.
     </div>

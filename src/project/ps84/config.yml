@@ -1,7 +1,7 @@
 # Settings for the app
 app:
   # HTML Title
-  title: Mapping Safe Routes to School for PS 84
+  title: PS 84
   # Header name
   name: PS 84
   # Small text below the name
