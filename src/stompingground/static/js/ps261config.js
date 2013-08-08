@@ -13,7 +13,7 @@ var StompingGround = StompingGround || {};
       attribution: 'Map data &copy; OpenStreetMap contributors, CC-BY-SA <a href="http://mapbox.com/about/maps" target="_blank">Terms &amp; Feedback</a>'
     },
     staticMap: {
-      urlRoot: 'http://{s}.tiles.mapbox.com/v3/openplans.map-jo9bww2s/{z}/{x}/{y}.png',
+      urlRoot: 'http://api.tiles.mapbox.com/v3/openplans.map-jo9bww2s/',
       width: 240,
       height: 240,
       center: [40.68736, -73.98821],
